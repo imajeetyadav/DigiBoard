@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "475141019968",
+    "firebase_url": "https://digiboard-fc83b.firebaseio.com",
+    "project_id": "digiboard-fc83b",
+    "storage_bucket": "digiboard-fc83b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475141019968:android:fa8be069b297f544a042a5",
+        "android_client_info": {
+          "package_name": "com.ak47.digiboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475141019968-8ek21our9o1mt31f4rp6vjat83o00mkk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmqsOhFLIWNzoNXWXKL1ElVPYsIVb3He4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475141019968-8ek21our9o1mt31f4rp6vjat83o00mkk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
