@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "475141019968-0u6roga8jmji4ngbmr5o2r37fgirhfrd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ak47.digiboard",
+            "certificate_hash": "cbc435e3cc9afd05ab87d0016c86401a95932791"
+          }
+        },
+        {
           "client_id": "475141019968-8ek21our9o1mt31f4rp6vjat83o00mkk.apps.googleusercontent.com",
           "client_type": 3
         }
