@@ -1,14 +1,13 @@
 package com.ak47.digiboard.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,15 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private DatabaseReference usersRef;
-    private ProgressDialog loadingBar;
 
-    //a constant for detecting the login intent result
+    //A constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
 
     //Tag for the logs optional
@@ -46,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-//        usersRef= FirebaseDatabase.getInstance().getReference().child("Users");
 
         //Then we need a GoogleSignInOptions object
         //And we need to build it as below
@@ -110,10 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
-
-                        // ...
                     }
                 });
     }
