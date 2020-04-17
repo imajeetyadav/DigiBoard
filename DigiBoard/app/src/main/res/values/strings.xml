@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DigiBoard</string>
+    <string name="profile_pic_description">profile_pic_description</string>
 </resources>
