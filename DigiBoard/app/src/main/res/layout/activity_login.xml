@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.LoginActivity">
 
     <com.github.florent37.diagonallayout.DiagonalLayout
@@ -15,24 +15,49 @@
         app:diagonal_position="bottom">
 
         <View
+            android:id="@+id/login_View"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_screen3"
-            android:scaleType="centerCrop" />
+            android:background="@drawable/bg_login_view" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/logo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/AppTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:accessibilityHeading="false"
+                android:fontFamily="@font/mo_re"
+                android:text="@string/app_name"
+                android:textColor="@color/design_default_color_on_secondary"
+                android:textSize="50sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp"
+                android:src="@drawable/ic_login_view" />
+
+        </LinearLayout>
+
 
     </com.github.florent37.diagonallayout.DiagonalLayout>
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="30dp" />
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

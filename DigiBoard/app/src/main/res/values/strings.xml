@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">DigiBoard</string>
-    <string name="profile_pic_description">profile_pic_description</string>
+    <string name="user_name">Name</string>
+    <string name="email">Email Id</string>
+    <string name="active_quiz">Active Quiz</string>
+    <string name="quiz_history">Quiz History</string>
+    <string name="result">Result</string>
+    <string name="notifications">Notifications</string>
+    <string name="support">Support</string>
+    <string name="about">About</string>
 </resources>

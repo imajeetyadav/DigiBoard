@@ -11,4 +11,7 @@
     <color name="bg_screen3">#3395ff</color>
     <color name="bg_screen4">#c873f4</color>
 
+
+    <color name="cardColor">#ffffff</color>
+    <color name="textCardColor">#3f3f3f</color>
 </resources>

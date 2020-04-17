@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         assert user != null;
         rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
         rootRef.keepSynced(true);
-        imageView = findViewById(R.id.imageView);
-        textName = findViewById(R.id.textViewName);
-        textEmail = findViewById(R.id.textViewEmail);
+        imageView = findViewById(R.id.user_photo);
+        textName = findViewById(R.id.user_name);
+        textEmail = findViewById(R.id.user_email);
 
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
