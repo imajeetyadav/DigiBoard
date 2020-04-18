@@ -14,4 +14,6 @@
 
     <color name="cardColor">#ffffff</color>
     <color name="textCardColor">#3f3f3f</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

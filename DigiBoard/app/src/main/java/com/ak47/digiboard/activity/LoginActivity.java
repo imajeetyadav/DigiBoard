@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //this method is called on click
     private void signIn() {
-        //getting the google signin intent
+        //getting the google signIn intent
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
         //starting the activity for result
@@ -163,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
+
         }
     }
 }

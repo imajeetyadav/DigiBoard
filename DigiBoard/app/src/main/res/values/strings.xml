@@ -2,10 +2,14 @@
     <string name="app_name">DigiBoard</string>
     <string name="user_name">Name</string>
     <string name="email">Email Id</string>
-    <string name="active_quiz">Active Quiz</string>
+    <string name="active_quiz">Quiz</string>
     <string name="quiz_history">Quiz History</string>
     <string name="result">Result</string>
     <string name="notifications">Notifications</string>
     <string name="support">Support</string>
     <string name="about">About</string>
+
+    <string name="title_activity_quiz">Quiz</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
