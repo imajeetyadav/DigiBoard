@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
         android:fontFamily="@font/mo_re"
-        android:text="@string/notifications_title"
+        android:text="@string/notifications"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="50sp"

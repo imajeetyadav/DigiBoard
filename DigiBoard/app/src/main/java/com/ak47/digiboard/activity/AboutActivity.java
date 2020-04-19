@@ -33,7 +33,6 @@ public class AboutActivity extends AppCompatActivity {
                         .start(AboutActivity.this);
             }
         });
-
     }
 
     private void changeStatusBarColor() {

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference rootRef;
     ImageView imageView;
     TextView textName, textEmail;
-    CardView activeQuiz, quizHistory, quizResult, quizNotification, quizSupport, quizAbout;
+    CardView activeQuiz, quizHistory, quizResult, quizNotification, quizSetting, quizAbout;
     private android.app.AlertDialog enableNotificationListenerAlertDialog;
 
     @Override
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         quizHistory = findViewById(R.id.history);
         quizResult = findViewById(R.id.result);
         quizNotification = findViewById(R.id.notification);
-        quizSupport = findViewById(R.id.support);
+        quizSetting = findViewById(R.id.setting);
         quizAbout = findViewById(R.id.about);
 
 
@@ -137,11 +137,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        quizSupport.setOnClickListener(new View.OnClickListener() {
+        quizSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                 Quiz Support
-                startActivity(new Intent(MainActivity.this, SupportActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
 

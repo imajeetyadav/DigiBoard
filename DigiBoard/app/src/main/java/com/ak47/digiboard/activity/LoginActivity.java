@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.HashMap;
 
@@ -47,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     //creating a DatabaseReference
     private DatabaseReference rootRef;
 
+    // Loading Animation
+    private RotateLoading rotateLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         rootRef = FirebaseDatabase.getInstance().getReference();
+        rotateLoading = findViewById(R.id.rotateloading);
 
         changeStatusBarColor();
 
@@ -74,6 +79,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+//                rotateLoading.setVisibility(View.VISIBLE);
+                rotateLoading.start();
+
             }
         });
 
@@ -94,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                rotateLoading.stop();
                 // ...
             }
         }
@@ -132,14 +141,18 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
-
+                            rotateLoading.stop();
+//                            rotateLoading.setVisibility(View.GONE);
                             sendUserToMainActivity();
                             Log.e(TAG, "User Signed In");
                         } else {
+                            rotateLoading.stop();
+//                            rotateLoading.setVisibility(View.INVISIBLE);
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
