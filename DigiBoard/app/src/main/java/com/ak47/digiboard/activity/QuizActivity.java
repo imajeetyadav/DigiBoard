@@ -1,6 +1,8 @@
 package com.ak47.digiboard.activity;
 
 import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,16 +17,18 @@ public class QuizActivity extends AppCompatActivity {
     public static int cheatingCount = 0;
     private Button endQuiz;
     private ActivityManager activityManager;
+    private NotificationManager mNotificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_actvity);
+        setContentView(R.layout.activity_quiz);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-//        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert mNotificationManager != null;
+        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
 
         endQuiz = findViewById(R.id.endQuiz);
 

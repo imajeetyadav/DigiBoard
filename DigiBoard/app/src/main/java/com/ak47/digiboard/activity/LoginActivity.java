@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -52,7 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        rootRef = FirebaseDatabase.getInstance().getReference().child("users");
+        rootRef = FirebaseDatabase.getInstance().getReference();
+
+        changeStatusBarColor();
 
         //Then we need a GoogleSignInOptions object
         //And we need to build it as below
@@ -86,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                assert account != null;
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -109,15 +113,16 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.e(TAG, "signInWithCredential:success");
                             final FirebaseUser user = mAuth.getCurrentUser();
-                            rootRef.addValueEventListener(new ValueEventListener() {
+                            rootRef.child("users").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    assert user != null;
                                     if (!dataSnapshot.hasChild(user.getUid())) {
                                         HashMap<String, String> profileMap = new HashMap<>();
                                         profileMap.put("name", user.getDisplayName());
                                         profileMap.put("email", user.getEmail());
-                                        profileMap.put("profilePic", Objects.requireNonNull(user.getPhotoUrl()).toString());
-                                        rootRef.child(user.getUid()).setValue(profileMap);
+                                        profileMap.put("profilePic", user.getPhotoUrl().toString());
+                                        rootRef.child("users").child(user.getUid()).setValue(profileMap);
                                     }
                                 }
 
@@ -161,9 +166,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            finish();
             startActivity(new Intent(this, MainActivity.class));
-
+            finish();
         }
+    }
+
+    private void changeStatusBarColor() {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 }

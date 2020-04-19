@@ -9,6 +9,7 @@
         android:id="@+id/endQuiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="end Quiz" />
+        android:text="end Quiz"
+        android:textColor="@color/gradient_color" />
 
 </RelativeLayout>

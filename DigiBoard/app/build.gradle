@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -32,6 +33,8 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta04'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.2'
     implementation 'com.google.firebase:firebase-database:19.2.1'
@@ -39,15 +42,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf:19.0.6'
     implementation 'com.google.firebase:firebase-ml-vision:24.0.2'
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'com.github.florent37:diagonallayout:1.0.9'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "com.mikepenz:aboutlibraries:6.2.3"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
-
 }
 
-apply plugin: 'com.google.gms.google-services'
+

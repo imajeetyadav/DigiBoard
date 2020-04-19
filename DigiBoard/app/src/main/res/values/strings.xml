@@ -9,7 +9,15 @@
     <string name="support">Support</string>
     <string name="about">About</string>
 
-    <string name="title_activity_quiz">Quiz</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="notification_listener_service">Grant Permission</string>
+    <string name="notification_listener_service_explanation">It is Required to enable Do Not Disturb Mode which is used during quiz. Enable it now?</string>
+    <string name="version">v1.0</string>
+    <string name="developers">Developed By \nAjeet Yadav\n&amp;\nBrij Jadaun</string>
+    <string name="open_source_licenses">Click to See Open Source Licenses</string>
+    <string name="support_title">Support</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="history_title">History</string>
+
+    <string name="aboutLibraries_description_showIcon">true</string>
+    <string name="aboutLibraries_description_showVersion">false</string>
 </resources>
