@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
         android:fontFamily="@font/mo_re"
-        android:text="@string/setting"
+        android:text="@string/quiz_history"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="55sp"

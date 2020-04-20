@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         rootRef = FirebaseDatabase.getInstance().getReference();
-        rotateLoading = findViewById(R.id.rotateloading);
+        rotateLoading = findViewById(R.id.loginLoading);
 
         changeStatusBarColor();
 

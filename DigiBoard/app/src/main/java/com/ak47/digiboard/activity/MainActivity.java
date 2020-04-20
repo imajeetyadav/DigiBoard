@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
 
@@ -33,15 +34,21 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     private DatabaseReference rootRef;
-    ImageView imageView;
-    TextView textName, textEmail;
-    CardView activeQuiz, quizHistory, quizResult, quizNotification, quizSetting, quizAbout;
+    private ImageView imageView;
+    private TextView textName, textEmail;
+    private CardView activeQuiz, quizHistory, quizResult, quizNotification, quizSetting, quizAbout;
     private android.app.AlertDialog enableNotificationListenerAlertDialog;
+    // Loading Animation
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        rotateLoading = findViewById(R.id.mainLoading);
+
+        rotateLoading.start();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -73,15 +80,19 @@ public class MainActivity extends AppCompatActivity {
                 textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
                 textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
                 Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
+
+                rotateLoading.stop();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "Profile Retrieval  - " + databaseError.getMessage());
+                rotateLoading.stop();
 
             }
         });
     }
+
 
     private void changeStatusBarColor() {
 
@@ -180,4 +191,6 @@ public class MainActivity extends AppCompatActivity {
                         });
         return (alertDialogBuilder.create());
     }
+
+
 }
