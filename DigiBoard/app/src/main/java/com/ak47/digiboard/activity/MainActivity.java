@@ -30,7 +30,7 @@ import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     private DatabaseReference rootRef;
@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         rotateLoading.start();
 
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        changeStatusBarColor();
 
         imageView = findViewById(R.id.user_photo);
         textName = findViewById(R.id.user_name);
@@ -65,9 +65,13 @@ public class MainActivity extends AppCompatActivity {
         quizSetting = findViewById(R.id.setting);
         quizAbout = findViewById(R.id.about);
 
+        activeQuiz.setOnClickListener(this);
+        quizHistory.setOnClickListener(this);
+        quizResult.setOnClickListener(this);
+        quizNotification.setOnClickListener(this);
+        quizSetting.setOnClickListener(this);
+        quizAbout.setOnClickListener(this);
 
-        changeStatusBarColor();
-        AddClickListeners();
 
         assert user != null;
         rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
                 textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
                 Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
-
                 rotateLoading.stop();
             }
 
@@ -94,19 +97,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void changeStatusBarColor() {
-
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-    }
-
-    private void AddClickListeners() {
-        activeQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                 Active Quiz
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activeQuiz:
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -118,52 +112,37 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     startActivity(new Intent(MainActivity.this, QuizActivity.class));
                 }
-
-            }
-        });
-
-        quizHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                 Quiz History
+                break;
+            case R.id.history:
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
-            }
-        });
-
-
-        quizResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Quiz  Result
+                break;
+            case R.id.result:
                 startActivity(new Intent(MainActivity.this, ResultActivity.class));
-            }
-        });
-
-        quizNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                 Quiz Notifications
+                break;
+            case R.id.notification:
                 startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-
-            }
-        });
-
-        quizSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                 Quiz Support
+                break;
+            case R.id.setting:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-
-        quizAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                 About
+                break;
+            case R.id.about:
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
-            }
-        });
+                break;
+            default:
+                Log.e(TAG, "Invalid Selection");
+                break;
+        }
+
     }
+
+
+    private void changeStatusBarColor() {
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
 
     @Override
     protected void onStart() {
@@ -191,6 +170,5 @@ public class MainActivity extends AppCompatActivity {
                         });
         return (alertDialogBuilder.create());
     }
-
 
 }
