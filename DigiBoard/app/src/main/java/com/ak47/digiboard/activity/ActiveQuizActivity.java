@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
 
-public class QuizActivity extends AppCompatActivity {
+public class ActiveQuizActivity extends AppCompatActivity {
     public static int cheatingCount = 0;
     private Button endQuiz;
     private ActivityManager activityManager;
@@ -22,7 +22,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.activity_active_quiz);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
@@ -112,7 +112,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private void normalEndQuiz() {
 
-        startActivity(new Intent(QuizActivity.this, MainActivity.class));
+        mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
+        startActivity(new Intent(ActiveQuizActivity.this, MainActivity.class));
         stopLockTask();
     }
 

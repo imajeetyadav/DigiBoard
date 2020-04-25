@@ -33,11 +33,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
-    private DatabaseReference rootRef;
     private ImageView imageView;
     private TextView textName, textEmail;
-    private CardView activeQuiz, quizHistory, quizResult, quizNotification, quizSetting, quizAbout;
-    private android.app.AlertDialog enableNotificationListenerAlertDialog;
     // Loading Animation
     private RotateLoading rotateLoading;
 
@@ -58,12 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textName = findViewById(R.id.user_name);
         textEmail = findViewById(R.id.user_email);
 
-        activeQuiz = findViewById(R.id.activeQuiz);
-        quizHistory = findViewById(R.id.history);
-        quizResult = findViewById(R.id.result);
-        quizNotification = findViewById(R.id.notification);
-        quizSetting = findViewById(R.id.setting);
-        quizAbout = findViewById(R.id.about);
+        CardView activeQuiz = findViewById(R.id.activeQuiz);
+        CardView quizHistory = findViewById(R.id.history);
+        CardView quizResult = findViewById(R.id.result);
+        CardView quizNotification = findViewById(R.id.notification);
+        CardView quizSetting = findViewById(R.id.setting);
+        CardView quizAbout = findViewById(R.id.about);
 
         activeQuiz.setOnClickListener(this);
         quizHistory.setOnClickListener(this);
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         assert user != null;
-        rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
         rootRef.keepSynced(true);
 
         rootRef.addValueEventListener(new ValueEventListener() {
@@ -106,11 +103,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 assert notificationManager != null;
                 if (!notificationManager.isNotificationPolicyAccessGranted()) {
-                    enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
+                    android.app.AlertDialog enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
                     enableNotificationListenerAlertDialog.show();
                 } else {
                     finish();
-                    startActivity(new Intent(MainActivity.this, QuizActivity.class));
+                    startActivity(new Intent(MainActivity.this, ActiveQuizActivity.class));
                 }
                 break;
             case R.id.history:

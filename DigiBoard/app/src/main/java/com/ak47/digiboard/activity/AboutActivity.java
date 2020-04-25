@@ -1,6 +1,7 @@
 package com.ak47.digiboard.activity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +16,8 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 public class AboutActivity extends AppCompatActivity {
 
     TextView openSourceLicenses;
+    TextView iconCredit;
+    String creditLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,14 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         changeStatusBarColor();
 
+        creditLink="Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a>"+
+                "<br> Icons made by <a href=\"https://www.flaticon.com/authors/iconixar\" title=\"iconixar\">iconixar</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a>";
         openSourceLicenses = findViewById(R.id.openSourceLicenses);
+        iconCredit=findViewById(R.id.icon_credit);
+        iconCredit.setText(Html.fromHtml(creditLink));
+
+
+
         openSourceLicenses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -22,7 +22,7 @@
         <activity android:name=".activity.ResultActivity" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.QuizActivity" />
+        <activity android:name=".activity.ActiveQuizActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
