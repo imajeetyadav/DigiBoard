@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                         HashMap<String, String> profileMap = new HashMap<>();
                                         profileMap.put("name", user.getDisplayName());
                                         profileMap.put("email", user.getEmail());
-                                        profileMap.put("profilePic", user.getPhotoUrl().toString());
+                                        profileMap.put("profilePic", Objects.requireNonNull(user.getPhotoUrl()).toString());
                                         rootRef.child("users").child(user.getUid()).setValue(profileMap);
                                     }
                                 }
@@ -169,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendUserToMainActivity() {
-        Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent mainActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainActivityIntent);
         finish();
@@ -179,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, StudentMainActivity.class));
             finish();
         }
     }

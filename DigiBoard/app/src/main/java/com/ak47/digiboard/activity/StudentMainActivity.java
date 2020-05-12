@@ -30,8 +30,8 @@ import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private String TAG = "MainActivity";
+public class StudentMainActivity extends AppCompatActivity implements View.OnClickListener {
+    private String TAG = "StudentMainActivity";
     private FirebaseAuth mAuth;
     private ImageView imageView;
     private TextView textName, textEmail;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_student);
 
         rotateLoading = findViewById(R.id.mainLoading);
 
@@ -107,23 +107,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     enableNotificationListenerAlertDialog.show();
                 } else {
                     finish();
-                    startActivity(new Intent(MainActivity.this, ActiveQuizActivity.class));
+                    startActivity(new Intent(StudentMainActivity.this, ActiveQuizActivity.class));
                 }
                 break;
             case R.id.history:
-                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+                startActivity(new Intent(StudentMainActivity.this, HistoryActivity.class));
                 break;
             case R.id.result:
-                startActivity(new Intent(MainActivity.this, ResultActivity.class));
+                startActivity(new Intent(StudentMainActivity.this, ResultActivity.class));
                 break;
             case R.id.notification:
-                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+                startActivity(new Intent(StudentMainActivity.this, NotificationActivity.class));
                 break;
             case R.id.setting:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(StudentMainActivity.this, SettingsActivity.class));
                 break;
             case R.id.about:
-                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                startActivity(new Intent(StudentMainActivity.this, AboutActivity.class));
                 break;
             default:
                 Log.e(TAG, "Invalid Selection");

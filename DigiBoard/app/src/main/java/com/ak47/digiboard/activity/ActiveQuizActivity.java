@@ -113,7 +113,7 @@ public class ActiveQuizActivity extends AppCompatActivity {
     private void normalEndQuiz() {
 
         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
-        startActivity(new Intent(ActiveQuizActivity.this, MainActivity.class));
+        startActivity(new Intent(ActiveQuizActivity.this, StudentMainActivity.class));
         stopLockTask();
     }
 

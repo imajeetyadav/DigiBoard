@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.StudentMainActivity">
 
     <View
         android:layout_width="match_parent"
@@ -90,13 +90,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_active_quiz" />
+                    android:background="@drawable/ic_active_quiz"
+                    android:contentDescription="@string/active_quiz" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,13 +132,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_history" />
+                    android:background="@drawable/ic_history"
+                    android:contentDescription="@string/quiz_history" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,13 +174,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_result" />
+                    android:background="@drawable/ic_result"
+                    android:contentDescription="@string/result" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -210,13 +216,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_notification" />
+                    android:background="@drawable/ic_notification"
+                    android:contentDescription="@string/notifications" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -250,13 +258,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_settings" />
+                    android:background="@drawable/ic_settings"
+                    android:contentDescription="@string/setting" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -290,13 +300,15 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_about" />
+                    android:background="@drawable/ic_about"
+                    android:contentDescription="@string/about" />
 
                 <TextView
                     android:layout_width="wrap_content"
