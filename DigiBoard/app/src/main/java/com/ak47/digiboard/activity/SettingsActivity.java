@@ -56,7 +56,6 @@ public class SettingsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 mAuth.signOut();
                                 ((ActivityManager) Objects.requireNonNull(getSystemService(ACTIVITY_SERVICE))).clearApplicationUserData();
-
                             }
                         })
                 .setNeutralButton("No", new DialogInterface.OnClickListener() {

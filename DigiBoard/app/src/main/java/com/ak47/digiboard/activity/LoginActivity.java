@@ -1,6 +1,7 @@
 package com.ak47.digiboard.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,9 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.victor.loading.rotate.RotateLoading;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -123,17 +121,38 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.e(TAG, "signInWithCredential:success");
                             final FirebaseUser user = mAuth.getCurrentUser();
-                            rootRef.child("users").addValueEventListener(new ValueEventListener() {
+                            SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            rootRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     assert user != null;
-                                    if (!dataSnapshot.hasChild(user.getUid())) {
-                                        HashMap<String, String> profileMap = new HashMap<>();
-                                        profileMap.put("name", user.getDisplayName());
-                                        profileMap.put("email", user.getEmail());
-                                        profileMap.put("profilePic", Objects.requireNonNull(user.getPhotoUrl()).toString());
-                                        rootRef.child("users").child(user.getUid()).setValue(profileMap);
+                                    if (dataSnapshot.child("users").hasChild(user.getUid())) {
+                                        editor.putInt("initial_setup", 1);
+                                        editor.apply();
+                                        rotateLoading.stop();
+//                                        sendUserToStudentMainActivity();
+
+                                    } else if (dataSnapshot.child("AdminUsers").hasChild(user.getUid())) {
+                                        editor.putInt("initial_setup", 2);
+                                        editor.apply();
+                                        rotateLoading.stop();
+//                                        sendUserToTeacherMainActivity();
+
+                                    } else {
+                                        editor.putInt("initial_setup", 0);
+                                        editor.apply();
+                                        rotateLoading.stop();
+//                                        sendUserToProfileSelectionActivity();
                                     }
+                                    Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, ActivitySelection.class);
+                                    mainTeacherActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(mainTeacherActivityIntent);
+                                    finish();
+
+
+
+
                                 }
 
                                 @Override
@@ -142,9 +161,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
-                            rotateLoading.stop();
+
 //                            rotateLoading.setVisibility(View.GONE);
-                            sendUserToMainActivity();
                             Log.e(TAG, "User Signed In");
                         } else {
                             rotateLoading.stop();
@@ -153,10 +171,31 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
+    }
+
+    private void sendUserToProfileSelectionActivity() {
+        Intent profileSelectionActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
+        profileSelectionActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(profileSelectionActivityIntent);
+        finish();
+    }
+
+
+    private void sendUserToStudentMainActivity() {
+        Intent mainStudentActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
+        mainStudentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainStudentActivityIntent);
+        finish();
+    }
+
+    private void sendUserToTeacherMainActivity() {
+        Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, TeacherMainActivity.class);
+        mainTeacherActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainTeacherActivityIntent);
+        finish();
     }
 
 
@@ -169,21 +208,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void sendUserToMainActivity() {
-        Intent mainActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
-        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainActivityIntent);
-        finish();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, StudentMainActivity.class));
-            finish();
-        }
-    }
 
     private void changeStatusBarColor() {
         Window window = getWindow();

@@ -21,4 +21,11 @@
     <string name="heart_message">Hope you like this App    ❤</string>
     <string name="sign_out">   Sign Out    </string>
     <string name="icon_credit">Icon Credit</string>
+    <string name="create_quiz">Create Quiz</string>
+    <string name="student_list">Student List</string>
+    <string name="publish_result">Publish Result</string>
+    <string name="select_role">Select Role</string>
+    <string name="role_note">Note- Any Changes can\'t be done of Selection</string>
+    <string name="candidate">Candidate</string>
+    <string name="examiner">Examiner</string>
 </resources>

@@ -69,18 +69,27 @@ public class StudentMainActivity extends AppCompatActivity implements View.OnCli
         quizSetting.setOnClickListener(this);
         quizAbout.setOnClickListener(this);
 
-
-        assert user != null;
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
         rootRef.keepSynced(true);
 
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
-                textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
-                textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
-                Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
+                try {
+                    String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
+                    Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
+                } catch (Exception e) {
+                    Log.e(TAG, "Profile pic fetch error");
+                    Picasso.get().load(R.drawable.profle_pic).into(imageView);
+                }
+
+                try {
+                    textName.setText(dataSnapshot.child("name").getValue().toString());
+                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
                 rotateLoading.stop();
             }
 
@@ -139,7 +148,6 @@ public class StudentMainActivity extends AppCompatActivity implements View.OnCli
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
-
 
     @Override
     protected void onStart() {
