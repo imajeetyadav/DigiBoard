@@ -143,7 +143,6 @@ public class StudentMainActivity extends AppCompatActivity implements View.OnCli
 
 
     private void changeStatusBarColor() {
-
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);

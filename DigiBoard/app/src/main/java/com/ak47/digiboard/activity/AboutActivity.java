@@ -26,11 +26,10 @@ public class AboutActivity extends AppCompatActivity {
         changeStatusBarColor();
 
         creditLink="Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a>"+
-                "<br> Icons made by <a href=\"https://www.flaticon.com/authors/iconixar\" title=\"iconixar\">iconixar</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a>";
+                "<br>Icons made by <a href=\"https://www.flaticon.com/authors/iconixar\" title=\"iconixar\">iconixar</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a>";
         openSourceLicenses = findViewById(R.id.openSourceLicenses);
         iconCredit=findViewById(R.id.icon_credit);
         iconCredit.setText(Html.fromHtml(creditLink));
-
 
 
         openSourceLicenses.setOnClickListener(new View.OnClickListener() {

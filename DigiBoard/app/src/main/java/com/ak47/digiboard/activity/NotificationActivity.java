@@ -19,7 +19,6 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void changeStatusBarColor() {
-
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
