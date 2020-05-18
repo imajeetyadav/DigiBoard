@@ -9,11 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/*
+    #Done
+    Role Selection Activity
+ */
+
 public class ActivitySelection extends AppCompatActivity {
     private static final String TAG = "ActivitySelection";
     Intent intent;
     FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,13 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
+/*
+      -SignOut button (with cache Clean)
+*/
 public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private android.app.AlertDialog signOutAndCacheCleanDialog;
 
-    /*
-        -SignOut button (with cache Clean)
-  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

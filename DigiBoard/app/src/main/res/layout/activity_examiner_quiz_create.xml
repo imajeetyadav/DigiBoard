@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ExaminerQuizCreateActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <TextView
+        android:id="@+id/note_quiz_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/mo_re"
+        android:text="@string/note_quiz_details"
+        android:textAlignment="center"
+        android:textColor="#D50404"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <!-- Quiz Encryption Code-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quizEncryptionCodeLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/note_quiz_details"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/quiz_encryption_code"
+        android:textColorHint="#101010"
+        app:boxStrokeColor="@color/gradient_color"
+        app:hintTextColor="#101010">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quizEncryptionCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mo_re" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Quiz Name-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quizNameIdLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quizEncryptionCodeLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:hint="@string/quiz_name"
+        android:textColorHint="#101010"
+        app:boxStrokeColor="@color/gradient_color"
+        app:hintTextColor="#101010">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quizNameId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mo_re" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Quiz Description-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quizDescriptionIdLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/quizNameIdLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="#101010"
+        app:boxStrokeColor="@color/gradient_color"
+        app:hintTextColor="#101010">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quizDescriptionId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/mo_re"
+            android:gravity="top"
+            android:hint="@string/description"
+            android:padding="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nextButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quizDescriptionIdLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/gradient_color"
+        android:fontFamily="@font/mo_re"
+        android:text="@string/next"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+</RelativeLayout>

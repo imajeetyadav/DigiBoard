@@ -32,6 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.victor.loading.rotate.RotateLoading;
 
+/*
+    #done
+    Login in
+ */
+
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 

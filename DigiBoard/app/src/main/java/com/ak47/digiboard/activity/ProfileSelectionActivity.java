@@ -20,6 +20,11 @@ import com.victor.loading.rotate.RotateLoading;
 
 import java.util.HashMap;
 
+/*
+    #done
+     Select Profile (candidate/examiner) then add Data
+
+*/
 public class ProfileSelectionActivity extends AppCompatActivity {
 
     Button candidateButton, examinerButton;
@@ -27,11 +32,6 @@ public class ProfileSelectionActivity extends AppCompatActivity {
     private DatabaseReference rootRef;
     // Loading Animation
     private RotateLoading rotateLoading;
-
-       /*
-            Select Profile (candidate/examiner) then add Data
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,6 +25,11 @@ import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
 
+/*
+     Examiner Main Activity
+         - Card Layout
+         - profile pic ,name and email id
+  */
 public class ExaminerMainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "TeacherMainActivity";
     private FirebaseAuth mAuth;
@@ -34,16 +39,11 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
     // Loading Animation
     private RotateLoading rotateLoading;
 
-    /*
-        Examiner Main Activity
-            - Card Layout
-            - profile pic ,name and email id
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_examiner_main);
+        setContentView(R.layout.activity_main_examiner);
         rotateLoading = findViewById(R.id.mainLoading);
 
         rotateLoading.start();
@@ -101,7 +101,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
 
         switch (v.getId()) {
             case R.id.createQuiz:
-                startActivity(new Intent(ExaminerMainActivity.this, CreateQuizActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizListActivity.class));
                 break;
             case R.id.studentList:
 //                startActivity(new Intent(TeacherMainActivity.this, HistoryActivity.class));

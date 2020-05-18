@@ -13,17 +13,16 @@ import com.ak47.digiboard.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
+/*
+     -open source Licenses
+     -icon credit
+     -developer Information
+     -version information
+  */
 public class AboutActivity extends AppCompatActivity {
-
+    String creditLink;
     TextView openSourceLicenses;
     TextView iconCredit;
-    String creditLink;
-       /*
-        -open source Licenses
-        -icon credit
-        -developer Information
-        -version information
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

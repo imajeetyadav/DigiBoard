@@ -13,4 +13,6 @@
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/gradient_color</item>
     </style>
+
+
 </resources>

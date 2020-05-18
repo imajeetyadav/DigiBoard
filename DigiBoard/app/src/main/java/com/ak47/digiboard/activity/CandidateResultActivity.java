@@ -8,19 +8,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
 
-
 /*
-       Common Activity (Notification)
+       Result of Candidate
     */
-public class NotificationActivity extends AppCompatActivity {
+public class CandidateResultActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_candidate_result);
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
-        mTitle.setText(R.string.notifications);
+        mTitle.setText(R.string.result);
 
     }
 }

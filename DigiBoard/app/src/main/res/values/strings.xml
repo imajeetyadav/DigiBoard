@@ -25,8 +25,16 @@
     <string name="student_list">Student List</string>
     <string name="publish_result">Publish Result</string>
     <string name="select_role">Select Role</string>
-    <string name="role_note">Note- Any Changes can\'t be done of Selection</string>
+    <string name="role_note">Note- Any Changes can\'t be done after Selection</string>
     <string name="candidate">Candidate</string>
     <string name="examiner">Examiner</string>
     <string name="quiz_list">Quiz List</string>
+    <string name="quiz_details">Quiz Details</string>
+    <string name="quiz_name">Quiz Name</string>
+    <string name="description">Description</string>
+    <string name="quiz_encryption_code">Quiz Encryption Code</string>
+    <string name="next">Next</string>
+    <string name="note_quiz_details">Note : Create Any 4 digit Code to Encrypt questions. Give this code to quiz  candidate to attempt Quiz</string>
+    <string name="test">Quiz History</string>
+    <string name="question_list">Question List</string>
 </resources>

@@ -13,22 +13,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
 
-public class ActiveQuizActivity extends AppCompatActivity {
+    /*
+          - Active Quiz
+
+    */
+
+public class CandidateActiveQuizActivity extends AppCompatActivity {
     public static int cheatingCount = 0;
     private Button endQuiz;
     private ActivityManager activityManager;
     private NotificationManager mNotificationManager;
-       /*
-          - Active Quiz
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_active_quiz);
+        setContentView(R.layout.activity_candidate_active_quiz);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert mNotificationManager != null;
@@ -117,7 +119,7 @@ public class ActiveQuizActivity extends AppCompatActivity {
     private void normalEndQuiz() {
 
         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
-        startActivity(new Intent(ActiveQuizActivity.this, CandidateMainActivity.class));
+        startActivity(new Intent(CandidateActiveQuizActivity.this, CandidateMainActivity.class));
         stopLockTask();
     }
 

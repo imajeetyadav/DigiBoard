@@ -29,6 +29,11 @@ import com.squareup.picasso.Picasso;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
+    /*
+        Examiner Main Activity
+            - Card Layout
+            - profile pic ,name and email id
+     */
 
 public class CandidateMainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "StudentMainActivity";
@@ -37,13 +42,6 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
     private TextView textName, textEmail;
     // Loading Animation
     private RotateLoading rotateLoading;
-
-       /*
-        Examiner Main Activity
-            - Card Layout
-            - profile pic ,name and email id
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,14 +120,14 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                     enableNotificationListenerAlertDialog.show();
                 } else {
                     finish();
-                    startActivity(new Intent(CandidateMainActivity.this, ActiveQuizActivity.class));
+                    startActivity(new Intent(CandidateMainActivity.this, CandidateActiveQuizActivity.class));
                 }
                 break;
             case R.id.history:
-                startActivity(new Intent(CandidateMainActivity.this, HistoryActivity.class));
+                startActivity(new Intent(CandidateMainActivity.this, CandidateHistoryActivity.class));
                 break;
             case R.id.result:
-                startActivity(new Intent(CandidateMainActivity.this, ResultActivity.class));
+                startActivity(new Intent(CandidateMainActivity.this, CandidateResultActivity.class));
                 break;
             case R.id.notification:
                 startActivity(new Intent(CandidateMainActivity.this, NotificationActivity.class));
