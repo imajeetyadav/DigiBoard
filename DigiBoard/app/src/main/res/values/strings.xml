@@ -11,13 +11,10 @@
     <string name="about">About</string>
     <string name="user_name">Name</string>
     <string name="email">Email Id</string>
-
     <string name="notification_listener_service">Grant Permission</string>
     <string name="notification_listener_service_explanation">It is Required to enable Do Not Disturb Mode which is used during quiz. Enable it now?</string>
-
     <string name="aboutLibraries_description_showIcon">true</string>
     <string name="aboutLibraries_description_showVersion">false</string>
-
     <string name="heart_message">Hope you like this App    ❤</string>
     <string name="sign_out">   Sign Out    </string>
     <string name="icon_credit">Icon Credit</string>
@@ -35,6 +32,25 @@
     <string name="quiz_encryption_code">Quiz Encryption Code</string>
     <string name="next">Next</string>
     <string name="note_quiz_details">Note : Create Any 4 digit Code to Encrypt questions. Give this code to quiz  candidate to attempt Quiz</string>
-    <string name="test">Quiz History</string>
+
+
     <string name="question_list">Question List</string>
+    <string name="option_1">option 1</string>
+    <string name="option_2">option 2</string>
+    <string name="option_3">option 3</string>
+    <string name="option_4">option 4</string>
+    <string name="question">Question</string>
+    <string name="start_question_number">1</string>
+    <string name="delete_option_button">Delete</string>
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+
+    <string name="enter_question">Enter Question</string>
+    <string name="option_a">Option A</string>
+    <string name="option_b">Option B</string>
+    <string name="option_c">Option C</string>
+    <string name="option_d">Option D</string>
+    <string name="add_question">Add Question</string>
+    <string name="answer">Answer</string>
+    <string name="no_question_found">No question Found</string>
 </resources>

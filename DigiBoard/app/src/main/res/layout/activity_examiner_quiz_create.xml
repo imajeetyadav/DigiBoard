@@ -44,7 +44,9 @@
             android:id="@+id/quizEncryptionCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/mo_re" />
+            android:fontFamily="@font/mo_re"
+            android:inputType="number"
+            android:maxLength="4" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Quiz Name-->

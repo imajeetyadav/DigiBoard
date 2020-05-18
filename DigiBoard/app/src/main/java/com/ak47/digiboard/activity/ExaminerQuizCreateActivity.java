@@ -56,12 +56,6 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return false;
-    }
-
     private void sendToQuestionListActivity(String Name, String Description, String EncryptionCode) {
         Intent intent = new Intent(ExaminerQuizCreateActivity.this, ExaminerQuestionListActivity.class);
         intent.putExtra("quizName", Name);
@@ -94,11 +88,16 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
+    }
+
+    @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Closing Quiz")
-                .setMessage("Are you sure you want to close?")
+                .setMessage("Are you really want to close?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

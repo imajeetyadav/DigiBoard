@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@color/colorPrimaryDark"
+    android:clickable="false"
+    android:elevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/sequenceId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/start_question_number"
+            android:textColor="@color/gradient_color"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/qid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="25dp"
+            android:layout_toEndOf="@+id/sequenceId"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/question"
+            android:textColor="@color/gradient_color"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/textViewOptions"
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/delete_option_button"
+            android:elevation="2dp"
+            android:src="@drawable/dot_icon" />
+
+
+        <TextView
+            android:id="@+id/A"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qid"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@android:drawable/presence_online"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/option_1"
+            android:textColor="#292525"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/B"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/A"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@android:drawable/presence_online"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/option_2"
+            android:textColor="#292525"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/C"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/B"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@android:drawable/presence_online"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/option_3"
+            android:textColor="#292525"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/C"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@android:drawable/presence_online"
+            android:fontFamily="@font/mo_re"
+            android:text="@string/option_4"
+            android:textColor="#292525"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
