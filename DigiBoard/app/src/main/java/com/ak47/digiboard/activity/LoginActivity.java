@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendUserToProfileSelectionActivity() {
-        Intent profileSelectionActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
+        Intent profileSelectionActivityIntent = new Intent(LoginActivity.this, CandidateMainActivity.class);
         profileSelectionActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(profileSelectionActivityIntent);
         finish();
@@ -185,14 +185,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void sendUserToStudentMainActivity() {
-        Intent mainStudentActivityIntent = new Intent(LoginActivity.this, StudentMainActivity.class);
+        Intent mainStudentActivityIntent = new Intent(LoginActivity.this, CandidateMainActivity.class);
         mainStudentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainStudentActivityIntent);
         finish();
     }
 
     private void sendUserToTeacherMainActivity() {
-        Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, TeacherMainActivity.class);
+        Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, ExaminerMainActivity.class);
         mainTeacherActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainTeacherActivityIntent);
         finish();

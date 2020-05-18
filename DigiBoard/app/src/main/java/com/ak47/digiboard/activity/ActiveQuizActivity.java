@@ -18,6 +18,10 @@ public class ActiveQuizActivity extends AppCompatActivity {
     private Button endQuiz;
     private ActivityManager activityManager;
     private NotificationManager mNotificationManager;
+       /*
+          - Active Quiz
+
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +117,7 @@ public class ActiveQuizActivity extends AppCompatActivity {
     private void normalEndQuiz() {
 
         mNotificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
-        startActivity(new Intent(ActiveQuizActivity.this, StudentMainActivity.class));
+        startActivity(new Intent(ActiveQuizActivity.this, CandidateMainActivity.class));
         stopLockTask();
     }
 

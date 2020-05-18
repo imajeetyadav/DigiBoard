@@ -16,10 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
-    private Button signOut;
     private FirebaseAuth mAuth;
     private android.app.AlertDialog signOutAndCacheCleanDialog;
 
+    /*
+        -SignOut button (with cache Clean)
+  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         changeStatusBarColor();
 
         mAuth = FirebaseAuth.getInstance();
-        signOut = findViewById(R.id.signOut);
-
+        Button signOut = findViewById(R.id.signOut);
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

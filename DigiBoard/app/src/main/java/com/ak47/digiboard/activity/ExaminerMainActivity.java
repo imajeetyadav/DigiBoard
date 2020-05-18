@@ -25,18 +25,25 @@ import com.victor.loading.rotate.RotateLoading;
 
 import java.util.Objects;
 
-public class TeacherMainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ExaminerMainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "TeacherMainActivity";
     private FirebaseAuth mAuth;
     private ImageView imageView;
     private TextView textName, textEmail;
+    private DatabaseReference rootRef;
     // Loading Animation
     private RotateLoading rotateLoading;
+
+    /*
+        Examiner Main Activity
+            - Card Layout
+            - profile pic ,name and email id
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_main);
+        setContentView(R.layout.activity_examiner_main);
         rotateLoading = findViewById(R.id.mainLoading);
 
         rotateLoading.start();
@@ -62,7 +69,7 @@ public class TeacherMainActivity extends AppCompatActivity implements View.OnCli
         Setting.setOnClickListener(this);
         About.setOnClickListener(this);
 
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+        rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         rootRef.keepSynced(true);
 
         rootRef.addValueEventListener(new ValueEventListener() {
@@ -94,7 +101,7 @@ public class TeacherMainActivity extends AppCompatActivity implements View.OnCli
 
         switch (v.getId()) {
             case R.id.createQuiz:
-//                startActivity(new Intent(TeacherMainActivity.this, ActiveQuizActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, CreateQuizActivity.class));
                 break;
             case R.id.studentList:
 //                startActivity(new Intent(TeacherMainActivity.this, HistoryActivity.class));
@@ -103,13 +110,13 @@ public class TeacherMainActivity extends AppCompatActivity implements View.OnCli
 //                startActivity(new Intent(TeacherMainActivity.this, ResultActivity.class));
                 break;
             case R.id.notification:
-                startActivity(new Intent(TeacherMainActivity.this, NotificationActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, NotificationActivity.class));
                 break;
             case R.id.setting:
-                startActivity(new Intent(TeacherMainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, SettingsActivity.class));
                 break;
             case R.id.about:
-                startActivity(new Intent(TeacherMainActivity.this, AboutActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, AboutActivity.class));
                 break;
             default:
                 Log.e(TAG, "Invalid Selection");
@@ -136,6 +143,16 @@ public class TeacherMainActivity extends AppCompatActivity implements View.OnCli
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
+
+//    private android.app.AlertDialog buildNotificationServiceAlertDialog() {
+//        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this, R.style.AlertDialogStyle)
+//                .setTitle("Warning")
+//                .setMessage("Atleast one ")
+//                .setCancelable(false)
+//                .setNeutralButton("Ok", null);
+//        return (alertDialogBuilder.create());
+//    }
 }
 
 

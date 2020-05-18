@@ -54,7 +54,7 @@
         app:loading_width="5dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/studentButton"
+        android:id="@+id/candidateButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/teacherButton"
+        android:id="@+id/examinerButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"

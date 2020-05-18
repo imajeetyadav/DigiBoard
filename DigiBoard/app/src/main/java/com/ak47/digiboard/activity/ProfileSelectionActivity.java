@@ -22,11 +22,16 @@ import java.util.HashMap;
 
 public class ProfileSelectionActivity extends AppCompatActivity {
 
-    Button studentButton, teacherButton;
+    Button candidateButton, examinerButton;
     //creating a DatabaseReference
     private DatabaseReference rootRef;
     // Loading Animation
     private RotateLoading rotateLoading;
+
+       /*
+            Select Profile (candidate/examiner) then add Data
+
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,8 @@ public class ProfileSelectionActivity extends AppCompatActivity {
 
         rootRef = FirebaseDatabase.getInstance().getReference();
         rotateLoading = findViewById(R.id.loginLoading);
-        studentButton = findViewById(R.id.studentButton);
-        teacherButton = findViewById(R.id.teacherButton);
+        candidateButton = findViewById(R.id.candidateButton);
+        examinerButton = findViewById(R.id.examinerButton);
 
         final HashMap<String, String> profileMap = new HashMap<>();
         assert user != null;
@@ -51,12 +56,12 @@ public class ProfileSelectionActivity extends AppCompatActivity {
         profileMap.put("profilePic", user.getPhotoUrl().toString());
 
 
-        studentButton.setOnClickListener(new View.OnClickListener() {
+        candidateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    studentButton.setVisibility(View.GONE);
-                    teacherButton.setVisibility(View.GONE);
+                    candidateButton.setVisibility(View.GONE);
+                    examinerButton.setVisibility(View.GONE);
                     rotateLoading.start();
                     rootRef.child("users").child(user.getUid()).setValue(profileMap);
                     editor.putInt("initial_setup", 1);
@@ -68,12 +73,12 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                 }
             }
         });
-        teacherButton.setOnClickListener(new View.OnClickListener() {
+        examinerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    studentButton.setVisibility(View.GONE);
-                    teacherButton.setVisibility(View.GONE);
+                    candidateButton.setVisibility(View.GONE);
+                    examinerButton.setVisibility(View.GONE);
                     rotateLoading.start();
                     rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
                     editor.putInt("initial_setup", 2);
@@ -89,14 +94,14 @@ public class ProfileSelectionActivity extends AppCompatActivity {
     }
 
     private void sendUserToStudentMainActivity() {
-        Intent mainActivityIntent = new Intent(ProfileSelectionActivity.this, StudentMainActivity.class);
+        Intent mainActivityIntent = new Intent(ProfileSelectionActivity.this, CandidateMainActivity.class);
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainActivityIntent);
         finish();
     }
 
     private void sendUserToTeacherMainActivity() {
-        Intent mainActivityIntent = new Intent(ProfileSelectionActivity.this, TeacherMainActivity.class);
+        Intent mainActivityIntent = new Intent(ProfileSelectionActivity.this, ExaminerMainActivity.class);
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainActivityIntent);
         finish();

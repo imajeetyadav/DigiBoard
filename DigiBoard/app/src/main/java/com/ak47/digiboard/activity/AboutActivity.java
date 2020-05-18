@@ -18,6 +18,12 @@ public class AboutActivity extends AppCompatActivity {
     TextView openSourceLicenses;
     TextView iconCredit;
     String creditLink;
+       /*
+        -open source Licenses
+        -icon credit
+        -developer Information
+        -version information
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

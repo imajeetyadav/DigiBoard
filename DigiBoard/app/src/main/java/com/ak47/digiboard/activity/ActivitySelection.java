@@ -35,10 +35,10 @@ public class ActivitySelection extends AppCompatActivity {
                     intent = new Intent(this, ProfileSelectionActivity.class);
                     break;
                 case 1:
-                    intent = new Intent(this, StudentMainActivity.class);
+                    intent = new Intent(this, CandidateMainActivity.class);
                     break;
                 case 2:
-                    intent = new Intent(this, TeacherMainActivity.class);
+                    intent = new Intent(this, ExaminerMainActivity.class);
                     break;
                 default:
                     Log.e(TAG, "Shared Preference Value Error");

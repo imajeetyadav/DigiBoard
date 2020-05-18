@@ -28,4 +28,5 @@
     <string name="role_note">Note- Any Changes can\'t be done of Selection</string>
     <string name="candidate">Candidate</string>
     <string name="examiner">Examiner</string>
+    <string name="quiz_list">Quiz List</string>
 </resources>
