@@ -3,22 +3,22 @@ package com.ak47.digiboard.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class QuestionListModel implements Parcelable {
-    public static final Creator<QuestionListModel> CREATOR = new Creator<QuestionListModel>() {
+public class ExaminerQuestionListModel implements Parcelable {
+    public static final Creator<ExaminerQuestionListModel> CREATOR = new Creator<ExaminerQuestionListModel>() {
         @Override
-        public QuestionListModel createFromParcel(Parcel source) {
-            return new QuestionListModel(source);
+        public ExaminerQuestionListModel createFromParcel(Parcel source) {
+            return new ExaminerQuestionListModel(source);
         }
 
         @Override
-        public QuestionListModel[] newArray(int size) {
-            return new QuestionListModel[size];
+        public ExaminerQuestionListModel[] newArray(int size) {
+            return new ExaminerQuestionListModel[size];
         }
     };
     private String question, optionA, optionB, optionC, optionD;
     private int ans;
 
-    public QuestionListModel(Parcel source) {
+    private ExaminerQuestionListModel(Parcel source) {
         this.question = source.readString();
         this.optionA = source.readString();
         this.optionB = source.readString();
@@ -27,7 +27,7 @@ public class QuestionListModel implements Parcelable {
         this.ans = source.readInt();
     }
 
-    public QuestionListModel(String question, String optionA, String optionB, String optionC, String optionD, int ans) {
+    public ExaminerQuestionListModel(String question, String optionA, String optionB, String optionC, String optionD, int ans) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;

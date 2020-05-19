@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ExaminerStudentListActivity" />
+        <activity android:name=".activity.ExaminerSearchCandidateActivity" />
+        <activity android:name=".activity.ExaminerNewCandidateListActivity" />
+        <activity android:name=".activity.ExaminerCandidateListsActivity" />
         <activity android:name=".activity.ExaminerAddQuestionActivity" />
         <activity android:name=".activity.ExaminerQuestionListActivity" />
         <activity android:name=".activity.ExaminerQuizCreateActivity" />

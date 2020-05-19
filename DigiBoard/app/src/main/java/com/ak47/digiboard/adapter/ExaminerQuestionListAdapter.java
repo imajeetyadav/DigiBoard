@@ -14,18 +14,18 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.model.QuestionListModel;
+import com.ak47.digiboard.model.ExaminerQuestionListModel;
 
 import java.util.ArrayList;
 
 
-public class QuestionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ExaminerQuestionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private Button saveButton;
     private TextView noQuestionFound;
-    private ArrayList<QuestionListModel> questionList;
+    private ArrayList<ExaminerQuestionListModel> questionList;
 
-    public QuestionListAdapter(Context context, ArrayList<QuestionListModel> questionList, Button saveButton, TextView noQuestionFoundTextView) {
+    public ExaminerQuestionListAdapter(Context context, ArrayList<ExaminerQuestionListModel> questionList, Button saveButton, TextView noQuestionFoundTextView) {
         this.context = context;
         this.questionList = questionList;
         this.saveButton = saveButton;
@@ -41,7 +41,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        QuestionListModel model = questionList.get(position);
+        ExaminerQuestionListModel model = questionList.get(position);
 
         final MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.question.setText(model.getQuestion());
@@ -80,7 +80,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return questionList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView question, seq, a, b, c, d;
         private ImageView delete;
 

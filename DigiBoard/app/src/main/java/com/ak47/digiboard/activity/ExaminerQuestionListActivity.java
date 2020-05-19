@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.adapter.QuestionListAdapter;
+import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
 import com.ak47.digiboard.common.ExaminerSaveQuiz;
-import com.ak47.digiboard.model.QuestionListModel;
+import com.ak47.digiboard.model.ExaminerQuestionListModel;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
     private static final String TAG = "QuestionListActivity";
     private RecyclerView recyclerView;
     private Button saveButton, addQuestionButton;
-    private QuestionListAdapter adapter;
-    private ArrayList<QuestionListModel> questionList;
+    private ExaminerQuestionListAdapter adapter;
+    private ArrayList<ExaminerQuestionListModel> questionList;
     private String quizName, quizDescription, quizEncryptionCode;
     private RotateLoading rotateLoading;
     private TextView noQuestionFoundTextView;
@@ -63,10 +63,10 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
         saveButton = findViewById(R.id.saveQuestionButton);
         addQuestionButton = findViewById(R.id.addNewQuestionButton);
         addQuestionButton.setOnClickListener(this);
-        recyclerView = findViewById(R.id.questionListId);
         saveButton.setOnClickListener(this);
+        recyclerView = findViewById(R.id.questionListId);
         questionList = new ArrayList<>();
-        adapter = new QuestionListAdapter(getApplicationContext(), questionList, saveButton, noQuestionFoundTextView);
+        adapter = new ExaminerQuestionListAdapter(getApplicationContext(), questionList, saveButton, noQuestionFoundTextView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ExaminerQuestionListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -85,7 +85,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                     rotateLoading.start();
                     new ExaminerSaveQuiz(questionList, quizName, quizDescription, quizEncryptionCode);
                     rotateLoading.stop();
-                    Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerQuizListActivity.class);
+                    Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -119,7 +119,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 String optionD = data.getStringExtra("optionD");
                 int ansNo = data.getIntExtra("ansNo", 1);
                 // create object of QuestionListModel Class
-                QuestionListModel model = new QuestionListModel(heading, optionA, optionB, optionC, optionD, ansNo);
+                ExaminerQuestionListModel model = new ExaminerQuestionListModel(heading, optionA, optionB, optionC, optionD, ansNo);
                 questionList.add(model);
                 adapter.notifyDataSetChanged();
                 saveButton.setVisibility(View.VISIBLE);

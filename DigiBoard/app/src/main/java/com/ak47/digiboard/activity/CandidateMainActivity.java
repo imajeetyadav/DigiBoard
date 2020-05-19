@@ -81,10 +81,10 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
-                    Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
+                    Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
-                    Picasso.get().load(R.drawable.profle_pic).into(imageView);
+                    Picasso.get().load(R.drawable.ic_profile).into(imageView);
                 }
 
                 try {

@@ -27,11 +27,12 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.quiz_list);
 
-        changeStatusBarColor();
+        changeStatusBarSetting();
+
 
     }
 
-    private void changeStatusBarColor() {
+    private void changeStatusBarSetting() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }

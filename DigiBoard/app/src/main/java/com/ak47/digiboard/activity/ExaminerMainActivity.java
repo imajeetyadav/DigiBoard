@@ -77,10 +77,10 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
-                    Picasso.get().load(userProfile).placeholder(R.drawable.profle_pic).into(imageView);
+                    Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
-                    Picasso.get().load(R.drawable.profle_pic).into(imageView);
+                    Picasso.get().load(R.drawable.ic_profile).into(imageView);
                 }
                 textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
                 textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
@@ -104,7 +104,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizCreateActivity.class));
                 break;
             case R.id.studentList:
-                startActivity(new Intent(ExaminerMainActivity.this, ExaminerStudentListActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, ExaminerCandidateListsActivity.class));
                 break;
             case R.id.quizList:
                 startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizListActivity.class));

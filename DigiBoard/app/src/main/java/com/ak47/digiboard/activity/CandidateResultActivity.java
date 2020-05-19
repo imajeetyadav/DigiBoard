@@ -21,6 +21,5 @@ public class CandidateResultActivity extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.result);
-
     }
 }

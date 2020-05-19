@@ -52,4 +52,11 @@
     <string name="add_question">Add Question</string>
     <string name="answer">Answer</string>
     <string name="no_question_found">No question Found</string>
+    <string name="candidate_name">Candidate Name</string>
+    <string name="candidate_email_id">Candidate Email Id</string>
+    <string name="new_candidate_list">New Candidate List</string>
+    <string name="search_candidate">Search Candidate</string>
+    <string name="no_candidate_found">No Candidate Found \n Please Add Candidates</string>
+    <string name="no_candidate_list">No Candidate List Found \n Please Create List</string>
+    <string name="enter_list_name">Enter list name</string>
 </resources>

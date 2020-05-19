@@ -8,16 +8,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
 
-public class ExaminerStudentListActivity extends AppCompatActivity {
+public class ExaminerSearchCandidateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_examiner_student_list);
-
+        setContentView(R.layout.activity_examiner_search_candidate);
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
-        mTitle.setText(R.string.student_list);
+        mTitle.setText(R.string.search_candidate);
+
+
     }
 }
