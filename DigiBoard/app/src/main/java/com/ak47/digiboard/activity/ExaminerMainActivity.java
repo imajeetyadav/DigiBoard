@@ -57,7 +57,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
 
         CardView createQuiz = findViewById(R.id.createQuiz);
         CardView studentList = findViewById(R.id.studentList);
-        CardView publishResult = findViewById(R.id.publishResult);
+        CardView publishResult = findViewById(R.id.quizList);
         CardView Notification = findViewById(R.id.notification);
         CardView Setting = findViewById(R.id.setting);
         CardView About = findViewById(R.id.about);
@@ -101,13 +101,13 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
 
         switch (v.getId()) {
             case R.id.createQuiz:
-                startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizListActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizCreateActivity.class));
                 break;
             case R.id.studentList:
-//                startActivity(new Intent(TeacherMainActivity.this, HistoryActivity.class));
+                startActivity(new Intent(ExaminerMainActivity.this, ExaminerStudentListActivity.class));
                 break;
-            case R.id.publishResult:
-//                startActivity(new Intent(TeacherMainActivity.this, ResultActivity.class));
+            case R.id.quizList:
+                startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizListActivity.class));
                 break;
             case R.id.notification:
                 startActivity(new Intent(ExaminerMainActivity.this, NotificationActivity.class));

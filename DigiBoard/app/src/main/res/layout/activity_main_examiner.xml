@@ -156,7 +156,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/publishResult"
+            android:id="@+id/quizList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -182,14 +182,14 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/ic_result"
-                    android:contentDescription="@string/publish_result" />
+                    android:contentDescription="@string/quiz_list" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/mo_re"
-                    android:text="@string/publish_result"
+                    android:text="@string/quiz_list"
                     android:textColor="@color/textCardColor"
                     android:textSize="14sp"
                     android:textStyle="bold" />
