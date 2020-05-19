@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.ExaminerNewCandidateListActivity">
 
     <include
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/saveCandidateListButton"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/no_candidate_found" />
 
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/mo_re"
         android:text="@string/no_candidate_found"
         android:textAlignment="center"
@@ -63,4 +64,12 @@
         android:text="@string/add"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
+
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/mainLoading"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        app:loading_color="@color/colorAccent"
+        app:loading_width="5dp" />
 </RelativeLayout>

@@ -59,4 +59,7 @@
     <string name="no_candidate_found">No Candidate Found \n Please Add Candidates</string>
     <string name="no_candidate_list">No Candidate List Found \n Please Create List</string>
     <string name="enter_list_name">Enter list name</string>
+    <string name="find_candidate">Find Candidate</string>
+    <string name="enter_candidate_email_id">Enter Candidate Email id</string>
+    <string name="candidate_list_name">Candidate List Name</string>
 </resources>

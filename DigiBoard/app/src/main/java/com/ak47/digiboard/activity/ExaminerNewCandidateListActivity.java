@@ -4,12 +4,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerCandidateListAdapter;
-import com.ak47.digiboard.common.ExaminerSaveCandidate;
+import com.ak47.digiboard.common.ExaminerSaveCandidateList;
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
-
 
 /*
     New candidate list
@@ -74,46 +80,43 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
                 break;
             case R.id.saveCandidateListButton:
                 // call SaveQuiz class Constructor
-                if (candidateList.size() > 5) {
+                if (candidateList.size() > 3) {
 
-                    // get prompts.xml view
-                    LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-
-                    View promptView = layoutInflater.inflate(R.layout.dialog_candidate_list_name, null);
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
-
-                    // set prompts.xml to be the layout file of the alertdialog builder
-                    alertDialogBuilder.setView(promptView);
-
-                    final EditText candidateListName = promptView.findViewById(R.id.listName);
-
-                    // setup a dialog window
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                    final EditText input = new EditText(this);
+                    new AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                            .setTitle("Save List")
+                            .setMessage("What is your List Name?")
+                            .setView(input)
+                            .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
                                     // get user input and set it to result
-                                    rotateLoading.start();
-                                    new ExaminerSaveCandidate(candidateList, candidateListName.toString());
-                                    rotateLoading.stop();
-                                    Intent intent = new Intent(ExaminerNewCandidateListActivity.this, ExaminerCandidateListsActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
+
+                                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyCandidateLists");
+                                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (!dataSnapshot.child(input.getText().toString()).exists()) {
+                                                Log.e(TAG, String.valueOf(dataSnapshot.child(input.getText().toString()).exists()));
+                                                rotateLoading.start();
+                                                new ExaminerSaveCandidateList(candidateList, input.getText().toString());
+                                                rotateLoading.stop();
+                                                Intent intent = new Intent(ExaminerNewCandidateListActivity.this, ExaminerCandidateListsActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(ExaminerNewCandidateListActivity.this, "List name Already exist.Try other name", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Log.e(TAG, databaseError.getMessage());
                                         }
                                     });
-
-                    // create an alert dialog
-                    AlertDialog alertD = alertDialogBuilder.create();
-
-                    alertD.show();
+                                }
+                            }).show();
 
                 } else {
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)
@@ -125,22 +128,35 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "OnActivityResult Called");
         if (requestCode == 2) {
             // add Candidate To  ArrayList
             if (data != null) {
                 String name = data.getStringExtra("candidateName");
-                String email = data.getStringExtra("candidateEmail");
+                final String email = data.getStringExtra("candidateEmail");
                 String profile_image = data.getStringExtra("profile_image");
                 // create object of Candidate ListModel Class
-                ExaminerCandidateListModel model = new ExaminerCandidateListModel(name, email, profile_image);
-                candidateList.add(model);
-                adapter.notifyDataSetChanged();
+                if (checkAlreadyExist(candidateList, email)) {
+                    Toast.makeText(ExaminerNewCandidateListActivity.this, "Candidate already exist", Toast.LENGTH_LONG).show();
+                } else {
+                    ExaminerCandidateListModel model = new ExaminerCandidateListModel(name, email, profile_image);
+                    candidateList.add(model);
+                    adapter.notifyDataSetChanged();
+                }
                 saveListButton.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private boolean checkAlreadyExist(ArrayList<ExaminerCandidateListModel> candidateList, String email) {
+        for (ExaminerCandidateListModel candidateListModel : candidateList) {
+            if (candidateListModel.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void sendToAddCandidateActivity() {

@@ -47,6 +47,7 @@ public class ExaminerCandidateListAdapter extends RecyclerView.Adapter<RecyclerV
         candidateListViewHolder.candidateEmail.setText(examinerCandidateListModel.getEmail());
         Picasso.get().load(examinerCandidateListModel.getProfilePic()).placeholder(R.drawable.ic_profile).into(candidateListViewHolder.profileImage);
 
+        noCandidateFound.setText("Total Candidate: " + candidateList.size());
     }
 
     @Override

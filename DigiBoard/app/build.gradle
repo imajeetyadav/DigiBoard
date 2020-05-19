@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-perf:19.0.7'
+    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 //    implementation 'com.google.firebase:firebase-ml-vision:24.0.2'
 //    implementation 'com.google.firebase:firebase-ml-vision-face-model:20.0.0'
     implementation 'com.google.android.material:material:1.1.0'

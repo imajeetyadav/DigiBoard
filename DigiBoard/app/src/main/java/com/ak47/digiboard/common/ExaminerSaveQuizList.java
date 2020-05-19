@@ -8,9 +8,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ExaminerSaveQuiz {
+public class ExaminerSaveQuizList {
 
-    public ExaminerSaveQuiz(ArrayList<ExaminerQuestionListModel> questionList, String quizName, String quizDescription, String quizEncryptionCode) {
+    public ExaminerSaveQuizList(ArrayList<ExaminerQuestionListModel> questionList, String quizName, String quizDescription, String quizEncryptionCode) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
 
@@ -24,7 +24,6 @@ public class ExaminerSaveQuiz {
         quizDetails.put("publishInfo", "false");
 
         String key = rootRef.push().getKey();
-        assert key != null;
         rootRef.child(key).setValue(questionListMap);
         rootRef.child(key).child("quizDetails").setValue(quizDetails);
     }

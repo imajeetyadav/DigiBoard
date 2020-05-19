@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
-import com.ak47.digiboard.common.ExaminerSaveQuiz;
+import com.ak47.digiboard.common.ExaminerSaveQuizList;
 import com.ak47.digiboard.model.ExaminerQuestionListModel;
 import com.victor.loading.rotate.RotateLoading;
 
@@ -83,7 +83,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 // call SaveQuiz class Constructor
                 if (questionList.size() > 9) {
                     rotateLoading.start();
-                    new ExaminerSaveQuiz(questionList, quizName, quizDescription, quizEncryptionCode);
+                    new ExaminerSaveQuizList(questionList, quizName, quizDescription, quizEncryptionCode);
                     rotateLoading.stop();
                     Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

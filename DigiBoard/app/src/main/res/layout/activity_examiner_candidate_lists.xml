@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/mo_re"
         android:text="@string/no_candidate_list"
         android:textAlignment="center"
