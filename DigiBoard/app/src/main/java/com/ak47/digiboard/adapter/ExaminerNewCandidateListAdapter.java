@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ExaminerCandidateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ExaminerNewCandidateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private Button saveListButton;
@@ -26,11 +26,25 @@ public class ExaminerCandidateListAdapter extends RecyclerView.Adapter<RecyclerV
     private ArrayList<ExaminerCandidateListModel> candidateList;
 
 
-    public ExaminerCandidateListAdapter(Context context, ArrayList<ExaminerCandidateListModel> candidateList, Button saveListButton, TextView noCandidateFound) {
+    public ExaminerNewCandidateListAdapter(Context context, ArrayList<ExaminerCandidateListModel> candidateList, Button saveListButton, TextView noCandidateFound) {
         this.context = context;
         this.candidateList = candidateList;
         this.saveListButton = saveListButton;
         this.noCandidateFound = noCandidateFound;
+    }
+
+    public void removeItem(int position) {
+        candidateList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, candidateList.size());
+        noCandidateFound.setText("Total Candidate: " + candidateList.size());
+    }
+
+    public void restoreItem(ExaminerCandidateListModel examinerCandidateListModel, int position) {
+        candidateList.add(position, examinerCandidateListModel);
+        // notify item added by position
+        notifyItemInserted(position);
+        noCandidateFound.setText("Total Candidate: " + candidateList.size());
     }
 
     @NonNull

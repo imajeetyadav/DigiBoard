@@ -37,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ExaminerSearchCandidateActivity extends AppCompatActivity {
 
     ArrayList<ExaminerCandidate> searchList;
-    private EditText searchFriend;
+    private EditText searchCandidate;
     private RecyclerView CandidateRecyclerList;
     private DatabaseReference candidateRef;
     private String TAG = "Search Candidate Activity";
@@ -50,18 +50,12 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.search_candidate);
-
-
         candidateRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-
         searchList = new ArrayList<>();
         CandidateRecyclerList = findViewById(R.id.find_candidate_recycler_list);
         CandidateRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-
-
-        searchFriend = findViewById(R.id.search_candidate);
-        searchFriend.addTextChangedListener(new TextWatcher() {
+        searchCandidate = findViewById(R.id.search_candidate);
+        searchCandidate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -122,16 +116,16 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
                         .setQuery(candidateRef, ExaminerCandidate.class)
                         .build();
 
-        FirebaseRecyclerAdapter<ExaminerCandidate, FindFriendViewHolder> adapter =
-                new FirebaseRecyclerAdapter<ExaminerCandidate, FindFriendViewHolder>(options) {
+        FirebaseRecyclerAdapter<ExaminerCandidate, SearchCandidateViewHolder> adapter =
+                new FirebaseRecyclerAdapter<ExaminerCandidate, SearchCandidateViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull FindFriendViewHolder findFriendViewHolder, final int position, @NonNull final ExaminerCandidate examinerCandidate) {
+                    protected void onBindViewHolder(@NonNull SearchCandidateViewHolder searchCandidateViewHolder, final int position, @NonNull final ExaminerCandidate examinerCandidate) {
 
-                        findFriendViewHolder.userName.setText(examinerCandidate.getName());
-                        findFriendViewHolder.userEmail.setText(examinerCandidate.getEmail());
-                        Picasso.get().load(examinerCandidate.getProfilePic()).placeholder(R.drawable.ic_profile).into(findFriendViewHolder.profileImage);
+                        searchCandidateViewHolder.userName.setText(examinerCandidate.getName());
+                        searchCandidateViewHolder.userEmail.setText(examinerCandidate.getEmail());
+                        Picasso.get().load(examinerCandidate.getProfilePic()).placeholder(R.drawable.ic_profile).into(searchCandidateViewHolder.profileImage);
 
-                        findFriendViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        searchCandidateViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 //                                String user_id =getRef(position).getKey();
@@ -147,9 +141,9 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
 
                     @NonNull
                     @Override
-                    public FindFriendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                    public SearchCandidateViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
                         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_examiner_candidate_info, viewGroup, false);
-                        return new FindFriendViewHolder(view);
+                        return new SearchCandidateViewHolder(view);
                     }
                 };
 
@@ -157,12 +151,12 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    public static class FindFriendViewHolder extends RecyclerView.ViewHolder {
+    public static class SearchCandidateViewHolder extends RecyclerView.ViewHolder {
         TextView userName, userEmail;
         CircleImageView profileImage;
 
 
-        FindFriendViewHolder(@NonNull View itemView) {
+        SearchCandidateViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userName = itemView.findViewById(R.id.candidate_name);

@@ -2,6 +2,8 @@ package com.ak47.digiboard.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +17,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.adapter.ExaminerCandidateListAdapter;
+import com.ak47.digiboard.adapter.ExaminerNewCandidateListAdapter;
 import com.ak47.digiboard.common.ExaminerSaveCandidateList;
+import com.ak47.digiboard.common.SwipeToDeleteCallback;
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +38,7 @@ import com.victor.loading.rotate.RotateLoading;
 import java.util.ArrayList;
 
 /*
+    #Done
     New candidate list
  */
 public class ExaminerNewCandidateListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,10 +46,11 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
     private static final String TAG = "NewCandidateList";
     private RecyclerView recyclerView;
     private Button saveListButton, addCandidateButton;
-    private ExaminerCandidateListAdapter adapter;
+    private ExaminerNewCandidateListAdapter adapter;
     private ArrayList<ExaminerCandidateListModel> candidateList;
     private RotateLoading rotateLoading;
     private TextView noCandidateFound;
+    private Paint p = new Paint();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +72,40 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
         recyclerView = findViewById(R.id.candidateList);
         candidateList = new ArrayList<>();
 
-        adapter = new ExaminerCandidateListAdapter(getApplicationContext(), candidateList, saveListButton, noCandidateFound);
+        adapter = new ExaminerNewCandidateListAdapter(getApplicationContext(), candidateList, saveListButton, noCandidateFound);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ExaminerNewCandidateListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        enableSwipe();
     }
 
+    private void enableSwipe() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                final ExaminerCandidateListModel deletedModel = candidateList.get(position);
+                final int deletedPosition = position;
+                adapter.removeItem(position);
+                // showing snack bar with Undo option
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), " Removed from List", Snackbar.LENGTH_LONG);
+                snackbar.setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // undo is selected, restore the deleted item
+                        adapter.restoreItem(deletedModel, deletedPosition);
+                        recyclerView.scrollToPosition(position);
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
 
     @Override
     public void onClick(View v) {
@@ -120,7 +155,7 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
 
                 } else {
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                            .setMessage("Number of Question Must Be More then 4")
+                            .setMessage("Number of Candidate Must Be More then 4")
                             .show();
                 }
                 break;
