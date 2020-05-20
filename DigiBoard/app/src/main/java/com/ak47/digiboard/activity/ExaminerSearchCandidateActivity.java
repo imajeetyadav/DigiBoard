@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerSearchCandidateAdapter;
-import com.ak47.digiboard.model.ExaminerCandidate;
+import com.ak47.digiboard.model.ExaminerCandidateInfoModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -34,9 +34,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+    Search Candidate By there Email Id
+ */
 public class ExaminerSearchCandidateActivity extends AppCompatActivity {
 
-    ArrayList<ExaminerCandidate> searchList;
+    ArrayList<ExaminerCandidateInfoModel> searchList;
     private EditText searchCandidate;
     private RecyclerView CandidateRecyclerList;
     private DatabaseReference candidateRef;
@@ -88,8 +91,8 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChildren()) {
                     searchList.clear();
                     for (DataSnapshot friends : dataSnapshot.getChildren()) {
-                        final ExaminerCandidate examinerCandidate = friends.getValue(ExaminerCandidate.class);
-                        searchList.add(examinerCandidate);
+                        final ExaminerCandidateInfoModel examinerCandidateInfoModel = friends.getValue(ExaminerCandidateInfoModel.class);
+                        searchList.add(examinerCandidateInfoModel);
                     }
 
                     ExaminerSearchCandidateAdapter searchFriendAdapter = new ExaminerSearchCandidateAdapter(getParent(), searchList);
@@ -111,15 +114,15 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<ExaminerCandidate> options =
-                new FirebaseRecyclerOptions.Builder<ExaminerCandidate>()
-                        .setQuery(candidateRef, ExaminerCandidate.class)
+        FirebaseRecyclerOptions<ExaminerCandidateInfoModel> options =
+                new FirebaseRecyclerOptions.Builder<ExaminerCandidateInfoModel>()
+                        .setQuery(candidateRef, ExaminerCandidateInfoModel.class)
                         .build();
 
-        FirebaseRecyclerAdapter<ExaminerCandidate, SearchCandidateViewHolder> adapter =
-                new FirebaseRecyclerAdapter<ExaminerCandidate, SearchCandidateViewHolder>(options) {
+        FirebaseRecyclerAdapter<ExaminerCandidateInfoModel, SearchCandidateViewHolder> adapter =
+                new FirebaseRecyclerAdapter<ExaminerCandidateInfoModel, SearchCandidateViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull SearchCandidateViewHolder searchCandidateViewHolder, final int position, @NonNull final ExaminerCandidate examinerCandidate) {
+                    protected void onBindViewHolder(@NonNull SearchCandidateViewHolder searchCandidateViewHolder, final int position, @NonNull final ExaminerCandidateInfoModel examinerCandidate) {
 
                         searchCandidateViewHolder.userName.setText(examinerCandidate.getName());
                         searchCandidateViewHolder.userEmail.setText(examinerCandidate.getEmail());

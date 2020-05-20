@@ -19,7 +19,7 @@
     <string name="sign_out">   Sign Out    </string>
     <string name="icon_credit">Icon Credit</string>
     <string name="create_quiz">Create Quiz</string>
-    <string name="student_list">Student List</string>>
+    <string name="candidate_lists">Candidate Lists</string>>
     <string name="select_role">Select Role</string>
     <string name="role_note">Note- Any Changes can\'t be done after Selection</string>
     <string name="candidate">Candidate</string>
@@ -62,4 +62,6 @@
     <string name="find_candidate">Find Candidate</string>
     <string name="enter_candidate_email_id">Enter Candidate Email id</string>
     <string name="candidate_list_name">Candidate List Name</string>
+    <string name="list_name">List Name</string>
+    <string name="total_candidate_lists">Total Number Of Candidate Lists : </string>
 </resources>

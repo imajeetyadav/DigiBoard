@@ -1,14 +1,14 @@
 package com.ak47.digiboard.model;
 
-public class ExaminerCandidate {
+public class ExaminerCandidateInfoModel {
 
     private String name, email, profilePic;
 
-    public ExaminerCandidate() {
+    public ExaminerCandidateInfoModel() {
 
     }
 
-    public ExaminerCandidate(String name, String email, String profilePic) {
+    public ExaminerCandidateInfoModel(String name, String email, String profilePic) {
         this.name = name;
         this.email = email;
         this.profilePic = profilePic;

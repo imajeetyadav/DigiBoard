@@ -18,6 +18,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+    #done
+    create list by searching in ExaminerSearchCandidateActivity and left swipe to delete candidate
+
+ */
+
 public class ExaminerNewCandidateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;

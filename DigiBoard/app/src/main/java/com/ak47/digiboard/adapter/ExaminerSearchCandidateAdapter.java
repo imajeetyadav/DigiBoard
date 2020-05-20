@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.model.ExaminerCandidate;
+import com.ak47.digiboard.model.ExaminerCandidateInfoModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ExaminerSearchCandidateAdapter extends RecyclerView.Adapter<ExaminerSearchCandidateAdapter.SearchViewHolder> {
 
     private Activity activity;
-    private ArrayList<ExaminerCandidate> searchList;
+    private ArrayList<ExaminerCandidateInfoModel> searchList;
 
 
-    public ExaminerSearchCandidateAdapter(Activity activity, ArrayList<ExaminerCandidate> searchList) {
+    public ExaminerSearchCandidateAdapter(Activity activity, ArrayList<ExaminerCandidateInfoModel> searchList) {
         this.activity = activity;
         this.searchList = searchList;
     }
@@ -38,19 +38,19 @@ public class ExaminerSearchCandidateAdapter extends RecyclerView.Adapter<Examine
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder searchViewHolder, int position) {
-        final ExaminerCandidate examinerCandidate = searchList.get(position);
+        final ExaminerCandidateInfoModel examinerCandidateInfoModel = searchList.get(position);
 
-        searchViewHolder.userName.setText(examinerCandidate.getName());
-        searchViewHolder.userEmail.setText(examinerCandidate.getEmail());
-        Picasso.get().load(examinerCandidate.getProfilePic()).placeholder(R.drawable.ic_profile).into(searchViewHolder.profileImage);
+        searchViewHolder.userName.setText(examinerCandidateInfoModel.getName());
+        searchViewHolder.userEmail.setText(examinerCandidateInfoModel.getEmail());
+        Picasso.get().load(examinerCandidateInfoModel.getProfilePic()).placeholder(R.drawable.ic_profile).into(searchViewHolder.profileImage);
         searchViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                                String user_id =getRef(position).getKey();
                 Intent intent = new Intent();
-                intent.putExtra("candidateName", examinerCandidate.getName());
-                intent.putExtra("candidateEmail", examinerCandidate.getEmail());
-                intent.putExtra("profile_image", examinerCandidate.getProfilePic());
+                intent.putExtra("candidateName", examinerCandidateInfoModel.getName());
+                intent.putExtra("candidateEmail", examinerCandidateInfoModel.getEmail());
+                intent.putExtra("profile_image", examinerCandidateInfoModel.getProfilePic());
                 activity.setResult(2, intent);
                 activity.finish();
             }

@@ -3,6 +3,8 @@ package com.ak47.digiboard.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ExaminerCandidateListModel implements Parcelable {
     public static final Creator<ExaminerCandidateListModel> CREATOR = new Creator<ExaminerCandidateListModel>() {
         @Override
@@ -16,6 +18,10 @@ public class ExaminerCandidateListModel implements Parcelable {
         }
     };
     private String name, email, profilePic;
+
+    public ExaminerCandidateListModel() {
+    }
+
 
     public ExaminerCandidateListModel(String name, String email, String profilePic) {
         this.name = name;
@@ -64,4 +70,16 @@ public class ExaminerCandidateListModel implements Parcelable {
         dest.writeString(this.profilePic);
         dest.writeString(this.email);
     }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "ExaminerCandidateListModel{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", profilePic='" + profilePic + '\'' +
+                '}';
+    }
+
 }

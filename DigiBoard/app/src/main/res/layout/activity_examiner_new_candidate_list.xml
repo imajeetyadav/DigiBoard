@@ -48,8 +48,7 @@
         android:fontFamily="@font/mo_re"
         android:text="@string/save"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addNewCandidateButton"
@@ -64,7 +63,8 @@
         android:fontFamily="@font/mo_re"
         android:text="@string/add"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap" />
 
     <com.victor.loading.rotate.RotateLoading
         android:id="@+id/mainLoading"

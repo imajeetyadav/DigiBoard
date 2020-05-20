@@ -24,6 +24,15 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+    <ListView
+        android:id="@+id/candidate_lists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/addNewCandidateListButton"
+        android:layout_below="@id/no_list_found"
+        android:layout_marginHorizontal="10dp" />
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addNewCandidateListButton"
         android:layout_width="wrap_content"

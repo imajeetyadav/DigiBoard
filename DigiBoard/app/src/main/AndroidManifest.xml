@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.ExaminerSearchCandidateActivity" />
         <activity android:name=".activity.ExaminerNewCandidateListActivity" />
+        <activity android:name=".activity.ExaminerModifyCandidateListActivity" />
         <activity android:name=".activity.ExaminerCandidateListsActivity" />
         <activity android:name=".activity.ExaminerAddQuestionActivity" />
         <activity android:name=".activity.ExaminerQuestionListActivity" />
