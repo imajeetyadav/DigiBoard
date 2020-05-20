@@ -82,8 +82,8 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
                 }
-                textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
-                textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
+                textName.setText(Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString());
+               // textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
                 rotateLoading.stop();
             }
 
