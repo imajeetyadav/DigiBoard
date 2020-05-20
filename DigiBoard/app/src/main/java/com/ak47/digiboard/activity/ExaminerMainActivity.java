@@ -85,6 +85,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                 textName.setText(Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString());
                // textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
                 rotateLoading.stop();
+                //
             }
 
             @Override
