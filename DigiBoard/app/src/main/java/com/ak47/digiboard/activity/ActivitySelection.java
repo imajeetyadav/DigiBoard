@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /*
     #Done
-    Role Selection Activity
+    Role Selection Activity without any Layout
  */
 
 public class ActivitySelection extends AppCompatActivity {

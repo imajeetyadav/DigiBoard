@@ -64,4 +64,6 @@
     <string name="candidate_list_name">Candidate List Name</string>
     <string name="list_name">List Name</string>
     <string name="total_candidate_lists">Total Number Of Candidate Lists : </string>
+    <string name="notice">Notice</string>
+    <string name="notice_image">Notice Image</string>
 </resources>

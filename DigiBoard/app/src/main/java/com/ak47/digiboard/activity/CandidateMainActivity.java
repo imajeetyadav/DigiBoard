@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.ak47.digiboard.R;
+import com.ak47.digiboard.common.CheckNotice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,6 +77,9 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
         rootRef.keepSynced(true);
 
+        // Checking Service Status and Message
+        new CheckNotice(CandidateMainActivity.this);
+
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -91,7 +95,7 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                     textName.setText(dataSnapshot.child("name").getValue().toString());
                     textEmail.setText(dataSnapshot.child("email").getValue().toString());
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
+                    Log.e(TAG, Objects.requireNonNull(e.getMessage()));
                 }
 
                 rotateLoading.stop();
@@ -178,5 +182,6 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                         });
         return (alertDialogBuilder.create());
     }
+
 
 }
