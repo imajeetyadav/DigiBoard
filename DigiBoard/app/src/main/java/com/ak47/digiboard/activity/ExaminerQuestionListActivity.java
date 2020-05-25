@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 
 /*
+    #done
     -Question List
     -Add Question
-     //ToDo : Add questions
  */
 public class ExaminerQuestionListActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -81,7 +81,8 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 break;
             case R.id.saveQuestionButton:
                 // call SaveQuiz class Constructor
-                if (questionList.size() > 9) {
+                // Todo: after testing change value to 9
+                if (questionList.size() > 1) {
                     rotateLoading.start();
                     new ExaminerSaveQuizList(questionList, quizName, quizDescription, quizEncryptionCode);
                     rotateLoading.stop();

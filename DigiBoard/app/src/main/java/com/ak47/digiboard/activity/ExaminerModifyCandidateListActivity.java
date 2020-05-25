@@ -71,7 +71,6 @@ public class ExaminerModifyCandidateListActivity extends AppCompatActivity imple
         if (intent != null) {
             listName = intent.getStringExtra("listName");
             getData = intent.getStringExtra("getData");
-            Log.e(TAG, "name : " + listName + " getData " + getData);
         }
 
         saveListButton = findViewById(R.id.saveCandidateListButton);
@@ -107,7 +106,6 @@ public class ExaminerModifyCandidateListActivity extends AppCompatActivity imple
                         candidateList.add(model);
                         adapter.notifyDataSetChanged();
                     }
-                    Log.e(TAG, "data " + data.getValue(ExaminerCandidateListModel.class));
                     noCandidateFound.setText("Total Candidate: " + dataSnapshot.getChildrenCount());
                 }
             }

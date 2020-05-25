@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.victor.loading.rotate.RotateLoading;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /*
@@ -54,6 +56,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
         profileMap.put("name", user.getDisplayName());
         profileMap.put("email", user.getEmail());
         profileMap.put("profilePic", user.getPhotoUrl().toString());
+        profileMap.put("createdDateTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
 
 
         candidateButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                     candidateButton.setVisibility(View.GONE);
                     examinerButton.setVisibility(View.GONE);
                     rotateLoading.start();
+                    profileMap.put("credit", "50");
                     rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
                     editor.putInt("initial_setup", 2);
                     editor.apply();

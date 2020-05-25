@@ -17,11 +17,11 @@ import com.google.android.material.textfield.TextInputEditText;
         #Done
     - Add Quiz Title,description
     then send to add question activity
-      //ToDo : Create Quiz List
    */
 public class ExaminerQuizCreateActivity extends AppCompatActivity {
     private TextInputEditText quizName, quizDescription, quizEncryptionCode;
     private Button nextButton;
+    private String TAG = "Quiz Create Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
     private void sendToQuestionListActivity(String Name, String Description, String EncryptionCode) {
         Intent intent = new Intent(ExaminerQuizCreateActivity.this, ExaminerQuestionListActivity.class);
         intent.putExtra("quizName", Name);
-        intent.putExtra("quizDescription ", Description);
+        intent.putExtra("quizDescription", Description);
         intent.putExtra("quizEncryptionCode", EncryptionCode);
         startActivity(intent);
     }

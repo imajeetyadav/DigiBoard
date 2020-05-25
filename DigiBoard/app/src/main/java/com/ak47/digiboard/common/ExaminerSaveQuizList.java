@@ -5,7 +5,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class ExaminerSaveQuizList {
@@ -17,14 +19,13 @@ public class ExaminerSaveQuizList {
         HashMap<String, ArrayList<ExaminerQuestionListModel>> questionListMap = new HashMap<>();
         questionListMap.put("questionList", questionList);
 
-        HashMap<String, String> quizDetails = new HashMap<>();
-        quizDetails.put("quizName", quizName);
-        quizDetails.put("quizDescription", quizDescription);
-        quizDetails.put("quizEncryptionCode", quizEncryptionCode);
-        quizDetails.put("publishInfo", "false");
-
         String key = rootRef.push().getKey();
         rootRef.child(key).setValue(questionListMap);
-        rootRef.child(key).child("quizDetails").setValue(quizDetails);
+        rootRef.child(key).child("quizName").setValue(quizName);
+        rootRef.child(key).child("quizDescription").setValue(quizDescription);
+        rootRef.child(key).child("quizEncryptionCode").setValue(quizEncryptionCode);
+        rootRef.child(key).child("publishInfo").setValue(false);
+        rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+
     }
 }

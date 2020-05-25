@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DigiBoard</string>
     <string name="version">v1.0</string>
-    <string name="developers">Developed By \nAjeet Yadav\n&amp;\nBrij Jadaun</string>
+    <string name="developers">Developed By \nAjeet Yadav\nBrij Pratap Singh</string>
     <string name="open_source_licenses">Click to See Open Source Licenses</string>
     <string name="active_quiz">Quiz</string>
     <string name="quiz_history">Quiz History</string>
@@ -31,8 +31,6 @@
     <string name="quiz_encryption_code">Quiz Encryption Code</string>
     <string name="next">Next</string>
     <string name="note_quiz_details">Note : Create Any 4 digit Code to Encrypt questions. Give this code to quiz  candidate to attempt Quiz</string>
-
-
     <string name="question_list">Question List</string>
     <string name="option_1">option 1</string>
     <string name="option_2">option 2</string>
@@ -64,6 +62,13 @@
     <string name="candidate_list_name">Candidate List Name</string>
     <string name="list_name">List Name</string>
     <string name="total_candidate_lists">Total Number Of Candidate Lists : </string>
+
     <string name="notice">Notice</string>
     <string name="notice_image">Notice Image</string>
+
+    <string name="quiz_description">Quiz Description</string>
+    <string name="no_quiz_found">No Quiz Found</string>
+    <string name="unpublished">Unpublished</string>
+    <string name="published">Published</string>
+    <string name="total_quiz">\"Total Number of Quiz : \"</string>
 </resources>
