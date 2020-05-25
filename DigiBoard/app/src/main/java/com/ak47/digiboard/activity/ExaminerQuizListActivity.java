@@ -1,5 +1,6 @@
 package com.ak47.digiboard.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /*
+     #done
      List of Quiz
  */
 
@@ -71,9 +73,9 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                         .setQuery(quizRef, QuizListModel.class)
                         .build();
 
-        FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder> adapter = new FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder>(quizDetailsModelFirebaseRecyclerOptions) {
+        final FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder> adapter = new FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder>(quizDetailsModelFirebaseRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull QuizListViewHolder holder, int position, @NonNull QuizListModel quizListModel) {
+            protected void onBindViewHolder(@NonNull final QuizListViewHolder holder, final int position, @NonNull final QuizListModel quizListModel) {
 
                 holder.quizName.setText(quizListModel.getQuizName());
                 holder.quizDescription.setText(quizListModel.getQuizDescription());
@@ -85,6 +87,16 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                 } else {
                     holder.publishInfo.setTextColor(getColor(R.color.bg_screen1));
                 }
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizInfoActivity.class);
+                        quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
+                        quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
+                        startActivity(quizInfoIntent);
+                    }
+                });
             }
 
             @NonNull

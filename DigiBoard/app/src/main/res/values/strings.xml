@@ -70,5 +70,7 @@
     <string name="no_quiz_found">No Quiz Found</string>
     <string name="unpublished">Unpublished</string>
     <string name="published">Published</string>
-    <string name="total_quiz">\"Total Number of Quiz : \"</string>
+    <string name="total_quiz">Total Number of Quiz : </string>
+    <string name="quiz_info">Quiz Information</string>
+    <!--    <string name="total_number_of_question">Total Number of Question : </string>-->
 </resources>
