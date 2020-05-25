@@ -2,15 +2,22 @@ package com.ak47.digiboard.activity;
 
 import android.app.ActivityManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -21,6 +28,9 @@ import java.util.Objects;
 public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private android.app.AlertDialog signOutAndCacheCleanDialog;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +39,42 @@ public class SettingsActivity extends AppCompatActivity {
         changeStatusBarColor();
 
         mAuth = FirebaseAuth.getInstance();
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Button signOut = findViewById(R.id.signOut);
+        mAuth = FirebaseAuth.getInstance();
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOutAndCacheCleanDialog = signOutAndCacheCleanDialog();
-                signOutAndCacheCleanDialog.show();
+                /*signOutAndCacheCleanDialog = signOutAndCacheCleanDialog();
+                signOutAndCacheCleanDialog.show();*/
+
+
+                mAuth.signOut();
+                mGoogleSignInClient.signOut().addOnCompleteListener(SettingsActivity.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        jumpToLogInActivity();
+                    }
+                });
+
             }
         });
+
+    }
+
+
+
+    private void jumpToLogInActivity()
+    {
+        Intent intent  = new Intent(SettingsActivity.this,LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
 

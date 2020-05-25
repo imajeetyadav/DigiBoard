@@ -1,5 +1,4 @@
 package com.ak47.digiboard.common;
-
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

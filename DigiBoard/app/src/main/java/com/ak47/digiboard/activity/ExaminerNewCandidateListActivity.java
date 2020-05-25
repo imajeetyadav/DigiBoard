@@ -93,7 +93,8 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
 
                                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyCandidateLists");
-                                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    rootRef.addListenerForSingleValueEvent(new ValueEventListener()
+                                    {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if (!dataSnapshot.child(input.getText().toString()).exists()) {

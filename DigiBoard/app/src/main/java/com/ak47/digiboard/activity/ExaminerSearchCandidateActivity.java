@@ -73,8 +73,10 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().isEmpty()) {
+            public void afterTextChanged(Editable s)
+            {
+                if (!s.toString().isEmpty())
+                {
 
                     search(s.toString());
                 } else {
@@ -114,7 +116,8 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
 
         FirebaseRecyclerOptions<ExaminerCandidate> options =
