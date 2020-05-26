@@ -76,7 +76,6 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
         final FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder> adapter = new FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder>(quizDetailsModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull final QuizListViewHolder holder, final int position, @NonNull final QuizListModel quizListModel) {
-
                 holder.quizName.setText(quizListModel.getQuizName());
                 holder.quizDescription.setText(quizListModel.getQuizDescription());
                 holder.createdDateTime.setText(quizListModel.getCreatedDateTime().split(" ")[0]);
@@ -88,13 +87,20 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                     holder.publishInfo.setTextColor(getColor(R.color.bg_screen1));
                 }
 
+                final Boolean finalPublishInfo = quizListModel.getPublishInfo();
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizInfoActivity.class);
-                        quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
-                        quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
-                        startActivity(quizInfoIntent);
+                        if (finalPublishInfo) {
+                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerShowQuizResultActivity.class);
+                            quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
+                            startActivity(quizInfoIntent);
+                        } else {
+                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizInfoActivity.class);
+                            quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
+                            quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
+                            startActivity(quizInfoIntent);
+                        }
                     }
                 });
             }

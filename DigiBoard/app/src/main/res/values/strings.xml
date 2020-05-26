@@ -72,5 +72,10 @@
     <string name="published">Published</string>
     <string name="total_quiz">Total Number of Quiz : </string>
     <string name="quiz_info">Quiz Information</string>
-    <!--    <string name="total_number_of_question">Total Number of Question : </string>-->
+    <string name="total_number_of_question">Number of question : </string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="quiz_date">Quiz Date</string>
+    <string name="quiz_duration_in_minutes">Quiz duration in minutes</string>
+    <string name="select_candidate_list">Select Candidate List</string>
 </resources>

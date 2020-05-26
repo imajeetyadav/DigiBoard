@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.ExaminerQuizInfoActivity">
 
     <include
@@ -42,5 +43,98 @@
         android:layout_below="@id/quizDescription"
         android:layout_marginTop="5dp"
         android:textAlignment="center"
+        android:text="@string/total_number_of_question"
+        android:textStyle="bold"
         android:textColor="@color/bg_screen1" />
+
+    <LinearLayout
+        android:id="@+id/layoutTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quizTotalQuestion"
+        android:layout_marginTop="15dp">
+
+        <!-- starting time of Quiz-->
+        <EditText
+            android:id="@+id/startTimeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/mo_re"
+            android:hint="@string/start_time"
+            android:textColor="@color/gradient_color"
+            android:textColorHint="#FFD600"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- end time of Quiz-->
+        <EditText
+            android:id="@+id/endTimeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/mo_re"
+            android:hint="@string/end_time"
+            android:textColor="@color/gradient_color"
+            android:textColorHint="#FFD600"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/quizDateId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutTime"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/mo_re"
+        android:hint="@string/quiz_date"
+        android:textColor="@color/gradient_color"
+        android:textColorHint="#FFD600"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/durationId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quizDateId"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/mo_re"
+        android:hint="@string/quiz_duration_in_minutes"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textColor="@color/gradient_color"
+        android:textColorHint="#FFD600"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/selectCandidateList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/publishButton"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/gradient_color"
+        android:fontFamily="@font/mo_re"
+        android:text="@string/select_candidate_list"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <in.shadowfax.proswipebutton.ProSwipeButton
+        android:id="@+id/publishButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:arrow_color="@color/colorPrimaryDark"
+        app:bg_color="@color/gradient_color"
+        app:btn_text="Publish"
+        app:text_size="20dp" />
+
 </RelativeLayout>
