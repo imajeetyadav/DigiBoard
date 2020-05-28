@@ -87,9 +87,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                     new ExaminerSaveQuizList(questionList, quizName, quizDescription, quizEncryptionCode);
                     rotateLoading.stop();
                     Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finish();
                 } else {
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                             .setMessage("Number of Question Must Be More then 9")
@@ -142,7 +140,8 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNeutralButton("No", null)

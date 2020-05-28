@@ -3,6 +3,7 @@ package com.ak47.digiboard.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,10 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.text.SimpleDateFormat;
@@ -29,16 +33,21 @@ import java.util.HashMap;
 */
 public class ProfileSelectionActivity extends AppCompatActivity {
 
+    private static final String TAG = "ProfileSelection";
     Button candidateButton, examinerButton;
     //creating a DatabaseReference
     private DatabaseReference rootRef;
     // Loading Animation
     private RotateLoading rotateLoading;
+    String newToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_selection);
+
+
+        // SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -57,7 +66,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
         profileMap.put("email", user.getEmail());
         profileMap.put("profilePic", user.getPhotoUrl().toString());
         profileMap.put("createdDateTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-
+        profileMap.put("token", newToken);
 
         candidateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +75,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                     candidateButton.setVisibility(View.GONE);
                     examinerButton.setVisibility(View.GONE);
                     rotateLoading.start();
+                    initFCMNewToken("users");
                     rootRef.child("users").child(user.getUid()).setValue(profileMap);
                     editor.putInt("initial_setup", 1);
                     editor.apply();
@@ -83,7 +93,8 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                     candidateButton.setVisibility(View.GONE);
                     examinerButton.setVisibility(View.GONE);
                     rotateLoading.start();
-                    profileMap.put("credit", "50");
+                    initFCMNewToken("AdminUsers");
+                    profileMap.put("credit", "10");
                     rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
                     editor.putInt("initial_setup", 2);
                     editor.apply();
@@ -96,6 +107,22 @@ public class ProfileSelectionActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initFCMNewToken(final String rootNodeName) {
+        // Firebase messaging Token
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ProfileSelectionActivity.this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                newToken = instanceIdResult.getToken();
+                Log.d(TAG, "Messaging token: " + newToken);
+                rootRef.child(rootNodeName)
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("token").setValue(newToken);
+            }
+        });
+
+    }
+
 
     private void sendUserToStudentMainActivity() {
         Intent mainActivityIntent = new Intent(ProfileSelectionActivity.this, CandidateMainActivity.class);

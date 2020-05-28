@@ -31,8 +31,6 @@ import com.google.firebase.database.ValueEventListener;
      #done
      List of Quiz
  */
-
-
 public class ExaminerQuizListActivity extends AppCompatActivity {
     private RecyclerView quizRecyclerList;
     private DatabaseReference quizRef;
@@ -96,7 +94,7 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                             quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
                             startActivity(quizInfoIntent);
                         } else {
-                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizInfoActivity.class);
+                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizPublishActivity.class);
                             quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
                             quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
                             startActivity(quizInfoIntent);
@@ -117,7 +115,6 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
 
 
     }
-
     private void changeSetting() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE);

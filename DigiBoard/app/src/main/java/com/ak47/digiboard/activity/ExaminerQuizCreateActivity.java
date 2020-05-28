@@ -50,6 +50,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String Name = quizName.getText().toString().trim();
                 String Description = quizDescription.getText().toString().trim();
                 String EncryptionCode = quizEncryptionCode.getText().toString().trim();
@@ -66,12 +67,12 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
     private void sendToQuestionListActivity(final String Name, final String Description, final String EncryptionCode) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
+        DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId);
         quizRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (ds.child("quizName").getValue().equals(Name)) {
+                    if (ds.hasChild("MyQuizLists") && ds.child("MyQuizLists").child("quizName").getValue().equals(Name)) {
                         quizName.setError("Already Exist. Please try other name");
                         break;
                     } else {

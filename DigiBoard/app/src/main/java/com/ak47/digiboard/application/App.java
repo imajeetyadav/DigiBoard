@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso;
 
 public class App extends Application {
     private static final String TAG = "App ";
-    String notificationChannelIdQuizAlert = "1000";
-    String notificationChannelNameQuizAlert = "Quiz Notification"; //Quiz Alert
+    private String notificationChannelIdQuizAlert = "1000";
+    private String notificationChannelNameQuizAlert = "Quiz Notification"; //Quiz Alert
     @Override
     public void onCreate() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);

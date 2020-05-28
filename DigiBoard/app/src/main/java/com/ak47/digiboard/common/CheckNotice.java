@@ -23,8 +23,8 @@ public class CheckNotice {
         rootRef.child("AppConfig").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "CheckNotice : Check Service");
                 ConfigModel configModel = dataSnapshot.getValue(ConfigModel.class);
-                Log.e(TAG, "Check Service");
                 assert configModel != null;
                 if (configModel.getService()) {
                     Intent intentNoticeActivity = new Intent(activity, NoticeActivity.class);
@@ -35,7 +35,7 @@ public class CheckNotice {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Examiner Error : " + databaseError.getMessage());
+                Log.d(TAG, "CheckNotice : Error : " + databaseError.getMessage());
             }
         });
     }

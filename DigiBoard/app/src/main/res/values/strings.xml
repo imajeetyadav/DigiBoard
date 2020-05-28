@@ -78,4 +78,14 @@
     <string name="quiz_date">Quiz Date</string>
     <string name="quiz_duration_in_minutes">Quiz duration in minutes</string>
     <string name="select_candidate_list">Select Candidate List</string>
+
+    <!--    Notification Elements-->
+    <string name="data_title">title</string>
+    <string name="data_type">data_type</string>
+    <string name="data_message">message</string>
+
+    <!--  data type for  future use  -->
+    <string name="data_type_quiz_message">data_type_quiz_message</string>
+    <!--    <string name="data_type_query_message">query_message</string>-->
+
 </resources>

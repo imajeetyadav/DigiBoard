@@ -82,12 +82,12 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                 try {
                     String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
+                    textName.setText(dataSnapshot.child("name").getValue().toString());
+                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
                 }
-                textName.setText(Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString());
-                textEmail.setText(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
                 rotateLoading.stop();
             }
 
@@ -95,7 +95,6 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "Profile Retrieval  - " + databaseError.getMessage());
                 rotateLoading.stop();
-
             }
         });
     }

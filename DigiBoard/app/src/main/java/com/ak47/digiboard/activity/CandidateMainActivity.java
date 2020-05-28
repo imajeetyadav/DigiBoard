@@ -28,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.victor.loading.rotate.RotateLoading;
-
-import java.util.Objects;
     /*
         Examiner Main Activity
             - Card Layout
@@ -84,20 +82,14 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
+                    String userProfile = dataSnapshot.child("profilePic").getValue().toString();
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
+                    textName.setText(dataSnapshot.child("name").getValue().toString());
+                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
                 }
-
-                try {
-                    textName.setText(dataSnapshot.child("name").getValue().toString());
-                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
-                } catch (Exception e) {
-                    Log.e(TAG, Objects.requireNonNull(e.getMessage()));
-                }
-
                 rotateLoading.stop();
             }
 
@@ -143,7 +135,7 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(CandidateMainActivity.this, AboutActivity.class));
                 break;
             default:
-                Log.e(TAG, "Invalid Selection");
+                Log.d(TAG, "Invalid Selection");
                 break;
         }
 
