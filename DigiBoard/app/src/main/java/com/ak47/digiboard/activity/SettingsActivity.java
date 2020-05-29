@@ -2,14 +2,16 @@ package com.ak47.digiboard.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,21 +20,62 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /*
-      -SignOut button (with cache Clean)
+      -SignOut button
 */
 public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = "SettingsActivity";
     private FirebaseAuth mAuth;
     private android.app.AlertDialog signOutDialog;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
+    private TextView remainingCreditText;
+    private Button getSomeCreditButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        changeStatusBarColor();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        mTitle.setText(R.string.setting);
+
+        remainingCreditText = findViewById(R.id.remainingCreditTextView);
+        getSomeCreditButton = findViewById(R.id.getCreditButton);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
+        int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        if (initialSetupInt == 1) {
+            getSomeCreditButton.setVisibility(View.GONE);
+            remainingCreditText.setVisibility(View.GONE);
+
+        } else if (initialSetupInt == 2) {
+            Query query = rootRef.child("AdminUsers")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange: getCredit from server");
+                    remainingCreditText.setText(getString(R.string.remaining_credit) + " " + dataSnapshot.child("credit").getValue().toString());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: Error: " + databaseError.getMessage());
+                }
+            });
+        }
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -50,12 +93,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void changeStatusBarColor() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     private android.app.AlertDialog signOutAndCacheCleanDialog() {

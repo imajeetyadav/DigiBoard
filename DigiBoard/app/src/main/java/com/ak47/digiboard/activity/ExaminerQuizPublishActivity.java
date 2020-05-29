@@ -38,7 +38,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Set;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 import okhttp3.ResponseBody;
@@ -68,7 +67,6 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
     private String candidateListName = "";
     private String userId;
     private String mServerKey;
-    private Set<String> mTokens; // to Store list of token
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -81,8 +79,6 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
         mTitle.setText(R.string.quiz_info);
         changeSetting();
 
-        // to store list of token
-//        mTokens = new HashSet<>();
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizNameTextView = findViewById(R.id.quizName);
@@ -194,9 +190,9 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                         showCreditAlert();
                     } else {
                         for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                            quizRef.child("quizCandidate").child(String.valueOf(i)).setValue(dataSnapshot.child(String.valueOf(i)).child("email").getValue());
+                            quizRef.child("quizCandidate").push().child("email").setValue(dataSnapshot.child(String.valueOf(i)).child("email").getValue());
                             // quiz adding in candidate data and  send Push Notification
-                            addQuizToCandidate(key, dataSnapshot.child(String.valueOf(i)).child("email").getValue().toString());
+                            addQuizToCandidate(key, dataSnapshot.child(String.valueOf(i)).child("email").getValue().toString(), startTime, endTime, quizDate);
                         }
                         creditRef.setValue(creditCount - dataSnapshot.getChildrenCount());
                         quizRef.child("startTime").setValue(startTime);
@@ -215,7 +211,6 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                     Log.e(TAG, "Error " + databaseError.getMessage());
                 }
             });
-//            sendMessageToCandidate("test title ","test message");
         } else {
             publishSwipeButton.showResultIcon(false); // false if task failed
         }
@@ -233,7 +228,7 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                 }).show();
     }
 
-    private void addQuizToCandidate(final String key, final String candidateEmail) {
+    private void addQuizToCandidate(final String key, final String candidateEmail, String startTime, String endTime, String quizDate) {
 
         final DatabaseReference candidateRef = FirebaseDatabase.getInstance().getReference().child("users");
         candidateRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -242,10 +237,17 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     if (ds.child("email").getValue().equals(candidateEmail)) {
                         Log.d(TAG, "candidateUid " + ds.getKey());
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).setValue(userId);
+                        String quizId = candidateRef.child(ds.getKey()).child("MyQuizLists").push().getKey();
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizId").setValue(key);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("examiner").setValue(userId);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizName").setValue(quizName);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizDescription").setValue(quizDescription);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("isAttempted").setValue(false);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizDate").setValue(quizDate);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("endTime").setValue(endTime);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("startTime").setValue(startTime);
+
                         sendMessageToCandidate(quizName, quizDescription, ds.child("token").getValue().toString());
-//                        mTokens.add(ds.child("token").getValue().toString());
-//                        Log.d(TAG, "mToken list " +mTokens );
                     }
                 }
             }
@@ -384,55 +386,8 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
         });
     }
 
-    //    private void sendMessageToCandidate(String title, String message) {
-//        Log.d(TAG, "sendMessageToCandidate: sending message to selected Candidate");
-//        Log.d(TAG, "mToken list " +mTokens );
-//        Log.d(TAG,"server key"+mServerKey);
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl(BASE_URL)
-//                .build();
-//
-//        FCM fcmAPI = retrofit.create(FCM.class);
-//
-//        //attach the headers
-//        HashMap<String, String> headers = new HashMap<>();
-//        headers.put("Content-Type", "application/json");
-//        headers.put("Authorization", "key=" + mServerKey);
-//
-//
-//        //send the message to tokens
-//        for (String token : mTokens) {
-//            Log.d(TAG, "sendMessageToCandidate: sending to token: " + token);
-//            Data data = new Data();
-//            data.setTitle(title);
-//            data.setMessage(message);
-//            data.setData_type("quiz_notification");
-//            FirebaseCloudMessage firebaseCloudMessage = new FirebaseCloudMessage();
-//            firebaseCloudMessage.setData(data);
-//            firebaseCloudMessage.setTo(token);
-//
-//            Call<ResponseBody> call = fcmAPI.send(headers, firebaseCloudMessage);
-//
-//            call.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    Log.d(TAG, "onResponse: Server Response: " + response.toString());
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    Log.e(TAG, "onFailure: Unable to send the message." + t.getMessage());
-//                    Toast.makeText(ExaminerQuizPublishActivity.this, "error", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//        }
-//    }
     private void sendMessageToCandidate(String title, String message, String token) {
         Log.d(TAG, "sendMessageToCandidate: sending message to selected Candidate");
-        Log.d(TAG, "mToken list " + mTokens);
         Log.d(TAG, "server key" + mServerKey);
 
         Retrofit retrofit = new Retrofit.Builder()

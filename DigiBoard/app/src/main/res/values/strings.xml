@@ -86,6 +86,10 @@
 
     <!--  data type for  future use  -->
     <string name="data_type_quiz_message">data_type_quiz_message</string>
+    <string name="remaining_credit">Remaining Credit :  </string>
+    <string name="get_some_credit">Get Some Credit</string>
+    <string name="my_quizzes">My quizzes</string>
+    <string name="active_till">Active Till :</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>

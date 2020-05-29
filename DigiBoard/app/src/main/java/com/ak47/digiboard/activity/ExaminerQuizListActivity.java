@@ -106,7 +106,7 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
             @NonNull
             @Override
             public QuizListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_quiz_details, viewGroup, false);
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_examiner_quiz_details, viewGroup, false);
                 return new QuizListViewHolder(view);
             }
         };

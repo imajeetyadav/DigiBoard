@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.SettingsActivity">
 
-    <View
-        android:id="@+id/bg_top_header"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@drawable/ic_bg_header"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="?attr/actionBarSize" />
 
     <TextView
-        android:id="@+id/support"
+        android:id="@+id/remainingCreditTextView"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
         android:fontFamily="@font/mo_re"
-        android:text="@string/setting"
+        android:layout_margin="10dp"
+        android:text="@string/remaining_credit"
+        android:textColor="@color/gradient_color"
         android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="55sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/getCreditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remainingCreditTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/mo_re"
+        android:text="@string/get_some_credit"
+        android:textColor="@color/bg_screen1"
+        android:textStyle="bold"
+        app:elevation="10dp" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signOut"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
         android:backgroundTint="@color/gradient_color"
-        android:text="@string/sign_out"
         android:fontFamily="@font/mo_re"
+        android:text="@string/sign_out"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -23,17 +23,17 @@ public class ActivitySelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Activity with No Layout
 
-        Log.e(TAG, "ActivitySelection Started");
+        Log.d(TAG, "ActivitySelection Started");
 
         mAuth = FirebaseAuth.getInstance();
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
 
         if (mAuth.getCurrentUser() == null) {
-            Log.e(TAG, "control send to LoginActivity");
+            Log.d(TAG, "control send to LoginActivity");
             intent = new Intent(this, LoginActivity.class);
         } else {
-            Log.e(TAG, "Shared Preference Value : " + initialSetupInt);
+            Log.d(TAG, "Shared Preference Value : " + initialSetupInt);
             switch (initialSetupInt) {
                 case 0:
                     intent = new Intent(this, ProfileSelectionActivity.class);
@@ -45,7 +45,7 @@ public class ActivitySelection extends AppCompatActivity {
                     intent = new Intent(this, ExaminerMainActivity.class);
                     break;
                 default:
-                    Log.e(TAG, "Shared Preference Value Error");
+                    Log.d(TAG, "Shared Preference Value Error");
             }
         }
         startActivity(intent);

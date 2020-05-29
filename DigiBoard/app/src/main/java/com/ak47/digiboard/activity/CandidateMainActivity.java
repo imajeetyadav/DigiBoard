@@ -1,7 +1,5 @@
 package com.ak47.digiboard.activity;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,17 +105,18 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activeQuiz:
-                NotificationManager notificationManager =
-                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                assert notificationManager != null;
-                if (!notificationManager.isNotificationPolicyAccessGranted()) {
-                    android.app.AlertDialog enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
-                    enableNotificationListenerAlertDialog.show();
-                } else {
-                    finish();
-                    startActivity(new Intent(CandidateMainActivity.this, CandidateActiveQuizActivity.class));
-                }
+//                NotificationManager notificationManager =
+//                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//                assert notificationManager != null;
+//                if (!notificationManager.isNotificationPolicyAccessGranted()) {
+//                    android.app.AlertDialog enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
+//                    enableNotificationListenerAlertDialog.show();
+//                } else {
+//                    finish();
+//                    startActivity(new Intent(CandidateMainActivity.this, CandidateActiveQuizActivity.class));
+//                }
+                startActivity(new Intent(CandidateMainActivity.this, CandidateMyQuizListActivity.class));
                 break;
             case R.id.history:
                 startActivity(new Intent(CandidateMainActivity.this, CandidateHistoryActivity.class));
@@ -174,6 +173,4 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                         });
         return (alertDialogBuilder.create());
     }
-
-
 }
