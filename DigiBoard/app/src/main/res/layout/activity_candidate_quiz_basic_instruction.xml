@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CandidateQuizBasicInstruction">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <TextView
+        android:id="@+id/instruction_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_1"
+        android:textColor="#101010" />
+
+    <TextView
+        android:id="@+id/instruction_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_1"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_2"
+        android:textColor="#101010" />
+
+    <TextView
+        android:id="@+id/instruction_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_2"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_3"
+        android:textColor="#101010" />
+
+    <TextView
+        android:id="@+id/instruction_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_3"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_4"
+        android:textColor="#101010" />
+
+    <TextView
+        android:id="@+id/instruction_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_4"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_5"
+        android:textColor="#101010" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/startQuiz"
+        android:layout_margin="20dp"
+        android:text="@string/all_the_best"
+        android:textAlignment="center"
+        android:textColor="@color/about_libraries_accent"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+
+    <in.shadowfax.proswipebutton.ProSwipeButton
+        android:id="@+id/startQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:arrow_color="@color/colorPrimaryDark"
+        app:bg_color="@color/gradient_color"
+        app:btn_text="@string/start_quiz"
+        app:text_size="20dp" />
+
+</RelativeLayout>

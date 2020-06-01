@@ -90,6 +90,14 @@
     <string name="get_some_credit">Get Some Credit</string>
     <string name="my_quizzes">My quizzes</string>
     <string name="active_till">Active Till :</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="instruction_1">instructions_1</string>
+    <string name="instruction_2">instruction_2</string>
+    <string name="instruction_3">instruction_3</string>
+    <string name="instruction_4">instruction_4</string>
+    <string name="instruction_5">instruction_5</string>
+    <string name="start_quiz">Start Quiz</string>
+    <string name="all_the_best">All the Best</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>

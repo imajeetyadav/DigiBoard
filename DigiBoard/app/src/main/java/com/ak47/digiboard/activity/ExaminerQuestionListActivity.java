@@ -17,11 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
-import com.ak47.digiboard.common.ExaminerSaveQuizList;
 import com.ak47.digiboard.model.ExaminerQuestionListModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.victor.loading.rotate.RotateLoading;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 
 
 /*
@@ -36,7 +42,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
     private Button saveButton, addQuestionButton;
     private ExaminerQuestionListAdapter adapter;
     private ArrayList<ExaminerQuestionListModel> questionList;
-    private String quizName, quizDescription, quizEncryptionCode;
+    private String quizName, quizDescription;
     private RotateLoading rotateLoading;
     private TextView noQuestionFoundTextView;
 
@@ -57,7 +63,6 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
         if (intent != null) {
             quizName = intent.getStringExtra("quizName");
             quizDescription = intent.getStringExtra("quizDescription");
-            quizEncryptionCode = intent.getStringExtra("quizEncryptionCode");
         }
 
         saveButton = findViewById(R.id.saveQuestionButton);
@@ -84,10 +89,8 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 // Todo: after testing change value to 9
                 if (questionList.size() > 1) {
                     rotateLoading.start();
-                    new ExaminerSaveQuizList(questionList, quizName, quizDescription, quizEncryptionCode);
-                    rotateLoading.stop();
-                    Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
-                    startActivity(intent);
+                    examinerSaveQuizList(questionList, quizName, quizDescription);
+
                 } else {
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                             .setMessage("Number of Question Must Be More then 9")
@@ -96,6 +99,35 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 break;
         }
 
+    }
+
+    private void examinerSaveQuizList(ArrayList<ExaminerQuestionListModel> questionList, String quizName, String quizDescription) {
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
+
+        HashMap<String, ArrayList<ExaminerQuestionListModel>> questionListMap = new HashMap<>();
+        questionListMap.put("questionList", questionList);
+
+        String key = rootRef.push().getKey();
+        rootRef.child(key).setValue(questionListMap);
+        rootRef.child(key).child("quizName").setValue(quizName);
+        rootRef.child(key).child("quizDescription").setValue(quizDescription);
+        rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        rootRef.child(key).child("publishInfo").setValue(false).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                rotateLoading.stop();
+                sendToMainActivity();
+            }
+        });
+    }
+
+    private void sendToMainActivity() {
+
+        Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void sendToAddQuestionActivity() {
@@ -142,6 +174,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .setNeutralButton("No", null)

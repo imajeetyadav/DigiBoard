@@ -12,42 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <TextView
-        android:id="@+id/note_quiz_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/mo_re"
-        android:text="@string/note_quiz_details"
-        android:textAlignment="center"
-        android:textColor="#D50404"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <!-- Quiz Encryption Code-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/quizEncryptionCodeLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/note_quiz_details"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:hint="@string/quiz_encryption_code"
-        android:textColorHint="#101010"
-        app:boxStrokeColor="@color/gradient_color"
-        app:hintTextColor="#101010">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/quizEncryptionCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mo_re"
-            android:inputType="number"
-            android:maxLength="4" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Quiz Name-->
     <com.google.android.material.textfield.TextInputLayout
@@ -55,9 +19,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/quizEncryptionCodeLayout"
+        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:hint="@string/quiz_name"
         android:textColorHint="#101010"

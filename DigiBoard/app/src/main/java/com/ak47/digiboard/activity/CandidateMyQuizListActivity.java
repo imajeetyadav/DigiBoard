@@ -1,5 +1,6 @@
 package com.ak47.digiboard.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,11 +70,12 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder> adapter = new FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder>(candidateQuizListBaseModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull CandidateQuizListViewHolder holder, int position, @NonNull CandidateQuizListBaseModel model) {
-                holder.quizName.setText(model.getQuizName());
-                holder.quizDescription.setText(model.getQuizDescription());
-                holder.activeTillDataTime.setText("Active At \n" + "Date : " + model.getQuizDate() + " \nTime : " + model.getStartTime());
 
-//                try {
+                if (!model.isAttempted()) {
+                    holder.quizName.setText(model.getQuizName());
+                    holder.quizDescription.setText(model.getQuizDescription());
+                    holder.activeTillDataTime.setText("Active At \n" + "Date : " + model.getQuizDate() + " \nTime : " + model.getStartTime());
+//                    try {
 //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 //                    Date dateToday = sdf.parse("2018-08-30");
 //                    Date dateQuizLastDate = sdf.parse(model.getQuizDate());
@@ -82,15 +84,16 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
 //                    e.printStackTrace();
 //                }
 
-//                holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent quizInstructionIntent = new Intent(CandidateMyQuizListActivity.this, CandidateQuizBasicInstruction.class);
-//                        quizInstructionIntent.putExtra("examiner", model.getExaminer());
-//                        quizInstructionIntent.putExtra("quizId", model.getQuizId());
-//                        startActivity(quizInstructionIntent);
-//                    }
-//                });
+                }
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent quizInstructionIntent = new Intent(CandidateMyQuizListActivity.this, CandidateQuizBasicInstruction.class);
+                        quizInstructionIntent.putExtra("examinerId", model.getExaminer());
+                        quizInstructionIntent.putExtra("quizId", model.getQuizId());
+                        startActivity(quizInstructionIntent);
+                    }
+                });
             }
 
             @NonNull

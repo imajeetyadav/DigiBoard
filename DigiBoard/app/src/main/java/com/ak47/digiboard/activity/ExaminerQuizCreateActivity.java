@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
     then send to add question activity
    */
 public class ExaminerQuizCreateActivity extends AppCompatActivity {
-    private TextInputEditText quizName, quizDescription, quizEncryptionCode;
+    private TextInputEditText quizName, quizDescription;
     private Button nextButton;
     private String TAG = "Quiz Create Activity";
 
@@ -44,7 +44,6 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
         quizName = findViewById(R.id.quizNameId);
         quizDescription = findViewById(R.id.quizDescriptionId);
-        quizEncryptionCode = findViewById(R.id.quizEncryptionCode);
         nextButton = findViewById(R.id.nextButton);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +52,10 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
                 String Name = quizName.getText().toString().trim();
                 String Description = quizDescription.getText().toString().trim();
-                String EncryptionCode = quizEncryptionCode.getText().toString().trim();
 
-                if (validation(Name, Description, EncryptionCode)) {
+                if (validation(Name, Description)) {
                     // send To QuestionListActivity
-                    sendToQuestionListActivity(Name, Description, EncryptionCode);
+                    sendToQuestionListActivity(Name, Description);
                 }
             }
         });
@@ -65,7 +63,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
     }
 
-    private void sendToQuestionListActivity(final String Name, final String Description, final String EncryptionCode) {
+    private void sendToQuestionListActivity(final String Name, final String Description) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId);
         quizRef.addValueEventListener(new ValueEventListener() {
@@ -79,7 +77,6 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
                         Intent intent = new Intent(ExaminerQuizCreateActivity.this, ExaminerQuestionListActivity.class);
                         intent.putExtra("quizName", Name);
                         intent.putExtra("quizDescription", Description);
-                        intent.putExtra("quizEncryptionCode", EncryptionCode);
                         startActivity(intent);
                     }
                 }
@@ -96,7 +93,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
 
     }
 
-    private boolean validation(String Name, String Description, String EncryptionCode) {
+    private boolean validation(String Name, String Description) {
         boolean check = true;
         if (TextUtils.isEmpty(Name)) {
             quizName.setError("Enter Quiz Name");
@@ -106,15 +103,6 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
             quizDescription.setError("Enter Quiz Description ");
             check = false;
         }
-        if (TextUtils.isEmpty(EncryptionCode)) {
-            quizEncryptionCode.setError("Enter Quiz Encryption Code");
-            check = false;
-        }
-        if (EncryptionCode.length() != 4) {
-            quizEncryptionCode.setError("4 digit of code required");
-            check = false;
-        }
-
         return check;
     }
 
