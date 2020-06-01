@@ -13,18 +13,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.victor.loading.rotate.RotateLoading;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 /*
     #done
@@ -65,60 +64,51 @@ public class ProfileSelectionActivity extends AppCompatActivity {
         profileMap.put("name", user.getDisplayName());
         profileMap.put("email", user.getEmail());
         profileMap.put("profilePic", user.getPhotoUrl().toString());
-        profileMap.put("createdDateTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        profileMap.put("createdDateTime", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
         profileMap.put("token", newToken);
 
-        candidateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    candidateButton.setVisibility(View.GONE);
-                    examinerButton.setVisibility(View.GONE);
-                    rotateLoading.start();
-                    initFCMNewToken("users");
-                    rootRef.child("users").child(user.getUid()).setValue(profileMap);
-                    editor.putInt("initial_setup", 1);
-                    editor.apply();
-                    rotateLoading.stop();
-                    sendUserToStudentMainActivity();
-                } catch (Exception e) {
-                    Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
-                }
+        candidateButton.setOnClickListener(v -> {
+            try {
+                candidateButton.setVisibility(View.GONE);
+                examinerButton.setVisibility(View.GONE);
+                rotateLoading.start();
+                initFCMNewToken("users");
+                rootRef.child("users").child(user.getUid()).setValue(profileMap);
+                editor.putInt("initial_setup", 1);
+                editor.apply();
+                rotateLoading.stop();
+                sendUserToStudentMainActivity();
+            } catch (Exception e) {
+                Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
             }
         });
-        examinerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    candidateButton.setVisibility(View.GONE);
-                    examinerButton.setVisibility(View.GONE);
-                    rotateLoading.start();
-                    initFCMNewToken("AdminUsers");
-                    profileMap.put("credit", "10");
-                    rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
-                    editor.putInt("initial_setup", 2);
-                    editor.apply();
-                    rotateLoading.stop();
-                    sendUserToTeacherMainActivity();
-                } catch (Exception e) {
-                    Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
-                }
-
+        examinerButton.setOnClickListener(v -> {
+            try {
+                candidateButton.setVisibility(View.GONE);
+                examinerButton.setVisibility(View.GONE);
+                rotateLoading.start();
+                initFCMNewToken("AdminUsers");
+                profileMap.put("credit", "10");
+                rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
+                editor.putInt("initial_setup", 2);
+                editor.apply();
+                rotateLoading.stop();
+                sendUserToTeacherMainActivity();
+            } catch (Exception e) {
+                Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
             }
+
         });
     }
 
     private void initFCMNewToken(final String rootNodeName) {
         // Firebase messaging Token
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ProfileSelectionActivity.this, new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                newToken = instanceIdResult.getToken();
-                Log.d(TAG, "Messaging token: " + newToken);
-                rootRef.child(rootNodeName)
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("token").setValue(newToken);
-            }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ProfileSelectionActivity.this, instanceIdResult -> {
+            newToken = instanceIdResult.getToken();
+            Log.d(TAG, "Messaging token: " + newToken);
+            rootRef.child(rootNodeName)
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("token").setValue(newToken);
         });
 
     }

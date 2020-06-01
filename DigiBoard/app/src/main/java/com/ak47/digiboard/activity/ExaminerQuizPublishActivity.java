@@ -35,9 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 import okhttp3.ResponseBody;
@@ -334,39 +337,45 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
     }
 
     private void showDateDialog() {
-        final Calendar calender = Calendar.getInstance();
-        int day = calender.get(Calendar.DAY_OF_MONTH);
-        int month = calender.get(Calendar.MONTH);
-        int year = calender.get(Calendar.YEAR);
-        DatePickerDialog dialog = new DatePickerDialog(ExaminerQuizPublishActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                (view, year1, month1, dayOfMonth) -> quizDate.setText(dayOfMonth + " /" + month1 + " /" + year1), year, month, day);
-        dialog.show();
+        SimpleDateFormat dateFormatter;
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        Calendar newCalendar = Calendar.getInstance();
+        new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            quizDate.setText(dateFormatter.format(newDate.getTime()));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+
     private void showtimeDialog(final int k) {
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        new TimePickerDialog(ExaminerQuizPublishActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                (view, hourOfDay, minute1) -> {
+                    if (hourOfDay < 10 && minute1 < 10) {
+                        if (k == 1) {
+                            startTime.setText("0" + hourOfDay + ":0" + minute1);
+                        } else if (k == 2) {
+                            endTime.setText("0" + hourOfDay + ":0" + minute1);
+                        }
+                    } else if (hourOfDay < 10) {
+                        if (k == 1) {
+                            startTime.setText("0" + hourOfDay + ":" + minute1);
+                        } else if (k == 2) {
+                            endTime.setText("0" + hourOfDay + ":" + minute1);
+                        }
+                    } else if (minute1 < 10) {
+                        if (k == 1) {
+                            startTime.setText(hourOfDay + ":0" + minute1);
+                        } else if (k == 2) {
+                            endTime.setText(hourOfDay + ":0" + minute1);
+                        }
+                    }
+
+                }, hour, minute, true).show();
         final Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY);
-        minutes = cal.get(Calendar.MINUTE);
-        picker = new TimePickerDialog(ExaminerQuizPublishActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                (view, hourOfDay, minute) -> {
-                    cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                    cal.set(Calendar.MINUTE, minute);
-
-                    if (cal.get(Calendar.AM_PM) == Calendar.AM) {
-                        AM_PM = "AM";
-                    } else {
-                        AM_PM = "PM";
-                        hourOfDay = hourOfDay - 12;
-                        hour = hour - 12;
-                    }
-                    if (k == 1) {
-                        startTime.setText(hourOfDay + " :" + minute + " " + AM_PM);
-                    } else if (k == 2) {
-                        endTime.setText(hourOfDay + " :" + minute + " " + AM_PM);
-                    }
-
-                }, hour, minutes, false);
-        picker.show();
     }
 
     public void getServerKey() {
@@ -417,12 +426,12 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NotNull Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, "onFailure: Unable to send the message." + t.getMessage());
                 Toast.makeText(ExaminerQuizPublishActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
