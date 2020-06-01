@@ -78,6 +78,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
                         intent.putExtra("quizName", Name);
                         intent.putExtra("quizDescription", Description);
                         startActivity(intent);
+                        finish();
                     }
                 }
             }

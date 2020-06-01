@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
 import com.ak47.digiboard.model.ExaminerQuestionListModel;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -114,11 +116,12 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
         rootRef.child(key).child("quizName").setValue(quizName);
         rootRef.child(key).child("quizDescription").setValue(quizDescription);
         rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
-        rootRef.child(key).child("publishInfo").setValue(false).addOnSuccessListener(new OnSuccessListener<Void>() {
+        rootRef.child(key).child("publishInfo").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onComplete(@NonNull Task<Void> task) {
                 rotateLoading.stop();
                 sendToMainActivity();
+
             }
         });
     }

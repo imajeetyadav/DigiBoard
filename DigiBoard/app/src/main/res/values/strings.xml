@@ -28,7 +28,6 @@
     <string name="quiz_details">Quiz Details</string>
     <string name="quiz_name">Quiz Name</string>
     <string name="description">Description</string>
-    <string name="quiz_encryption_code">Quiz Encryption Code</string>
     <string name="next">Next</string>
     <string name="note_quiz_details">Note : Create Any 4 digit Code to Encrypt questions. Give this code to quiz  candidate to attempt Quiz</string>
     <string name="question_list">Question List</string>
