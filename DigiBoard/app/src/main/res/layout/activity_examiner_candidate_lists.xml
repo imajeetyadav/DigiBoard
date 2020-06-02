@@ -17,12 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="6dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/no_candidate_list"
         android:textAlignment="center"
         android:textColor="#D50404"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="15sp" />
 
     <ListView
         android:id="@+id/candidate_lists"
@@ -43,9 +41,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/gradient_color"
         android:elevation="7dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/add"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>

@@ -65,8 +65,7 @@
         android:text="@string/all_the_best"
         android:textAlignment="center"
         android:textColor="@color/about_libraries_accent"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textSize="30sp" />
 
 
     <in.shadowfax.proswipebutton.ProSwipeButton

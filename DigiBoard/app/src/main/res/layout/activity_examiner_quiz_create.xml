@@ -31,8 +31,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/quizNameId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mo_re" />
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Quiz Description-->
@@ -53,7 +52,6 @@
             android:id="@+id/quizDescriptionId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/mo_re"
             android:gravity="top"
             android:hint="@string/description"
             android:padding="10dp" />
@@ -67,9 +65,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:backgroundTint="@color/gradient_color"
-        android:fontFamily="@font/mo_re"
         android:text="@string/next"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>

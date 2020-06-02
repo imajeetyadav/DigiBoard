@@ -20,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/version"
         android:textAlignment="center"
         android:textColor="#ffffff"
@@ -33,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/developers"
         android:textAlignment="center"
         android:textColor="#ffffff"
@@ -46,11 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/open_source_licenses"
         android:textAlignment="center"
         android:textSize="25sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bg_top_header" />
 
@@ -79,12 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/heart_message"
         android:textAlignment="center"
         android:textColor="@color/bg_screen1"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

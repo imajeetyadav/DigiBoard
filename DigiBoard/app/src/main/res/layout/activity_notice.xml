@@ -16,12 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/notice"
         android:textAlignment="center"
         android:textColor="@color/gradient_color"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textSize="40sp" />
 
     <ImageView
         android:layout_width="250dp"

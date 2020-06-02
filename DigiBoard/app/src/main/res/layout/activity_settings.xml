@@ -17,13 +17,11 @@
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/mo_re"
         android:layout_margin="10dp"
         android:text="@string/remaining_credit"
         android:textColor="@color/gradient_color"
         android:textAlignment="center"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="25sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/getCreditButton"
@@ -32,10 +30,9 @@
         android:layout_below="@id/remainingCreditTextView"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/get_some_credit"
         android:textColor="@color/bg_screen1"
-        android:textStyle="bold"
+        android:backgroundTint="@color/colorPrimaryDark"
         app:elevation="10dp" />
 
 
@@ -47,9 +44,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="38dp"
         android:backgroundTint="@color/gradient_color"
-        android:fontFamily="@font/mo_re"
         android:text="@string/sign_out"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>

@@ -17,12 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:fontFamily="@font/mo_re"
         android:text="@string/quiz_name"
         android:textAlignment="center"
         android:textColor="#DE090909"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/quizDescription"
@@ -30,11 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/quizName"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/quiz_description"
         android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/quizTotalQuestion"
@@ -61,13 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/mo_re"
             android:textAlignment="center"
             android:hint="@string/start_time"
             android:textColor="@color/gradient_color"
             android:textColorHint="#FFD600"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <!-- end time of Quiz-->
         <EditText
@@ -76,13 +70,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
-            android:fontFamily="@font/mo_re"
             android:textAlignment="center"
             android:hint="@string/end_time"
             android:textColor="@color/gradient_color"
             android:textColorHint="#FFD600"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <EditText
@@ -93,12 +85,10 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="15dp"
         android:textAlignment="center"
-        android:fontFamily="@font/mo_re"
         android:hint="@string/quiz_date"
         android:textColor="@color/gradient_color"
         android:textColorHint="#FFD600"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/durationId"
@@ -107,14 +97,12 @@
         android:layout_below="@+id/quizDateId"
         android:layout_centerInParent="true"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/mo_re"
         android:hint="@string/quiz_duration_in_minutes"
         android:inputType="number"
         android:textAlignment="center"
         android:textColor="@color/gradient_color"
         android:textColorHint="#FFD600"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/selectCandidateList"
@@ -124,10 +112,8 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/gradient_color"
-        android:fontFamily="@font/mo_re"
         android:text="@string/select_candidate_list"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <in.shadowfax.proswipebutton.ProSwipeButton
         android:id="@+id/publishButton"

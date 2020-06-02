@@ -23,11 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/no_result_found"
         android:textAlignment="center"
         android:textColor="#D50404"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        />
 
 </RelativeLayout>

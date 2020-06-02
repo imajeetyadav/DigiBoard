@@ -21,22 +21,18 @@
                 android:id="@+id/quizName"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/mo_re"
                 android:text="@string/quiz_name"
                 android:textColor="@color/textCardColor"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/quizDescription"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/mo_re"
                 android:text="@string/quiz_description"
                 android:textAlignment="textStart"
                 android:textColor="@color/gradient_color"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,12 +44,10 @@
                 android:id="@+id/activeTillDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/mo_re"
                 android:text="@string/active_till"
                 android:textAlignment="center"
                 android:textColor="#CF133E"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 

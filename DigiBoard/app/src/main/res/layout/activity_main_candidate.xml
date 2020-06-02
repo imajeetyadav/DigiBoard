@@ -34,8 +34,6 @@
         android:layout_marginStart="18dp"
         android:text="@string/user_name"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/mo_re"
-        android:hint="@string/user_name"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:layout_height="wrap_content"
@@ -48,9 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/mo_re"
         android:text="@string/email"
-        android:hint="@string/email"
         android:textColor="#ffffff"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/user_photo"
@@ -104,11 +100,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/active_quiz"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -146,11 +140,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/quiz_history"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -188,11 +180,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/result"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -230,11 +220,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/notifications"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -272,11 +260,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/setting"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -314,11 +300,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/mo_re"
                     android:text="@string/about"
                     android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>

@@ -15,7 +15,6 @@
             android:id="@+id/sequenceId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/mo_re"
             android:text="@string/start_question_number"
             android:textColor="@color/gradient_color"
             android:textSize="20sp" />
@@ -27,11 +26,9 @@
             android:layout_marginStart="7dp"
             android:layout_marginEnd="25dp"
             android:layout_toEndOf="@+id/sequenceId"
-            android:fontFamily="@font/mo_re"
             android:text="@string/question"
             android:textColor="@color/gradient_color"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/textViewOptions"
@@ -53,10 +50,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:drawableStart="@android:drawable/presence_online"
-            android:fontFamily="@font/mo_re"
             android:text="@string/option_1"
-            android:textColor="#292525"
-            android:textStyle="bold" />
+            android:textColor="#292525" />
 
         <TextView
             android:id="@+id/B"
@@ -66,10 +61,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:drawableStart="@android:drawable/presence_online"
-            android:fontFamily="@font/mo_re"
             android:text="@string/option_2"
-            android:textColor="#292525"
-            android:textStyle="bold" />
+            android:textColor="#292525" />
 
         <TextView
             android:id="@+id/C"
@@ -79,10 +72,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:drawableStart="@android:drawable/presence_online"
-            android:fontFamily="@font/mo_re"
             android:text="@string/option_3"
-            android:textColor="#292525"
-            android:textStyle="bold" />
+            android:textColor="#292525" />
 
         <TextView
             android:id="@+id/D"
@@ -92,10 +83,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:drawableStart="@android:drawable/presence_online"
-            android:fontFamily="@font/mo_re"
             android:text="@string/option_4"
-            android:textColor="#292525"
-            android:textStyle="bold" />
-
+            android:textColor="#292525" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

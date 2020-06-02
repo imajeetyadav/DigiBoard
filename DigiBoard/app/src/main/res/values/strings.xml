@@ -101,6 +101,7 @@
     <string name="no_result_found">no Result Found</string>
     <string name="active_now">Active Now</string>
     <string name="not_submitted_properly">Not Submitted properly</string>
+    <string name="created_date">Created date</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>

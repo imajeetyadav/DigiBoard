@@ -22,7 +22,6 @@
         android:layout_marginRight="10dp"
         android:hint="@string/enter_candidate_email_id"
         android:textColorHint="#101010"
-        android:textStyle="bold"
         app:boxStrokeColor="@color/gradient_color"
         app:hintTextColor="#101010">
 
@@ -30,10 +29,8 @@
             android:id="@+id/search_candidate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/mo_re"
             android:maxLength="60"
-            android:textAlignment="center"
-            android:textStyle="bold" />
+            android:textAlignment="center" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView

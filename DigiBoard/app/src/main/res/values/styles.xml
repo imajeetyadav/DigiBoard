@@ -8,10 +8,15 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/mo_re</item>
+        <item name="fontFamily">@font/mo_re</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/gradient_color</item>
+        <item name="android:fontFamily">@font/mo_re</item>
+        <item name="fontFamily">@font/mo_re</item>
     </style>
 
 
