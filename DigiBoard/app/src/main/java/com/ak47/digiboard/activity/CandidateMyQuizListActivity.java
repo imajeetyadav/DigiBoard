@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +20,22 @@ import com.ak47.digiboard.model.CandidateQuizListBaseModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class CandidateMyQuizListActivity extends AppCompatActivity {
     private static final String TAG = "MyQuizList";
     private RecyclerView quizRecyclerList;
     private DatabaseReference quizRef;
     private TextView noQuizFound;
+    private int quizCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,58 +48,91 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
 
         noQuizFound = findViewById(R.id.no_quiz_found);
 
-
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("MyQuizLists");
         quizRecyclerList = findViewById(R.id.quizRecyclerView);
         quizRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-
-
-        quizRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                noQuizFound.setText(getString(R.string.total_quiz) + (int) dataSnapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error : " + databaseError.getMessage());
-            }
-        });
 
         FirebaseRecyclerOptions<CandidateQuizListBaseModel> candidateQuizListBaseModelFirebaseRecyclerOptions =
                 new FirebaseRecyclerOptions.Builder<CandidateQuizListBaseModel>()
                         .setQuery(quizRef, CandidateQuizListBaseModel.class)
                         .build();
 
-
         FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder> adapter = new FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder>(candidateQuizListBaseModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull CandidateQuizListViewHolder holder, int position, @NonNull CandidateQuizListBaseModel model) {
+                if (!model.getIsAttempted()) {
+                    try {
+                        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        Date dateToday = sdfDate.parse(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
+                        Date dateQuizLastDate = sdfDate.parse(model.getQuizDate());
+                        if (dateToday.before(dateQuizLastDate)) {
+                            quizCount = quizCount + 1;
+                            noQuizFound.setText(MessageFormat.format("{0} {1}", getString(R.string.total_quiz), quizCount));
+                            holder.quizName.setText(model.getQuizName());
+                            holder.quizDescription.setText(model.getQuizDescription());
+                            holder.activeTillDataTime.setText(String.format("Active At \nDate : %s \nTime : %s", model.getQuizDate(), model.getStartTime()));
+                        } else if (dateToday.equals(dateQuizLastDate)) {
+                            String currentTime = new SimpleDateFormat("HH:mm", Locale.US).format(Calendar.getInstance().getTime()).replace(":", "");
+                            String start = model.getStartTime().replace(":", "");
+                            String end = model.getEndTime().replace(":", "");
+                            boolean endTimeCheck = Integer.parseInt(currentTime) < Integer.parseInt(end);
+                            boolean startTimeCheck = Integer.parseInt(currentTime) > Integer.parseInt(start);
+                            Log.e(TAG, "currentTime : " + currentTime + " start : " + start + " stop :" + end);
+                            if (startTimeCheck && endTimeCheck) {
+                                quizCount = quizCount + 1;
+                                noQuizFound.setText(MessageFormat.format("{0} {1}", getString(R.string.total_quiz), quizCount));
+                                holder.quizName.setText(model.getQuizName());
+                                holder.quizDescription.setText(model.getQuizDescription());
+                                holder.activeTillDataTime.setTextColor(getColor(R.color.colorPrimaryDark));
+                                holder.activeTillDataTime.setBackgroundColor(getColor(R.color.gradient_color));
+                                holder.activeTillDataTime.setText(R.string.active_now);
 
-                if (!model.isAttempted()) {
-                    holder.quizName.setText(model.getQuizName());
-                    holder.quizDescription.setText(model.getQuizDescription());
-                    holder.activeTillDataTime.setText("Active At \n" + "Date : " + model.getQuizDate() + " \nTime : " + model.getStartTime());
-//                    try {
-//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//                    Date dateToday = sdf.parse("2018-08-30");
-//                    Date dateQuizLastDate = sdf.parse(model.getQuizDate());
-//
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
+                            } else if (endTimeCheck) {
+                                quizCount = quizCount + 1;
+                                noQuizFound.setText(MessageFormat.format("{0} {1}", getString(R.string.total_quiz), quizCount));
+                                holder.quizName.setText(model.getQuizName());
+                                holder.quizDescription.setText(model.getQuizDescription());
+                                holder.activeTillDataTime.setText(String.format("Active At \nDate : %s \nTime : %s", model.getQuizDate(), model.getStartTime()));
 
-                }
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent quizInstructionIntent = new Intent(CandidateMyQuizListActivity.this, CandidateQuizBasicInstruction.class);
-                        quizInstructionIntent.putExtra("examinerId", model.getExaminer());
-                        quizInstructionIntent.putExtra("quizId", model.getQuizId());
-                        startActivity(quizInstructionIntent);
+                            } else {
+                                ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+                                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                                layoutParams.height = 0;
+                                holder.itemView.setLayoutParams(layoutParams);
+                            }
+                        } else {
+                            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+                            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                            layoutParams.height = 0;
+                            holder.itemView.setLayoutParams(layoutParams);
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+                        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                        layoutParams.height = 0;
+                        holder.itemView.setLayoutParams(layoutParams);
                     }
-                });
+
+                    holder.itemView.setOnClickListener(v -> {
+                        if (holder.activeTillDataTime.getText().equals("Active Now")) {
+                            Intent quizInstructionIntent = new Intent(CandidateMyQuizListActivity.this, CandidateQuizBasicInstruction.class);
+                            quizInstructionIntent.putExtra("examinerId", model.getExaminer());
+                            quizInstructionIntent.putExtra("quizId", model.getQuizId());
+                            startActivity(quizInstructionIntent);
+                        } else {
+                            showWarningMessage(model.getQuizDate(), model.getStartTime());
+                        }
+                    });
+
+                } else {
+                    ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+                    layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    layoutParams.height = 0;
+                    holder.itemView.setLayoutParams(layoutParams);
+                }
             }
 
             @NonNull
@@ -109,8 +148,14 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
 
     }
 
+    private void showWarningMessage(String quizDate, String startTime) {
+        new AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                .setMessage("Quiz Active At " + quizDate + " " + startTime)
+                .show();
+    }
 
     public static class CandidateQuizListViewHolder extends RecyclerView.ViewHolder {
+
         TextView quizName;
         TextView quizDescription;
         TextView activeTillDataTime;
@@ -121,7 +166,7 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
             quizDescription = itemView.findViewById(R.id.quizDescription);
             activeTillDataTime = itemView.findViewById(R.id.activeTillDateTime);
         }
-    }
 
+    }
 
 }

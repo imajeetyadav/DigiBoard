@@ -8,9 +8,12 @@ public class CandidateQuizListBaseModel {
     String quizDate;
     String endTime;
     String startTime;
+    String quizStartTime;
+    String quizEndTime;
+    String result;
     boolean isAttempted;
 
-    public CandidateQuizListBaseModel(String quizId, String examiner, String quizName, String quizDescription, String quizDate, String endTime, String startTime, boolean isAttempted) {
+    public CandidateQuizListBaseModel(String quizId, String examiner, String quizName, String quizDescription, String quizDate, String endTime, String startTime, String quizStartTime, String quizEndTime, String result, boolean isAttempted) {
         this.quizId = quizId;
         this.examiner = examiner;
         this.quizName = quizName;
@@ -18,8 +21,22 @@ public class CandidateQuizListBaseModel {
         this.quizDate = quizDate;
         this.endTime = endTime;
         this.startTime = startTime;
+        this.quizStartTime = quizStartTime;
+        this.quizEndTime = quizEndTime;
+        this.result = result;
         this.isAttempted = isAttempted;
     }
+
+    //    public CandidateQuizListBaseModel(String quizId, String examiner, String quizName, String quizDescription, String quizDate, String endTime, String startTime, boolean isAttempted) {
+//        this.quizId = quizId;
+//        this.examiner = examiner;
+//        this.quizName = quizName;
+//        this.quizDescription = quizDescription;
+//        this.quizDate = quizDate;
+//        this.endTime = endTime;
+//        this.startTime = startTime;
+//        this.isAttempted = isAttempted;
+//    }
 
     public CandidateQuizListBaseModel() {
     }
@@ -80,7 +97,7 @@ public class CandidateQuizListBaseModel {
         this.endTime = endTime;
     }
 
-    public boolean isAttempted() {
+    public boolean getIsAttempted() {
         return isAttempted;
     }
 
@@ -88,17 +105,27 @@ public class CandidateQuizListBaseModel {
         isAttempted = attempted;
     }
 
-    @Override
-    public String toString() {
-        return "CandidateQuizListBaseModel{" +
-                "quizId='" + quizId + '\'' +
-                ", examiner='" + examiner + '\'' +
-                ", quizName='" + quizName + '\'' +
-                ", quizDescription='" + quizDescription + '\'' +
-                ", quizDate='" + quizDate + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", isAttempted=" + isAttempted +
-                '}';
+    public String getQuizStartTime() {
+        return quizStartTime;
+    }
+
+    public void setQuizStartTime(String quizStartTime) {
+        this.quizStartTime = quizStartTime;
+    }
+
+    public String getQuizEndTime() {
+        return quizEndTime;
+    }
+
+    public void setQuizEndTime(String quizEndTime) {
+        this.quizEndTime = quizEndTime;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

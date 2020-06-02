@@ -97,6 +97,10 @@
     <string name="instruction_5">instruction_5</string>
     <string name="start_quiz">Start Quiz</string>
     <string name="all_the_best">All the Best</string>
+    <string name="no_history_found">No History Found</string>
+    <string name="no_result_found">no Result Found</string>
+    <string name="active_now">Active Now</string>
+    <string name="not_submitted_properly">Not Submitted properly</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>
