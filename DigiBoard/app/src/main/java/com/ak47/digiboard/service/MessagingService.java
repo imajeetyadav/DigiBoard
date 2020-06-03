@@ -38,24 +38,11 @@ public class MessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-//        String notificationBody="";
-//        String notificationTitle="";
-//        String notificationData="";
-//
-//        try {
-//            notificationData=remoteMessage.getData().toString();
-//            notificationTitle=remoteMessage.getNotification().getTitle();
-//            notificationBody=remoteMessage.getNotification().getBody();
-//
-//        }catch (NullPointerException e){
-//            Log.e(TAG,"onMessageReceived : NullPointerException : "+e.getMessage());
-//        }
-//
-//        Log.d(TAG,"onMessageReceived : data: "+notificationData);
-//        Log.d(TAG,"onMessageReceived : body: "+notificationBody);
-//        Log.d(TAG,"onMessageReceived : Title: "+notificationTitle);
+
         String identifyDataType = remoteMessage.getData().get(getString(R.string.data_type));
-        if (identifyDataType.equals(getString(R.string.data_type_quiz_message))) {
+        SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
+        int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
+        if (identifyDataType.equals(getString(R.string.data_type_quiz_message)) && initialSetupInt == 1) {
             //build quiz broadcast notification
             String title = remoteMessage.getData().get(getString(R.string.data_title));
             String message = remoteMessage.getData().get(getString(R.string.data_message));
@@ -66,7 +53,6 @@ public class MessagingService extends FirebaseMessagingService {
 
     private void sendBroadcastNotification(String title, String message) {
         Log.d(TAG, "sendBroadcastNotification: building a admin broadcast notification");
-
 
         // Instantiate a Builder object.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,

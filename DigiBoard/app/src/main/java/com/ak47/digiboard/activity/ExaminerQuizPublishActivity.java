@@ -3,7 +3,6 @@ package com.ak47.digiboard.activity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,7 +51,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /*
-    show Quiz Information and  Publish button
+    #Done
+    show Quiz Information , Publish button and Send Notification
  */
 public class ExaminerQuizPublishActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Quiz Info Activity";
@@ -63,9 +64,6 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
     private DatabaseReference quizRef, quizCandidateRef, creditRef;
     private TextView quizNameTextView, quizDescriptionTextView, noOfQuestion;
     private EditText startTime, endTime, quizDate, duration;
-    private TimePickerDialog picker;
-    private String AM_PM = "";
-    private int hour, minutes;
     private ProSwipeButton publishSwipeButton;
     private String candidateListName = "";
     private String userId;
@@ -102,12 +100,9 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
 
         publishSwipeButton.setOnSwipeListener(() -> {
             // user has swiped the btn. Perform your async operation now
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // task success! show TICK icon in ProSwipeButton
-                    publishQuiz(key);
-                }
+            new Handler().postDelayed(() -> {
+                // task success! show TICK icon in ProSwipeButton
+                publishQuiz(key);
             }, 2000);
         });
 
@@ -192,17 +187,18 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                         publishSwipeButton.showResultIcon(false); // false if task failed
                         showCreditAlert();
                     } else {
+                        String publishTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime());
                         for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
                             quizRef.child("quizCandidate").push().child("email").setValue(dataSnapshot.child(String.valueOf(i)).child("email").getValue());
                             // quiz adding in candidate data and  send Push Notification
-                            addQuizToCandidate(key, dataSnapshot.child(String.valueOf(i)).child("email").getValue().toString(), startTime, endTime, quizDate);
+                            addQuizToCandidate(key, dataSnapshot.child(String.valueOf(i)).child("email").getValue().toString(), startTime, endTime, quizDate, publishTime);
                         }
                         creditRef.setValue(creditCount - dataSnapshot.getChildrenCount());
                         quizRef.child("startTime").setValue(startTime);
                         quizRef.child("endTime").setValue(endTime);
                         quizRef.child("quizDate").setValue(quizDate);
                         quizRef.child("duration").setValue(duration);
-                        quizRef.child("publishedTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+                        quizRef.child("publishedTime").setValue(publishTime);
                         quizRef.child("publishInfo").setValue(true);
                         publishSwipeButton.showResultIcon(true); // true if task success
                         finish();
@@ -224,14 +220,10 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                 .setTitle("You have insufficient credit to Publish Quiz.")
                 .setMessage("Goto Setting to Get some credit")
                 .setCancelable(false)
-                .setNeutralButton("Got It", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        finish();
-                    }
-                }).show();
+                .setNeutralButton("Got It", (dialog, whichButton) -> finish()).show();
     }
 
-    private void addQuizToCandidate(final String key, final String candidateEmail, String startTime, String endTime, String quizDate) {
+    private void addQuizToCandidate(final String key, final String candidateEmail, String startTime, String endTime, String quizDate, String notificationTime) {
 
         final DatabaseReference candidateRef = FirebaseDatabase.getInstance().getReference().child("users");
         candidateRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -249,6 +241,12 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                         candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizDate").setValue(quizDate);
                         candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("endTime").setValue(endTime);
                         candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("startTime").setValue(startTime);
+
+                        // Add Notification in Candidate
+                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("title").setValue(quizName);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("message").setValue(quizDescription);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("notificationTime").setValue(notificationTime);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("type").setValue("new Quiz");
 
                         sendMessageToCandidate(quizName, quizDescription, ds.child("token").getValue().toString());
                     }
@@ -297,38 +295,38 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                 candidateListName = data.getStringExtra("listName");
                 if (!candidateListName.isEmpty()) {
                     selectListButton.setText(candidateListName);
-                    selectListButton.setClickable(false);
+//                    selectListButton.setClickable(false);
                 }
             }
         }
     }
 
     private boolean validation(String startTime, String endTime, String quizDate, String duration, String candidateListName) {
-        // todo: proper validation needed
-        boolean check = true;
         if (TextUtils.isEmpty(startTime)) {
             this.startTime.setError("Enter Start Time");
-            check = false;
+            return false;
         } else if (TextUtils.isEmpty(endTime)) {
             this.endTime.setError("Enter End Time");
-            check = false;
+            return false;
         } else if (TextUtils.isEmpty(quizDate)) {
             this.quizDate.setError("Enter Quiz Date");
-            check = false;
+            return false;
         } else if (TextUtils.isEmpty(duration)) {
             this.duration.setError("Enter Quiz Duration");
-            check = false;
+            return false;
         } else if (duration.length() > 3) {
             this.duration.setError("Allowed Duration between 9 to 99 minute");
-            check = false;
-        } else if (candidateListName.equals("Select Candidate List") || (candidateListName.equals("Result"))) {
+            return false;
+        } else if (!validateTimeAndDuration(startTime, endTime, duration)) {
+            showTimeAndDurationAlertDialog();
+            return false;
+        } else if (candidateListName.equals("Select Candidate List")) {
             new AlertDialog.Builder(ExaminerQuizPublishActivity.this, R.style.AlertDialogStyle)
                     .setMessage("Please Select Candidate List")
                     .show();
-            check = false;
+            return false;
         }
-
-        return check;
+        return true;
     }
 
     private void selectCandidateList() {
@@ -347,35 +345,53 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-
     private void showtimeDialog(final int k) {
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
-        new TimePickerDialog(ExaminerQuizPublishActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+        new TimePickerDialog(ExaminerQuizPublishActivity.this, android.R.style.Theme_Holo_Light_Dialog,
                 (view, hourOfDay, minute1) -> {
                     if (hourOfDay < 10 && minute1 < 10) {
                         if (k == 1) {
-                            startTime.setText("0" + hourOfDay + ":0" + minute1);
+                            startTime.setText(MessageFormat.format("0{0}:0{1}", hourOfDay, minute1));
                         } else if (k == 2) {
-                            endTime.setText("0" + hourOfDay + ":0" + minute1);
+                            endTime.setText(MessageFormat.format("0{0}:0{1}", hourOfDay, minute1));
                         }
                     } else if (hourOfDay < 10) {
                         if (k == 1) {
-                            startTime.setText("0" + hourOfDay + ":" + minute1);
+                            startTime.setText(MessageFormat.format("0{0}:{1}", hourOfDay, minute1));
                         } else if (k == 2) {
-                            endTime.setText("0" + hourOfDay + ":" + minute1);
+                            endTime.setText(MessageFormat.format("0{0}:{1}", hourOfDay, minute1));
                         }
                     } else if (minute1 < 10) {
                         if (k == 1) {
-                            startTime.setText(hourOfDay + ":0" + minute1);
+                            startTime.setText(MessageFormat.format("{0}:0{1}", hourOfDay, minute1));
                         } else if (k == 2) {
-                            endTime.setText(hourOfDay + ":0" + minute1);
+                            endTime.setText(MessageFormat.format("{0}:0{1}", hourOfDay, minute1));
+                        }
+                    } else {
+                        if (k == 1) {
+                            startTime.setText(MessageFormat.format("{0}:{1}", hourOfDay, minute1));
+                        } else if (k == 2) {
+                            endTime.setText(MessageFormat.format("{0}:{1}", hourOfDay, minute1));
                         }
                     }
 
                 }, hour, minute, true).show();
-        final Calendar cal = Calendar.getInstance();
+    }
+
+    private boolean validateTimeAndDuration(String startTime, String endTime, String duration) {
+        int start = Integer.parseInt(startTime.replace(":", ""));
+        int end = Integer.parseInt(endTime.replace(":", ""));
+        if (start == end) {
+            return false;
+        } else return Integer.parseInt(duration) < (end - start);
+    }
+
+    private void showTimeAndDurationAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.showTimeAndDurationDialog)
+                .show();
     }
 
     public void getServerKey() {
@@ -426,13 +442,13 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "onFailure: Unable to send the message." + t.getMessage());
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable throwable) {
+                Log.e(TAG, "onFailure: Unable to send the message." + throwable.getMessage());
                 Toast.makeText(ExaminerQuizPublishActivity.this, "error", Toast.LENGTH_SHORT).show();
             }
         });

@@ -102,6 +102,13 @@
     <string name="active_now">Active Now</string>
     <string name="not_submitted_properly">Not Submitted properly</string>
     <string name="created_date">Created date</string>
+
+    <string name="date_validation_message">Note: Exam Date must be greater or equal to current date</string>
+    <string name="showTimeAndDurationDialog">Note: Difference between Start and End time is must be greater then Quiz duration</string>
+    <string name="no_notification_found">No Notification Found</string>
+    <string name="notification_type">notification Type</string>
+    <string name="title">title</string>
+    <string name="message">Message</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>
