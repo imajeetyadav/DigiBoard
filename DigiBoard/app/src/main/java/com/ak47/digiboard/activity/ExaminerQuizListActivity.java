@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
+
 /*
      #done
      List of Quiz
@@ -50,13 +52,17 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        // to reverse recycle view
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         quizRecyclerList = findViewById(R.id.quizRecyclerView);
-        quizRecyclerList.setLayoutManager(new LinearLayoutManager(this));
+        quizRecyclerList.setLayoutManager(mLayoutManager);
 
         quizRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                noQuizFound.setText(getString(R.string.total_quiz) + (int) dataSnapshot.getChildrenCount());
+                noQuizFound.setText(MessageFormat.format("{0}{1}", getString(R.string.total_quiz), (int) dataSnapshot.getChildrenCount()));
             }
 
             @Override
@@ -86,19 +92,16 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                 }
 
                 final Boolean finalPublishInfo = quizListModel.getPublishInfo();
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalPublishInfo) {
-                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerShowQuizResultActivity.class);
-                            quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
-                            startActivity(quizInfoIntent);
-                        } else {
-                            Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizPublishActivity.class);
-                            quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
-                            quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
-                            startActivity(quizInfoIntent);
-                        }
+                holder.itemView.setOnClickListener(v -> {
+                    if (finalPublishInfo) {
+                        Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerShowQuizResultActivity.class);
+                        quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
+                        startActivity(quizInfoIntent);
+                    } else {
+                        Intent quizInfoIntent = new Intent(ExaminerQuizListActivity.this, ExaminerQuizPublishActivity.class);
+                        quizInfoIntent.putExtra("QuizName", quizListModel.getQuizName());
+                        quizInfoIntent.putExtra("quizDescription", quizListModel.getQuizDescription());
+                        startActivity(quizInfoIntent);
                     }
                 });
             }
