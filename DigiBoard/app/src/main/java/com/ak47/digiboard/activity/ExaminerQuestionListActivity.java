@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
-import com.ak47.digiboard.model.ExaminerQuestionListModel;
+import com.ak47.digiboard.model.QuestionListModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +43,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
     private RecyclerView recyclerView;
     private Button saveButton, addQuestionButton;
     private ExaminerQuestionListAdapter adapter;
-    private ArrayList<ExaminerQuestionListModel> questionList;
+    private ArrayList<QuestionListModel> questionList;
     private String quizName, quizDescription;
     private RotateLoading rotateLoading;
     private TextView noQuestionFoundTextView;
@@ -103,12 +103,12 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
 
     }
 
-    private void examinerSaveQuizList(ArrayList<ExaminerQuestionListModel> questionList, String quizName, String quizDescription) {
+    private void examinerSaveQuizList(ArrayList<QuestionListModel> questionList, String quizName, String quizDescription) {
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
 
-        HashMap<String, ArrayList<ExaminerQuestionListModel>> questionListMap = new HashMap<>();
+        HashMap<String, ArrayList<QuestionListModel>> questionListMap = new HashMap<>();
         questionListMap.put("questionList", questionList);
 
         String key = rootRef.push().getKey();
@@ -153,7 +153,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 String optionD = data.getStringExtra("optionD");
                 int ansNo = data.getIntExtra("ansNo", 1);
                 // create object of QuestionListModel Class
-                ExaminerQuestionListModel model = new ExaminerQuestionListModel(heading, optionA, optionB, optionC, optionD, ansNo);
+                QuestionListModel model = new QuestionListModel(heading, optionA, optionB, optionC, optionD, ansNo);
                 questionList.add(model);
                 adapter.notifyDataSetChanged();
                 saveButton.setVisibility(View.VISIBLE);

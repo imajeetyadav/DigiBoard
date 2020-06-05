@@ -3,13 +3,162 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.CandidateActiveQuizActivity">
 
-    <Button
-        android:id="@+id/endQuiz"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/submitQuiz"
+        android:layout_below="@id/quizDuration">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                app:cardBackgroundColor="@color/gradient_color">
+
+                <TextView
+                    android:id="@+id/question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/all_the_best"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="25sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/optionA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardQuestion"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:drawableLeft="@android:drawable/presence_online"
+                android:text="@string/option_1"
+                android:textAlignment="textStart"
+                android:textColor="@color/bg_screen1"
+                android:textSize="15sp"
+                android:visibility="invisible"
+                app:elevation="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/optionB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/optionA"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:drawableLeft="@android:drawable/presence_online"
+                android:text="@string/option_2"
+                android:textAlignment="textStart"
+                android:textColor="@color/bg_screen1"
+                android:textSize="15sp"
+                android:visibility="invisible"
+                app:elevation="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/optionC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/optionB"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:drawableLeft="@android:drawable/presence_online"
+                android:text="@string/option_3"
+                android:textAlignment="textStart"
+                android:textColor="@color/bg_screen1"
+                android:textSize="15sp"
+                android:visibility="invisible"
+                app:elevation="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/optionD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/optionC"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:drawableLeft="@android:drawable/presence_online"
+                android:text="@string/option_4"
+                android:textAlignment="textStart"
+                android:textColor="@color/bg_screen1"
+                android:textSize="15sp"
+                android:visibility="invisible"
+                app:elevation="10dp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/questionNumber"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="end Quiz"
-        android:textColor="@color/gradient_color" />
+        android:layout_below="@id/toolbar"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/question"
+        android:textColor="@color/bg_screen1"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:elevation="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/quizDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/duration"
+        android:textColor="@color/bg_screen1"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:elevation="10dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/gradient_color"
+        android:elevation="7dp"
+        android:text="@string/submit"
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="invisible" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skipQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/gradient_color"
+        android:elevation="7dp"
+        android:text="@string/skip"
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="invisible"
+        tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

@@ -58,6 +58,15 @@
         android:textColor="#101010" />
 
     <TextView
+        android:id="@+id/instruction_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/instruction_5"
+        android:layout_margin="10dp"
+        android:text="@string/instruction_6"
+        android:textColor="#101010" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/startQuiz"

@@ -3,37 +3,37 @@ package com.ak47.digiboard.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ExaminerQuestionListModel implements Parcelable {
-    public static final Creator<ExaminerQuestionListModel> CREATOR = new Creator<ExaminerQuestionListModel>() {
+public class QuestionListModel implements Parcelable {
+    public static final Creator<QuestionListModel> CREATOR = new Creator<QuestionListModel>() {
         @Override
-        public ExaminerQuestionListModel createFromParcel(Parcel source) {
-            return new ExaminerQuestionListModel(source);
+        public QuestionListModel createFromParcel(Parcel source) {
+            return new QuestionListModel(source);
         }
 
         @Override
-        public ExaminerQuestionListModel[] newArray(int size) {
-            return new ExaminerQuestionListModel[size];
+        public QuestionListModel[] newArray(int size) {
+            return new QuestionListModel[size];
         }
     };
     private String question, optionA, optionB, optionC, optionD;
-    private int ans;
+    private int answer;
 
-    private ExaminerQuestionListModel(Parcel source) {
+    private QuestionListModel(Parcel source) {
         this.question = source.readString();
         this.optionA = source.readString();
         this.optionB = source.readString();
         this.optionC = source.readString();
         this.optionD = source.readString();
-        this.ans = source.readInt();
+        this.answer = source.readInt();
     }
 
-    public ExaminerQuestionListModel(String question, String optionA, String optionB, String optionC, String optionD, int ans) {
+    public QuestionListModel(String question, String optionA, String optionB, String optionC, String optionD, int answer) {
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
         this.optionC = optionC;
         this.optionD = optionD;
-        this.ans = ans;
+        this.answer = answer;
     }
 
     public String getQuestion() {
@@ -77,11 +77,11 @@ public class ExaminerQuestionListModel implements Parcelable {
     }
 
     public int getAnswer() {
-        return ans;
+        return answer;
     }
 
-    public void setAnswer(int ans) {
-        this.ans = ans;
+    public void setAnswer(int answer) {
+        this.answer = answer;
     }
 
     // Override parcelable interface method
@@ -97,7 +97,17 @@ public class ExaminerQuestionListModel implements Parcelable {
         dest.writeString(this.optionB);
         dest.writeString(this.optionC);
         dest.writeString(this.optionD);
-        dest.writeInt(this.ans);
+        dest.writeInt(this.answer);
     }
 
+    @Override
+    public String toString() {
+        return "QuestionListModel{" +
+                "question='" + question + '\'' +
+                ", optionA='" + optionA + '\'' +
+                ", optionB='" + optionB + '\'' +
+                ", optionC='" + optionC + '\'' +
+                ", optionD='" + optionD + '\'' +
+                '}';
+    }
 }

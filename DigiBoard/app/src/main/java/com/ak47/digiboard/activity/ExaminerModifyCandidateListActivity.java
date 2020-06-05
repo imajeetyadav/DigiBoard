@@ -218,12 +218,6 @@ public class ExaminerModifyCandidateListActivity extends AppCompatActivity imple
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle("Candidate list is not saved")

@@ -46,12 +46,15 @@ public class MessagingService extends FirebaseMessagingService {
             //build quiz broadcast notification
             String title = remoteMessage.getData().get(getString(R.string.data_title));
             String message = remoteMessage.getData().get(getString(R.string.data_message));
-            sendBroadcastNotification(title, message);
+            sendBroadcastNotification(title, message, "New Quiz");
+        } else if (identifyDataType.equals(getString(R.string.data_type_quiz_attempt)) && initialSetupInt == 2) {
+            String title = remoteMessage.getData().get(getString(R.string.data_title));
+            String message = remoteMessage.getData().get(getString(R.string.data_message));
+            sendBroadcastNotification(title, message, "Quiz Attempted");
         }
-
     }
 
-    private void sendBroadcastNotification(String title, String message) {
+    private void sendBroadcastNotification(String title, String message, String type) {
         Log.d(TAG, "sendBroadcastNotification: building a admin broadcast notification");
 
         // Instantiate a Builder object.
@@ -75,9 +78,9 @@ public class MessagingService extends FirebaseMessagingService {
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
                         R.drawable.ic_active_quiz))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle("New Quiz")
-                .setContentText(title)
-                .setSubText(message)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSubText(type)
                 .setColor(getColor(R.color.gradient_color))
                 .setAutoCancel(true);
 

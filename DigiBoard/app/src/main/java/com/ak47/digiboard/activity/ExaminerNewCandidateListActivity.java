@@ -201,11 +201,6 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
         startActivityForResult(intent, 2);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return false;
-    }
 
     @Override
     public void onBackPressed() {

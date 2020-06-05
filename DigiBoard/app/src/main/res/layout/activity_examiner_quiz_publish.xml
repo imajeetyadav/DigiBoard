@@ -12,108 +12,121 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <TextView
-        android:id="@+id/quizName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:text="@string/quiz_name"
-        android:textAlignment="center"
-        android:textColor="#DE090909"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
-    <TextView
-        android:id="@+id/quizDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/quizName"
-        android:layout_marginTop="10dp"
-        android:text="@string/quiz_description"
-        android:textAlignment="center"
-        android:textSize="20sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/quizTotalQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/quizDescription"
-        android:layout_marginTop="5dp"
-        android:textAlignment="center"
-        android:text="@string/total_number_of_question"
-        android:textStyle="bold"
-        android:textColor="@color/bg_screen1" />
+            <TextView
+                android:id="@+id/quizName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-    <LinearLayout
-        android:id="@+id/layoutTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/quizTotalQuestion"
-        android:layout_marginTop="15dp">
+                android:text="@string/quiz_name"
+                android:textAlignment="center"
+                android:textColor="#DE090909"
+                android:textSize="20sp" />
 
-        <!-- starting time of Quiz-->
-        <EditText
-            android:id="@+id/startTimeId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:hint="@string/start_time"
-            android:textColor="@color/gradient_color"
-            android:textColorHint="#FFD600"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/quizDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quizName"
+                android:layout_marginTop="10dp"
+                android:text="@string/quiz_description"
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
-        <!-- end time of Quiz-->
-        <EditText
-            android:id="@+id/endTimeId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:hint="@string/end_time"
-            android:textColor="@color/gradient_color"
-            android:textColorHint="#FFD600"
-            android:textSize="20sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/quizTotalQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quizDescription"
+                android:layout_marginTop="5dp"
+                android:text="@string/total_number_of_question"
+                android:textAlignment="center"
+                android:textColor="@color/bg_screen1"
+                android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/quizDateId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutTime"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="15dp"
-        android:textAlignment="center"
-        android:hint="@string/quiz_date"
-        android:textColor="@color/gradient_color"
-        android:textColorHint="#FFD600"
-        android:textSize="20sp" />
+            <LinearLayout
+                android:id="@+id/layoutTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quizTotalQuestion"
+                android:layout_marginTop="15dp">
 
-    <EditText
-        android:id="@+id/durationId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/quizDateId"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="15dp"
-        android:hint="@string/quiz_duration_in_minutes"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textColor="@color/gradient_color"
-        android:textColorHint="#FFD600"
-        android:textSize="20sp" />
+                <!-- starting time of Quiz-->
+                <EditText
+                    android:id="@+id/startTimeId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="1"
+                    android:hint="@string/start_time"
+                    android:textAlignment="center"
+                    android:textColor="@color/gradient_color"
+                    android:textColorHint="#FFD600"
+                    android:textSize="20sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectCandidateList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/publishButton"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/gradient_color"
-        android:text="@string/select_candidate_list"
-        android:textColor="@color/colorPrimaryDark" />
+                <!-- end time of Quiz-->
+                <EditText
+                    android:id="@+id/endTimeId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_weight="1"
+                    android:hint="@string/end_time"
+                    android:textAlignment="center"
+                    android:textColor="@color/gradient_color"
+                    android:textColorHint="#FFD600"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/quizDateId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutTime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:hint="@string/quiz_date"
+                android:textAlignment="center"
+                android:textColor="@color/gradient_color"
+                android:textColorHint="#FFD600"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/durationId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/quizDateId"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:hint="@string/quiz_duration_in_minutes"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/gradient_color"
+                android:textColorHint="#FFD600"
+                android:textSize="20sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectCandidateList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/durationId"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/gradient_color"
+                android:text="@string/select_candidate_list"
+                android:textColor="@color/colorPrimaryDark" />
+        </RelativeLayout>
+
+
+    </ScrollView>
 
     <in.shadowfax.proswipebutton.ProSwipeButton
         android:id="@+id/publishButton"
@@ -125,5 +138,6 @@
         app:bg_color="@color/gradient_color"
         app:btn_text="Publish"
         app:text_size="20dp" />
+
 
 </RelativeLayout>

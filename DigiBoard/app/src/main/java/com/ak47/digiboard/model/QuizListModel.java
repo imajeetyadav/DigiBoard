@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class QuizListModel {
     private String quizName, quizDescription;
     private Boolean publishInfo;
-    private ArrayList<ExaminerQuestionListModel> questionsList;
+    private ArrayList<QuestionListModel> questionsList;
     private String createdDateTime;
 
-    public QuizListModel(String quizName, String quizDescription, Boolean publishInfo, ArrayList<ExaminerQuestionListModel> questionsList, String createdDateTime) {
+    public QuizListModel(String quizName, String quizDescription, Boolean publishInfo, ArrayList<QuestionListModel> questionsList, String createdDateTime) {
         this.quizName = quizName;
         this.quizDescription = quizDescription;
         this.publishInfo = publishInfo;
@@ -50,11 +50,11 @@ public class QuizListModel {
         this.publishInfo = publishInfo;
     }
 
-    public ArrayList<ExaminerQuestionListModel> getQuestionsList() {
+    public ArrayList<QuestionListModel> getQuestionsList() {
         return questionsList;
     }
 
-    public void setQuestionsList(ArrayList<ExaminerQuestionListModel> questionsList) {
+    public void setQuestionsList(ArrayList<QuestionListModel> questionsList) {
         this.questionsList = questionsList;
     }
 }

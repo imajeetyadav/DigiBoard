@@ -80,10 +80,10 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    String userProfile = Objects.requireNonNull(dataSnapshot.child("profilePic").getValue()).toString();
+                    String userProfile = String.valueOf(dataSnapshot.child("profilePic").getValue());
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
-                    textName.setText(dataSnapshot.child("name").getValue().toString());
-                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
+                    textName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
+                    textEmail.setText(String.valueOf(dataSnapshot.child("email").getValue()));
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);

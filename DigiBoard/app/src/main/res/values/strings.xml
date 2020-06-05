@@ -12,7 +12,7 @@
     <string name="user_name">Name</string>
     <string name="email">Email Id</string>
     <string name="notification_listener_service">Grant Permission</string>
-    <string name="notification_listener_service_explanation">It is Required to enable Do Not Disturb Mode which is used during quiz. Enable it now?</string>
+    <string name="notification_listener_service_explanation">It is Required to give DND Permission (No Call or Message will Disturb you During Quiz). Enable it now?</string>
     <string name="aboutLibraries_description_showIcon">true</string>
     <string name="aboutLibraries_description_showVersion">false</string>
     <string name="heart_message">Hope you like this App    ❤</string>
@@ -85,30 +85,36 @@
 
     <!--  data type for  future use  -->
     <string name="data_type_quiz_message">data_type_quiz_message</string>
+    <string name="data_type_quiz_attempt">data_type_quiz_attempt</string>
     <string name="remaining_credit">Remaining Credit :  </string>
     <string name="get_some_credit">Get Some Credit</string>
     <string name="my_quizzes">My quizzes</string>
     <string name="active_till">Active Till :</string>
     <string name="instructions_title">Instructions</string>
-    <string name="instruction_1">instructions_1</string>
-    <string name="instruction_2">instruction_2</string>
-    <string name="instruction_3">instruction_3</string>
+    <string name="instruction_1">1. You have to swipe start quiz slider to enter in quiz mode. May be when quiz mode first time you see a Dialog Box asking something select \'Got it\' option. Otherwise you my face problem during quiz</string>
+    <string name="instruction_2">2. When you enter in quiz mode your phone  will automatically set to Don\'t Disturb mode.</string>
+    <string name="instruction_3">3. Your phone power button work as a force quiz submit button during quiz.</string>
     <string name="instruction_4">instruction_4</string>
     <string name="instruction_5">instruction_5</string>
+    <string name="instruction_6">6. There is no negative marking.</string>
     <string name="start_quiz">Start Quiz</string>
-    <string name="all_the_best">All the Best</string>
+    <string name="all_the_best">All The Best</string>
     <string name="no_history_found">No History Found</string>
-    <string name="no_result_found">no Result Found</string>
-    <string name="active_now">Active Now</string>
+    <string name="no_result_found">No Result Found</string>
     <string name="not_submitted_properly">Not Submitted properly</string>
-    <string name="created_date">Created date</string>
 
+    <string name="created_date">Created date</string>
     <string name="date_validation_message">Note: Exam Date must be greater or equal to current date</string>
     <string name="showTimeAndDurationDialog">Note: Difference between Start and End time is must be greater then Quiz duration</string>
     <string name="no_notification_found">No Notification Found</string>
     <string name="notification_type">notification Type</string>
     <string name="title">title</string>
     <string name="message">Message</string>
+    <string name="submit">Submit</string>
+    <string name="quiz_mode">Quiz Mode</string>
+    <string name="duration">duration</string>
+    <string name="skip">Skip</string>
+    <string name="thank_you">Thank You</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>

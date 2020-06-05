@@ -233,20 +233,20 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                     if (ds.child("email").getValue().equals(candidateEmail)) {
                         Log.d(TAG, "candidateUid " + ds.getKey());
                         String quizId = candidateRef.child(ds.getKey()).child("MyQuizLists").push().getKey();
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizId").setValue(key);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("examiner").setValue(userId);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizName").setValue(quizName);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizDescription").setValue(quizDescription);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("isAttempted").setValue(false);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("quizDate").setValue(quizDate);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("endTime").setValue(endTime);
-                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(quizId).child("startTime").setValue(startTime);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("quizId").setValue(key);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("examiner").setValue(userId);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("quizName").setValue(quizName);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("quizDescription").setValue(quizDescription);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("isAttempted").setValue(false);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("quizDate").setValue(quizDate);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("endTime").setValue(endTime);
+                        candidateRef.child(ds.getKey()).child("MyQuizLists").child(key).child("startTime").setValue(startTime);
 
                         // Add Notification in Candidate
-                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("title").setValue(quizName);
-                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("message").setValue(quizDescription);
-                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("notificationTime").setValue(notificationTime);
-                        candidateRef.child(ds.getKey()).child("Notifications").child(quizId).child("type").setValue("new Quiz");
+                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("title").setValue(quizName);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("message").setValue(quizDescription);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("notificationTime").setValue(notificationTime);
+                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("type").setValue("new Quiz");
 
                         sendMessageToCandidate(quizName, quizDescription, ds.child("token").getValue().toString());
                     }

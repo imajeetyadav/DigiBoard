@@ -1,9 +1,7 @@
 package com.ak47.digiboard.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.common.CheckNotice;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +46,6 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
         rotateLoading.start();
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
         changeStatusBarColor();
 
         imageView = findViewById(R.id.user_photo);
@@ -80,10 +76,10 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    String userProfile = dataSnapshot.child("profilePic").getValue().toString();
+                    String userProfile = String.valueOf(dataSnapshot.child("profilePic").getValue());
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
-                    textName.setText(dataSnapshot.child("name").getValue().toString());
-                    textEmail.setText(dataSnapshot.child("email").getValue().toString());
+                    textName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
+                    textEmail.setText(String.valueOf(dataSnapshot.child("email").getValue()));
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
@@ -105,17 +101,6 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activeQuiz:
-//                NotificationManager notificationManager =
-//                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//                assert notificationManager != null;
-//                if (!notificationManager.isNotificationPolicyAccessGranted()) {
-//                    android.app.AlertDialog enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
-//                    enableNotificationListenerAlertDialog.show();
-//                } else {
-//                    finish();
-//                    startActivity(new Intent(CandidateMainActivity.this, CandidateActiveQuizActivity.class));
-//                }
                 startActivity(new Intent(CandidateMainActivity.this, CandidateMyQuizListActivity.class));
                 break;
             case R.id.history:
@@ -156,21 +141,5 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-    }
-
-
-    private android.app.AlertDialog buildNotificationServiceAlertDialog() {
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                .setTitle(R.string.notification_listener_service)
-                .setMessage(R.string.notification_listener_service_explanation)
-                .setCancelable(false)
-                .setPositiveButton("Enable Notification Access",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-                                startActivity(intent);
-                            }
-                        });
-        return (alertDialogBuilder.create());
     }
 }

@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.model.ExaminerQuestionListModel;
+import com.ak47.digiboard.model.QuestionListModel;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,9 @@ public class ExaminerQuestionListAdapter extends RecyclerView.Adapter<RecyclerVi
     private Context context;
     private Button saveButton;
     private TextView noQuestionFound;
-    private ArrayList<ExaminerQuestionListModel> questionList;
+    private ArrayList<QuestionListModel> questionList;
 
-    public ExaminerQuestionListAdapter(Context context, ArrayList<ExaminerQuestionListModel> questionList, Button saveButton, TextView noQuestionFoundTextView) {
+    public ExaminerQuestionListAdapter(Context context, ArrayList<QuestionListModel> questionList, Button saveButton, TextView noQuestionFoundTextView) {
         this.context = context;
         this.questionList = questionList;
         this.saveButton = saveButton;
@@ -41,7 +41,7 @@ public class ExaminerQuestionListAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ExaminerQuestionListModel model = questionList.get(position);
+        QuestionListModel model = questionList.get(position);
 
         final MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.question.setText(model.getQuestion());
