@@ -116,7 +116,7 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
             case R.id.saveCandidateListButton:
                 // call SaveQuiz class Constructor
                 // todo :  change min candidate limit
-                if (candidateList.size() > 0) {
+                if (candidateList.size() > 4) {
 
                     final EditText input = new EditText(this);
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)

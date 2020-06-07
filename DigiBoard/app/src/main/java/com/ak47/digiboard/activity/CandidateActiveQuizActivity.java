@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -65,7 +66,8 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
     private DatabaseReference adminRef, userRef;
     private String notificationChannelIdQuizAlert = "1000";
     private TextView question;
-    private Button optionA, optionB, optionC, optionD, questionNumberButton, quizDurationButton;
+    private Button optionA, optionB, optionC, optionD, questionNumberButton;
+    private Button quizDurationButton;
     private int result = 0;
     private int currentQuestion = 0;
     private boolean isSubmitted = false;
@@ -110,7 +112,26 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
                             userRef.child("MyQuizLists").child(quizId).child("quizStartTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
                             getExaminerTokenAndNameOfCandidate();
                             loadFirstQuestion();
+                            startTimer();
                         }).show();
+    }
+
+    private void startTimer() {
+        new CountDownTimer(Integer.parseInt(duration) * 60000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long min = (millisUntilFinished / 1000) / 60;
+                long sec = (millisUntilFinished / 1000) % 60;
+                quizDurationButton.setText(String.format("Left : %02d:%02d min", min, sec));
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(CandidateActiveQuizActivity.this, "Done!", Toast.LENGTH_LONG).show();
+                quizDurationButton.setText("Time Up");
+                normalSubmitQuiz();
+            }
+        }.start();
     }
 
     private void loadFirstQuestion() {

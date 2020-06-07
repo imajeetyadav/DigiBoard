@@ -89,7 +89,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
             case R.id.saveQuestionButton:
                 // call SaveQuiz class Constructor
                 // Todo: after testing change value to 9
-                if (questionList.size() > 1) {
+                if (questionList.size() > 5) {
                     rotateLoading.start();
                     examinerSaveQuizList(questionList, quizName, quizDescription);
 

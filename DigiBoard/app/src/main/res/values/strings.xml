@@ -112,7 +112,7 @@
     <string name="message">Message</string>
     <string name="submit">Submit</string>
     <string name="quiz_mode">Quiz Mode</string>
-    <string name="duration">duration</string>
+    <string name="duration">00:00</string>
     <string name="skip">Skip</string>
     <string name="thank_you">Thank You</string>
     <string name="not_attempted">Not Attempted</string>
