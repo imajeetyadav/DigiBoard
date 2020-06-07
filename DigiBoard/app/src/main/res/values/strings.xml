@@ -115,6 +115,9 @@
     <string name="duration">duration</string>
     <string name="skip">Skip</string>
     <string name="thank_you">Thank You</string>
+    <string name="not_attempted">Not Attempted</string>
+    <string name="candidate_email">Candidate Email</string>
+    <string name="score">Score</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>

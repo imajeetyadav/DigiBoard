@@ -226,7 +226,7 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
         float finalResult = ((float) result / (float) questionList.size()) * 100;
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle("Quiz Submitted")
-                .setMessage("Your score : " + finalResult + "%")
+                .setMessage("Your score : " + finalResult)
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         (dialog, id) -> {
@@ -298,9 +298,7 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
                 .setMessage("Due to some Reason quiz failed to load")
                 .setCancelable(false)
                 .setPositiveButton("OK",
-                        (dialog, id) -> {
-                            sendToMainActivity();
-                        }).show();
+                        (dialog, id) -> sendToMainActivity()).show();
 
     }
 
@@ -368,9 +366,7 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
                 .setMessage("If Yes then screen will be Unlock ")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
-                        (dialog, id) -> {
-                            sendToMainActivity();
-                        }).setNeutralButton("No", null).show();
+                        (dialog, id) -> sendToMainActivity()).setNeutralButton("No", null).show();
     }
 
     private void hideSystemUI() {
