@@ -10,13 +10,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ak47.digiboard.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.victor.loading.rotate.RotateLoading;
 
@@ -79,7 +84,9 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                 rotateLoading.stop();
                 sendUserToStudentMainActivity();
             } catch (Exception e) {
-                Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(ProfileSelectionActivity.this, R.style.AlertDialogStyle)
+                        .setMessage("Sorry Error occurred\nTry Again Later ")
+                        .show();
             }
         });
         examinerButton.setOnClickListener(v -> {
@@ -87,13 +94,30 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                 candidateButton.setVisibility(View.GONE);
                 examinerButton.setVisibility(View.GONE);
                 rotateLoading.start();
-                initFCMNewToken("AdminUsers");
-                profileMap.put("credit", "10");
-                rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
-                editor.putInt("initial_setup", 2);
-                editor.apply();
-                rotateLoading.stop();
-                sendUserToTeacherMainActivity();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                        .child("AppConfig");
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d(TAG, " onDataChange: got the server key");
+                        profileMap.put("credit", String.valueOf(dataSnapshot.child("credit").getValue()));
+                        rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
+                        initFCMNewToken("AdminUsers");
+                        editor.putInt("initial_setup", 2);
+                        editor.apply();
+                        rotateLoading.stop();
+                        sendUserToTeacherMainActivity();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        new AlertDialog.Builder(ProfileSelectionActivity.this, R.style.AlertDialogStyle)
+                                .setMessage("Sorry Error occurred\nTry Again Later ")
+                                .show();
+                    }
+                });
+
+
             } catch (Exception e) {
                 Toast.makeText(ProfileSelectionActivity.this, "Sorry Error occur. Try Again Later ", Toast.LENGTH_LONG).show();
             }

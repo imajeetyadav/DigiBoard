@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -85,11 +86,17 @@ public class SettingsActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Button signOut = findViewById(R.id.signOut);
-        signOut.setOnClickListener(new View.OnClickListener() {
+        signOut.setOnClickListener(v -> {
+            signOutDialog = signOutAndCacheCleanDialog();
+            signOutDialog.show();
+        });
+
+        getSomeCreditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOutDialog = signOutAndCacheCleanDialog();
-                signOutDialog.show();
+                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                        .setMessage("Coming Soon")
+                        .show();
             }
         });
 
