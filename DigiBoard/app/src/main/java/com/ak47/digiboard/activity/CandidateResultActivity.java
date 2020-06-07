@@ -68,7 +68,7 @@ public class CandidateResultActivity extends AppCompatActivity {
                     if (model.getResult() == null && model.getQuizStartTime() == null && model.getQuizEndTime() == null) {
                         holder.result.setText(R.string.not_submitted_properly);
                     } else {
-                        holder.result.setText(String.format("Marks :%s %", model.getResult()));
+                        holder.result.setText(String.format("Marks : %s %%", model.getResult()));
                     }
 
                 } else {
