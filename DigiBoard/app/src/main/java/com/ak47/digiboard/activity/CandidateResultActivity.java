@@ -22,11 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 /*
        Result of Candidate
@@ -73,7 +68,7 @@ public class CandidateResultActivity extends AppCompatActivity {
                     if (model.getResult() == null && model.getQuizStartTime() == null && model.getQuizEndTime() == null) {
                         holder.result.setText(R.string.not_submitted_properly);
                     } else {
-                        holder.result.setText(String.format("Marks :%s%%", model.getResult()));
+                        holder.result.setText(String.format("Marks :%s %", model.getResult()));
                     }
 
                 } else {
@@ -83,26 +78,26 @@ public class CandidateResultActivity extends AppCompatActivity {
                     holder.itemView.setLayoutParams(layoutParams);
                 }
 
-
-                holder.itemView.setOnClickListener(v -> {
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                    try {
-                        Date dateToday = sdfDate.parse(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
-                        Date dateQuizLastDate = sdfDate.parse(model.getQuizDate());
-                        if (dateToday.after(dateQuizLastDate)) {
-//                                Intent quizInstructionIntent = new Intent(CandidateResultActivity.this, QuizLeaderBoardActivity.class);
-//                                quizInstructionIntent.putExtra("examinerId", model.getExaminer());
-//                                quizInstructionIntent.putExtra("quizId", model.getQuizId());
-//                                startActivity(quizInstructionIntent);
-                        } else {
-                            showWarningMessage(model.getQuizDate());
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-
-                });
+                // todo: leaderboard
+//                holder.itemView.setOnClickListener(v -> {
+//                    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+//                    try {
+//                        Date dateToday = sdfDate.parse(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
+//                        Date dateQuizLastDate = sdfDate.parse(model.getQuizDate());
+//                        if (dateToday.after(dateQuizLastDate)) {
+////                                Intent quizInstructionIntent = new Intent(CandidateResultActivity.this, QuizLeaderBoardActivity.class);
+////                                quizInstructionIntent.putExtra("examinerId", model.getExaminer());
+////                                quizInstructionIntent.putExtra("quizId", model.getQuizId());
+////                                startActivity(quizInstructionIntent);
+//                        } else {
+//                            showWarningMessage(model.getQuizDate());
+//                        }
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//
+//                });
 
             }
 
