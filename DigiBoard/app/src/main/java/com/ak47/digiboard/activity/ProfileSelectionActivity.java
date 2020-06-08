@@ -68,7 +68,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
         assert user != null;
         profileMap.put("name", user.getDisplayName());
         profileMap.put("email", user.getEmail());
-        profileMap.put("profilePic", user.getPhotoUrl().toString());
+        profileMap.put("profilePic", String.valueOf(user.getPhotoUrl()));
         profileMap.put("createdDateTime", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
         profileMap.put("token", newToken);
 
@@ -101,6 +101,7 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d(TAG, " onDataChange: got the server key");
                         profileMap.put("credit", String.valueOf(dataSnapshot.child("credit").getValue()));
+                        profileMap.put("creditedOn", new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
                         rootRef.child("AdminUsers").child(user.getUid()).setValue(profileMap);
                         initFCMNewToken("AdminUsers");
                         editor.putInt("initial_setup", 2);
@@ -108,7 +109,6 @@ public class ProfileSelectionActivity extends AppCompatActivity {
                         rotateLoading.stop();
                         sendUserToTeacherMainActivity();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         new AlertDialog.Builder(ProfileSelectionActivity.this, R.style.AlertDialogStyle)

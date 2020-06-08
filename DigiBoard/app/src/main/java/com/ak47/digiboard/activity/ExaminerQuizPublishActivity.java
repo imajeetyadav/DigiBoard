@@ -218,7 +218,7 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
     private void showCreditAlert() {
         new AlertDialog.Builder(ExaminerQuizPublishActivity.this, R.style.AlertDialogStyle)
                 .setTitle("You have insufficient credit to Publish Quiz.")
-                .setMessage("Goto Setting to Get some credit")
+                .setMessage("Goto Setting to Refresh Credit")
                 .setCancelable(false)
                 .setNeutralButton("Got It", (dialog, whichButton) -> finish()).show();
     }

@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.common.CheckNotice;
+import com.ak47.digiboard.common.CheckNoticeAndVersion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,8 +69,6 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
         rootRef.keepSynced(true);
 
-        // Checking Service Status and Message
-        new CheckNotice(CandidateMainActivity.this);
 
         rootRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,9 +78,13 @@ public class CandidateMainActivity extends AppCompatActivity implements View.OnC
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
                     textName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                     textEmail.setText(String.valueOf(dataSnapshot.child("email").getValue()));
+                    // Checking Service Status and Message
+                    new CheckNoticeAndVersion(CandidateMainActivity.this);
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
+                    textName.setText(getString(R.string.user_name));
+                    textEmail.setText(getString(R.string.email));
                 }
                 rotateLoading.stop();
             }

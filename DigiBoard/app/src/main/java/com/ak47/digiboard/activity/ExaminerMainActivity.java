@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.common.CheckNotice;
+import com.ak47.digiboard.common.CheckNoticeAndVersion;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -73,8 +73,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
         rootRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         rootRef.keepSynced(true);
 
-        // Checking Service Status and Message
-        new CheckNotice(ExaminerMainActivity.this);
+
 
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,9 +83,13 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                     Picasso.get().load(userProfile).placeholder(R.drawable.ic_profile).into(imageView);
                     textName.setText(String.valueOf(dataSnapshot.child("name").getValue()));
                     textEmail.setText(String.valueOf(dataSnapshot.child("email").getValue()));
+                    // Checking Service Status and Message
+                    new CheckNoticeAndVersion(ExaminerMainActivity.this);
                 } catch (Exception e) {
                     Log.e(TAG, "Profile pic fetch error");
                     Picasso.get().load(R.drawable.ic_profile).into(imageView);
+                    textName.setText(getString(R.string.user_name));
+                    textEmail.setText(getString(R.string.email));
                 }
                 rotateLoading.stop();
             }
@@ -97,6 +100,8 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
                 rotateLoading.stop();
             }
         });
+
+
     }
 
     @Override
@@ -151,7 +156,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         // Checking Service Status and Message
-        new CheckNotice(ExaminerMainActivity.this);
+        new CheckNoticeAndVersion(ExaminerMainActivity.this);
     }
 }
 

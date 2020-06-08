@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DigiBoard</string>
-    <string name="version">v1.0 Beta</string>
+    <string name="versionCode">2</string>
+    <string name="version">v1.1</string>
     <string name="developers">Developed By \nAjeet Yadav\nBrij Pratap Singh</string>
     <string name="open_source_licenses">Click to See Open Source Licenses</string>
     <string name="active_quiz">Quiz</string>
@@ -86,7 +87,7 @@
     <!--  data type for  future use  -->
     <string name="data_type_quiz_message">data_type_quiz_message</string>
     <string name="data_type_quiz_attempt">data_type_quiz_attempt</string>
-    <string name="remaining_credit">Remaining Credit :  </string>
+    <string name="remaining_credit">Credit left :  </string>
     <string name="get_some_credit">Get Some Credit</string>
     <string name="my_quizzes">My quizzes</string>
     <string name="active_till">Active Till :</string>
@@ -118,6 +119,8 @@
     <string name="not_attempted">Not Attempted</string>
     <string name="candidate_email">Candidate Email</string>
     <string name="score">Score</string>
+    <string name="testing_version">Testing version</string>
+    <string name="refresh_credit">Refresh Credit</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>
