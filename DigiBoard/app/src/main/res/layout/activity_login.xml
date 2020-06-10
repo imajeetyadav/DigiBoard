@@ -15,16 +15,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/AppTitle"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:textStyle="normal"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="50sp"
+        android:layout_height="230dp"
+        android:src="@drawable/digiborad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

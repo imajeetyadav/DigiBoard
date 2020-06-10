@@ -1,2 +1,2 @@
-rootProject.name='DigiBoard'
+rootProject.name='digiboard'
 include ':app'
