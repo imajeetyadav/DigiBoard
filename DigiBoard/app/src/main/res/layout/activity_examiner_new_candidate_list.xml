@@ -45,6 +45,16 @@
         android:backgroundTint="@color/gradient_color"
         android:src="@drawable/save" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/swipe_to_delete"
+        android:textColor="@color/bg_screen1"
+        android:textSize="12sp" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNewCandidateButton"
         android:layout_width="wrap_content"

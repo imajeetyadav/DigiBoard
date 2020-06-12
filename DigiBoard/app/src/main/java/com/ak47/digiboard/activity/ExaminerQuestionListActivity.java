@@ -1,13 +1,11 @@
 package com.ak47.digiboard.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
 import com.ak47.digiboard.model.QuestionListModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -116,21 +112,19 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
         rootRef.child(key).child("quizName").setValue(quizName);
         rootRef.child(key).child("quizDescription").setValue(quizDescription);
         rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
-        rootRef.child(key).child("publishInfo").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                rotateLoading.stop();
-                sendToMainActivity();
+        rootRef.child(key).child("publishInfo").setValue(false).addOnCompleteListener(task -> {
+            rotateLoading.stop();
+            sendToMainActivity();
 
-            }
         });
     }
 
     private void sendToMainActivity() {
 
         Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     private void sendToAddQuestionActivity() {
@@ -162,24 +156,11 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle("Questions are not saved")
                 .setMessage("Are you really want to close ?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
+                .setPositiveButton("Yes", (dialog, which) -> sendToMainActivity())
                 .setNeutralButton("No", null)
                 .show();
     }

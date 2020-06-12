@@ -124,6 +124,7 @@
     <string name="examiner_name">Examiner Name</string>
     <string name="examiner_email">Examiner Email</string>
     <string name="examiner_details">Examiner Details</string>
+    <string name="swipe_to_delete">Tip : Swipe to Delete</string>
     <!--    <string name="data_type_query_message">query_message</string>-->
 
 </resources>
