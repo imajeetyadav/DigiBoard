@@ -20,6 +20,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 
@@ -33,6 +34,7 @@ public class CandidateResultActivity extends AppCompatActivity {
     private DatabaseReference quizRef;
     private TextView noQuizFound;
     private int quizCount = 0;
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class CandidateResultActivity extends AppCompatActivity {
         mTitle.setText(R.string.result);
 
         noQuizFound = findViewById(R.id.no_quiz_found);
+        rotateLoading = findViewById(R.id.mainLoading);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("MyQuizLists");
@@ -55,7 +58,7 @@ public class CandidateResultActivity extends AppCompatActivity {
                         .setQuery(quizRef, CandidateQuizListBaseModel.class)
                         .build();
 
-
+        rotateLoading.start();
         FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizResultViewHolder> adapter = new FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizResultViewHolder>(candidateQuizListBaseModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull CandidateQuizResultViewHolder holder, int position, @NonNull CandidateQuizListBaseModel model) {
@@ -67,8 +70,10 @@ public class CandidateResultActivity extends AppCompatActivity {
 
                     if (model.getResult() == null && model.getQuizStartTime() == null && model.getQuizEndTime() == null) {
                         holder.result.setText(R.string.not_submitted_properly);
+                        holder.result.setBackgroundColor(getColor(R.color.bg_screen1));
                     } else {
                         holder.result.setText(String.format("Marks : %s %%", model.getResult()));
+                        holder.result.setBackgroundColor(getColor(R.color.gradient_color));
                     }
 
                 } else {
@@ -99,6 +104,13 @@ public class CandidateResultActivity extends AppCompatActivity {
 //
 //                });
 
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (rotateLoading != null && rotateLoading.isStart()) {
+                    rotateLoading.stop();
+                }
             }
 
 

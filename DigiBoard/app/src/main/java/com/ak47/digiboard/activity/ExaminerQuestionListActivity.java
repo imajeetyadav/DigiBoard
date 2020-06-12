@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,7 @@ import com.ak47.digiboard.adapter.ExaminerQuestionListAdapter;
 import com.ak47.digiboard.model.QuestionListModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 /*
@@ -41,7 +42,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
 
     private static final String TAG = "QuestionListActivity";
     private RecyclerView recyclerView;
-    private Button saveButton, addQuestionButton;
+    private FloatingActionButton saveButton, addQuestionButton;
     private ExaminerQuestionListAdapter adapter;
     private ArrayList<QuestionListModel> questionList;
     private String quizName, quizDescription;
@@ -88,14 +89,13 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
                 break;
             case R.id.saveQuestionButton:
                 // call SaveQuiz class Constructor
-                // Todo: after testing change value to 9
                 if (questionList.size() > 5) {
                     rotateLoading.start();
                     examinerSaveQuizList(questionList, quizName, quizDescription);
 
                 } else {
                     new AlertDialog.Builder(this, R.style.AlertDialogStyle)
-                            .setMessage("Number of Question Must Be More then 9")
+                            .setMessage("Number of Question Must Be More then 5")
                             .show();
                 }
                 break;
@@ -115,7 +115,7 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
         rootRef.child(key).setValue(questionListMap);
         rootRef.child(key).child("quizName").setValue(quizName);
         rootRef.child(key).child("quizDescription").setValue(quizDescription);
-        rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+        rootRef.child(key).child("createdDateTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
         rootRef.child(key).child("publishInfo").setValue(false).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

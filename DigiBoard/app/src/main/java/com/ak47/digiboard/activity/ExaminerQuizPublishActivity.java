@@ -246,7 +246,7 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
                         candidateRef.child(ds.getKey()).child("Notifications").child(key).child("title").setValue(quizName);
                         candidateRef.child(ds.getKey()).child("Notifications").child(key).child("message").setValue(quizDescription);
                         candidateRef.child(ds.getKey()).child("Notifications").child(key).child("notificationTime").setValue(notificationTime);
-                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("type").setValue("new Quiz");
+                        candidateRef.child(ds.getKey()).child("Notifications").child(key).child("type").setValue("New Quiz");
 
                         sendMessageToCandidate(quizName, quizDescription, ds.child("token").getValue().toString());
                     }

@@ -57,7 +57,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
         textEmail = findViewById(R.id.user_email);
 
         CardView createQuiz = findViewById(R.id.createQuiz);
-        CardView studentList = findViewById(R.id.studentList);
+        CardView studentList = findViewById(R.id.candidateList);
         CardView publishResult = findViewById(R.id.quizList);
         CardView Notification = findViewById(R.id.notification);
         CardView Setting = findViewById(R.id.setting);
@@ -111,7 +111,7 @@ public class ExaminerMainActivity extends AppCompatActivity implements View.OnCl
             case R.id.createQuiz:
                 startActivity(new Intent(ExaminerMainActivity.this, ExaminerQuizCreateActivity.class));
                 break;
-            case R.id.studentList:
+            case R.id.candidateList:
                 startActivity(new Intent(ExaminerMainActivity.this, ExaminerCandidateListsActivity.class));
                 break;
             case R.id.quizList:

@@ -2,10 +2,8 @@ package com.ak47.digiboard.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -15,17 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.model.QuestionListModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 
 public class ExaminerQuestionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private Button saveButton;
+    private FloatingActionButton saveButton;
     private TextView noQuestionFound;
     private ArrayList<QuestionListModel> questionList;
 
-    public ExaminerQuestionListAdapter(Context context, ArrayList<QuestionListModel> questionList, Button saveButton, TextView noQuestionFoundTextView) {
+    public ExaminerQuestionListAdapter(Context context, ArrayList<QuestionListModel> questionList, FloatingActionButton saveButton, TextView noQuestionFoundTextView) {
         this.context = context;
         this.questionList = questionList;
         this.saveButton = saveButton;
@@ -50,27 +49,21 @@ public class ExaminerQuestionListAdapter extends RecyclerView.Adapter<RecyclerVi
         myViewHolder.b.setText(model.getOptionB());
         myViewHolder.c.setText(model.getOptionC());
         myViewHolder.d.setText(model.getOptionD());
-        myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, myViewHolder.delete);
-                popupMenu.getMenuInflater().inflate(R.menu.deletemenu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        Toast.makeText(context, "delete clicked", Toast.LENGTH_SHORT).show();
-                        questionList.remove(position);
-                        if (questionList.size() == 0) {
-                            saveButton.setVisibility(View.INVISIBLE);
-                            noQuestionFound.setVisibility(View.INVISIBLE);
-                        }
-                        notifyDataSetChanged();
+        myViewHolder.delete.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(context, myViewHolder.delete);
+            popupMenu.getMenuInflater().inflate(R.menu.deletemenu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                Toast.makeText(context, "delete clicked", Toast.LENGTH_SHORT).show();
+                questionList.remove(position);
+                if (questionList.size() == 0) {
+                    saveButton.setVisibility(View.INVISIBLE);
+                    noQuestionFound.setVisibility(View.INVISIBLE);
+                }
+                notifyDataSetChanged();
 
-                        return true;
-                    }
-                });
-                popupMenu.show();
-            }
+                return true;
+            });
+            popupMenu.show();
         });
 
     }

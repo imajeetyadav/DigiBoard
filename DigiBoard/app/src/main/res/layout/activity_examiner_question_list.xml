@@ -31,7 +31,7 @@
         android:layout_above="@id/saveQuestionButton"
         android:layout_below="@id/toolbar" />
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNewQuestionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,10 +41,9 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/gradient_color"
         android:elevation="7dp"
-        android:text="@string/add"
-        android:textColor="@color/colorPrimaryDark" />
+        android:src="@drawable/add" />
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveQuestionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +53,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/gradient_color"
         android:elevation="7dp"
-        android:text="@string/save"
-        android:textColor="@color/colorPrimaryDark"
+        android:src="@drawable/save"
         android:visibility="invisible" />
 
     <com.victor.loading.rotate.RotateLoading

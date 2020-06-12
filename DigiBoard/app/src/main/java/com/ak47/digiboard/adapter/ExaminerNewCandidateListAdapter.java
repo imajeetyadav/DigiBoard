@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,12 +27,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ExaminerNewCandidateListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private Button saveListButton;
+    private FloatingActionButton saveListButton;
     private TextView noCandidateFound;
     private ArrayList<ExaminerCandidateListModel> candidateList;
 
 
-    public ExaminerNewCandidateListAdapter(Context context, ArrayList<ExaminerCandidateListModel> candidateList, Button saveListButton, TextView noCandidateFound) {
+    public ExaminerNewCandidateListAdapter(Context context, ArrayList<ExaminerCandidateListModel> candidateList, FloatingActionButton saveListButton, TextView noCandidateFound) {
         this.context = context;
         this.candidateList = candidateList;
         this.saveListButton = saveListButton;

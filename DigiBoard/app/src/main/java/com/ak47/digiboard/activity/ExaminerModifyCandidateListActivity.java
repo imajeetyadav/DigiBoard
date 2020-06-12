@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +24,7 @@ import com.ak47.digiboard.adapter.ExaminerNewCandidateListAdapter;
 import com.ak47.digiboard.common.ExaminerSaveCandidateList;
 import com.ak47.digiboard.common.SwipeToDeleteCallback;
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +45,7 @@ public class ExaminerModifyCandidateListActivity extends AppCompatActivity imple
 
     private static final String TAG = "ModifyCandidateList";
     private RecyclerView recyclerView;
-    private Button saveListButton, addCandidateButton;
+    private FloatingActionButton saveListButton, addCandidateButton;
     private ExaminerNewCandidateListAdapter adapter;
     private ArrayList<ExaminerCandidateListModel> candidateList;
     private RotateLoading rotateLoading;

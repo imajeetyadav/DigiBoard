@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +25,7 @@ import com.ak47.digiboard.adapter.ExaminerNewCandidateListAdapter;
 import com.ak47.digiboard.common.ExaminerSaveCandidateList;
 import com.ak47.digiboard.common.SwipeToDeleteCallback;
 import com.ak47.digiboard.model.ExaminerCandidateListModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,14 +38,13 @@ import com.victor.loading.rotate.RotateLoading;
 import java.util.ArrayList;
 
 /*
-    #Done
-    New candidate list
- */
+     New candidate list
+*/
 public class ExaminerNewCandidateListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "NewCandidateList";
     private RecyclerView recyclerView;
-    private Button saveListButton, addCandidateButton;
+    private FloatingActionButton saveListButton, addCandidateButton;
     private ExaminerNewCandidateListAdapter adapter;
     private ArrayList<ExaminerCandidateListModel> candidateList;
     private RotateLoading rotateLoading;
@@ -115,7 +114,6 @@ public class ExaminerNewCandidateListActivity extends AppCompatActivity implemen
                 break;
             case R.id.saveCandidateListButton:
                 // call SaveQuiz class Constructor
-                // todo :  change min candidate limit
                 if (candidateList.size() > 4) {
 
                     final EditText input = new EditText(this);

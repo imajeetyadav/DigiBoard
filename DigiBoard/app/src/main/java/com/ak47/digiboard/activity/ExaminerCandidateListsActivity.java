@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
 import com.ak47.digiboard.common.ExaminerDeleteCandidateList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ExaminerCandidateListsActivity extends AppCompatActivity {
 
-    private Button addNewCandidateList;
+    private FloatingActionButton addNewCandidateList;
     private ListView candidateLists;
     private ArrayList<String> candidateListsName = new ArrayList<>();
     private String userId;
@@ -55,12 +55,9 @@ public class ExaminerCandidateListsActivity extends AppCompatActivity {
         noOFList = findViewById(R.id.no_list_found);
 
         addNewCandidateList = findViewById(R.id.addNewCandidateListButton);
-        addNewCandidateList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newCandidateList = new Intent(ExaminerCandidateListsActivity.this, ExaminerNewCandidateListActivity.class);
-                startActivity(newCandidateList);
-            }
+        addNewCandidateList.setOnClickListener(v -> {
+            Intent newCandidateList = new Intent(ExaminerCandidateListsActivity.this, ExaminerNewCandidateListActivity.class);
+            startActivity(newCandidateList);
         });
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -88,7 +85,7 @@ public class ExaminerCandidateListsActivity extends AppCompatActivity {
         candidateLists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-                final TextView listName = view.findViewById(R.id.text1);
+                final TextView listName = view.findViewById(R.id.listName);
                 new AlertDialog.Builder(ExaminerCandidateListsActivity.this, R.style.AlertDialogStyle)
                         .setTitle(" What do you want? ")
                         .setPositiveButton("Modify", new DialogInterface.OnClickListener() {

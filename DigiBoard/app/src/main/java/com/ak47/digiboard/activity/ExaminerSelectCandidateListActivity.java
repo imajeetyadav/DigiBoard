@@ -69,7 +69,7 @@ public class ExaminerSelectCandidateListActivity extends AppCompatActivity {
         candidateLists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
-                final TextView listName = view.findViewById(R.id.text1);
+                final TextView listName = view.findViewById(R.id.listName);
                 Intent intent = new Intent();
                 intent.putExtra("listName", listName.getText().toString());
                 setResult(2, intent);

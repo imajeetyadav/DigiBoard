@@ -82,35 +82,45 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/createQuizImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_active_quiz"
                     android:contentDescription="@string/create_quiz" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/create_quiz"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/createQuizImage"
+                    android:layout_marginTop="8dp">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/create_quiz"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/studentList"
+            android:id="@+id/candidateList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -122,31 +132,42 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/candidateListImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_history"
                     android:contentDescription="@string/candidate_lists" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:text="@string/candidate_lists"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp"
-                    android:textAlignment="center" />
-            </LinearLayout>
+                    android:layout_below="@id/candidateListImage">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/candidate_lists"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
+
 
         </androidx.cardview.widget.CardView>
 
@@ -163,30 +184,41 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/quizListImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_result"
                     android:contentDescription="@string/quiz_list" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/quiz_list"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/quizListImage"
+                    android:layout_marginTop="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/quiz_list"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
+
 
         </androidx.cardview.widget.CardView>
 
@@ -203,30 +235,40 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/notificationImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_notification"
                     android:contentDescription="@string/notifications" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/notifications"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/notificationImage"
+                    android:layout_marginTop="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/notifications"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16dp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -243,31 +285,40 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/settingImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_settings"
                     android:contentDescription="@string/setting" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:text="@string/setting"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:layout_below="@id/settingImage">
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/setting"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -283,30 +334,40 @@
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:id="@+id/aboutImage"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
                     android:background="@drawable/ic_about"
                     android:contentDescription="@string/about" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/about"
-                    android:textColor="@color/textCardColor"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/aboutImage"
+                    android:layout_marginTop="8dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/about"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:cornerRadius="8dp" />
+                </FrameLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
 

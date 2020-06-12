@@ -24,6 +24,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -38,6 +39,7 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
     private DatabaseReference quizRef;
     private TextView noQuizFound;
     private int quizCount = 0;
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
         mTitle.setText(R.string.my_quizzes);
 
         noQuizFound = findViewById(R.id.no_quiz_found);
+        rotateLoading = findViewById(R.id.mainLoading);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("MyQuizLists");
@@ -59,7 +62,7 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<CandidateQuizListBaseModel>()
                         .setQuery(quizRef, CandidateQuizListBaseModel.class)
                         .build();
-
+        rotateLoading.start();
         FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder> adapter = new FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizListViewHolder>(candidateQuizListBaseModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull CandidateQuizListViewHolder holder, int position, @NonNull CandidateQuizListBaseModel model) {
@@ -143,6 +146,13 @@ public class CandidateMyQuizListActivity extends AppCompatActivity {
                     layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     layoutParams.height = 0;
                     holder.itemView.setLayoutParams(layoutParams);
+                }
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (rotateLoading != null && rotateLoading.isStart()) {
+                    rotateLoading.stop();
                 }
             }
 

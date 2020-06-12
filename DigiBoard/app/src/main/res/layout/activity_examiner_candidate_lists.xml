@@ -31,7 +31,7 @@
         android:layout_marginHorizontal="10dp" />
 
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNewCandidateListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,6 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/gradient_color"
         android:elevation="7dp"
-        android:text="@string/add"
-        android:textColor="@color/colorPrimaryDark" />
+        android:src="@drawable/add" />
 
 </RelativeLayout>

@@ -20,6 +20,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 
@@ -33,6 +34,7 @@ public class NotificationActivity extends AppCompatActivity {
     private DatabaseReference notificationRef;
     private TextView noNotificationFound;
     private int notificationCount = 0;
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class NotificationActivity extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.notifications);
+
+        rotateLoading = findViewById(R.id.mainLoading);
+
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
 
@@ -61,6 +66,7 @@ public class NotificationActivity extends AppCompatActivity {
                         .setQuery(notificationRef, NotificationModel.class)
                         .build();
 
+        rotateLoading.start();
         FirebaseRecyclerAdapter<NotificationModel, NotificationViewHolder> adapter = new FirebaseRecyclerAdapter<NotificationModel, NotificationViewHolder>(notificationModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull NotificationViewHolder holder, int position, @NonNull NotificationModel model) {
@@ -70,6 +76,13 @@ public class NotificationActivity extends AppCompatActivity {
                 holder.notificationMessage.setText(model.getMessage());
                 holder.notificationType.setText(model.getType());
                 holder.notificationDateTime.setText(model.getNotificationTime());
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (rotateLoading != null && rotateLoading.isStart()) {
+                    rotateLoading.stop();
+                }
             }
 
             @NonNull

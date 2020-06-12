@@ -31,7 +31,6 @@ public class ExaminerResultAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        // TODO implement you own logic with ID
         return 0;
     }
 
@@ -48,7 +47,6 @@ public class ExaminerResultAdapter extends BaseAdapter {
 
         Map.Entry<String, String> item = getItem(position);
 
-        // TODO replace findViewById by ViewHolder
         ((TextView) result.findViewById(R.id.candidate_email)).setText(item.getKey());
         ((TextView) result.findViewById(R.id.candidate_score)).setText(item.getValue());
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ak47.digiboard.R;
-import com.ak47.digiboard.adapter.ExaminerSearchCandidateAdapter;
 import com.ak47.digiboard.model.ExaminerCandidateInfoModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.util.ArrayList;
 
@@ -44,6 +40,7 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
     private RecyclerView CandidateRecyclerList;
     private DatabaseReference candidateRef;
     private String TAG = "Search Candidate Activity";
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +50,7 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.search_candidate);
+        rotateLoading = findViewById(R.id.mainLoading);
         candidateRef = FirebaseDatabase.getInstance().getReference().child("users");
         searchList = new ArrayList<>();
         CandidateRecyclerList = findViewById(R.id.find_candidate_recycler_list);
@@ -61,12 +59,13 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
         searchCandidate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (!rotateLoading.isStart()) {
+                    rotateLoading.start();
+                }
             }
 
             @Override
@@ -74,8 +73,14 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
                 if (!s.toString().isEmpty()) {
 
                     search(s.toString());
+                    if (rotateLoading != null && rotateLoading.isStart()) {
+                        rotateLoading.stop();
+                    }
                 } else {
                     search("");
+                    if (rotateLoading != null && rotateLoading.isStart()) {
+                        rotateLoading.stop();
+                    }
                 }
 
             }
@@ -85,40 +90,16 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
     private void search(String s) {
         Query query = candidateRef.orderByChild("email").startAt(s).endAt(s + "\uf8ff");
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    searchList.clear();
-                    for (DataSnapshot friends : dataSnapshot.getChildren()) {
-                        final ExaminerCandidateInfoModel examinerCandidateInfoModel = friends.getValue(ExaminerCandidateInfoModel.class);
-                        searchList.add(examinerCandidateInfoModel);
-                    }
-
-                    ExaminerSearchCandidateAdapter searchFriendAdapter = new ExaminerSearchCandidateAdapter(getParent(), searchList);
-                    CandidateRecyclerList.setAdapter(searchFriendAdapter);
-                    searchFriendAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error - " + databaseError.getDetails());
-
-            }
-        });
+        candidateRecycleView(query);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void candidateRecycleView(Query query) {
 
         FirebaseRecyclerOptions<ExaminerCandidateInfoModel> options =
                 new FirebaseRecyclerOptions.Builder<ExaminerCandidateInfoModel>()
-                        .setQuery(candidateRef, ExaminerCandidateInfoModel.class)
+                        .setQuery(query, ExaminerCandidateInfoModel.class)
                         .build();
-
+        rotateLoading.start();
         FirebaseRecyclerAdapter<ExaminerCandidateInfoModel, SearchCandidateViewHolder> adapter =
                 new FirebaseRecyclerAdapter<ExaminerCandidateInfoModel, SearchCandidateViewHolder>(options) {
                     @Override
@@ -142,6 +123,13 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
                         });
                     }
 
+                    @Override
+                    public void onDataChanged() {
+                        if (rotateLoading != null && rotateLoading.isStart()) {
+                            rotateLoading.stop();
+                        }
+                    }
+
                     @NonNull
                     @Override
                     public SearchCandidateViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -154,17 +142,27 @@ public class ExaminerSearchCandidateActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        candidateRecycleView(candidateRef);
+
+
+    }
+
     public static class SearchCandidateViewHolder extends RecyclerView.ViewHolder {
         TextView userName, userEmail;
         CircleImageView profileImage;
 
-
         SearchCandidateViewHolder(@NonNull View itemView) {
             super(itemView);
-
             userName = itemView.findViewById(R.id.candidate_name);
             userEmail = itemView.findViewById(R.id.candidate_email);
             profileImage = itemView.findViewById(R.id.profile_image);
         }
     }
+
+
 }

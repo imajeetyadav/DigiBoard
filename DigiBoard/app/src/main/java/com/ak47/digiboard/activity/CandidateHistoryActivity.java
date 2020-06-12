@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -37,6 +38,7 @@ public class CandidateHistoryActivity extends AppCompatActivity {
     private DatabaseReference quizRef;
     private TextView noQuizFound;
     private int quizCount = 0;
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class CandidateHistoryActivity extends AppCompatActivity {
         mTitle.setText(R.string.quiz_history);
 
         noQuizFound = findViewById(R.id.no_quiz_found);
+        rotateLoading = findViewById(R.id.mainLoading);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("MyQuizLists");
@@ -59,7 +62,7 @@ public class CandidateHistoryActivity extends AppCompatActivity {
                         .setQuery(quizRef, CandidateQuizListBaseModel.class)
                         .build();
 
-
+        rotateLoading.start();
         FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizHistoryViewHolder> adapter = new FirebaseRecyclerAdapter<CandidateQuizListBaseModel, CandidateQuizHistoryViewHolder>(candidateQuizListBaseModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull CandidateQuizHistoryViewHolder holder, int position, @NonNull CandidateQuizListBaseModel model) {
@@ -70,7 +73,7 @@ public class CandidateHistoryActivity extends AppCompatActivity {
                     holder.quizDescription.setText(model.getQuizDescription());
                     holder.activeTillDataTime.setTextColor(getColor(R.color.colorPrimaryDark));
                     holder.activeTillDataTime.setBackgroundColor(getColor(R.color.gradient_color));
-                    holder.activeTillDataTime.setText(String.format("Quiz Date %s\nDone", model.getQuizDate()));
+                    holder.activeTillDataTime.setText(String.format("Quiz Date %s\nSubmitted", model.getQuizDate()));
                 } else {
                     try {
                         SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -113,6 +116,13 @@ public class CandidateHistoryActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                }
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (rotateLoading != null && rotateLoading.isStart()) {
+                    rotateLoading.stop();
                 }
             }
 

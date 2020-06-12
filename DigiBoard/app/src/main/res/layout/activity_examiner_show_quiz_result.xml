@@ -12,58 +12,79 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-
-    <View
-        android:id="@+id/viewUpper"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/toolbar"
-        android:background="@color/bg_screen1" />
-
-
-    <LinearLayout
-        android:id="@+id/result_heading"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewUpper">
-
-        <TextView
-            android:id="@+id/candidate_email_heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/candidate_email"
-            android:textAlignment="center"
-            android:textColor="#D50404"
-            android:textSize="20sp" />
+        android:layout_below="@id/toolbar"
+        android:layout_marginHorizontal="5dp"
+        app:cardElevation="5dp">
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:id="@+id/viewUpper"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/toolbar"
             android:background="@color/bg_screen1" />
 
-        <TextView
-            android:id="@+id/score_heading"
+        <LinearLayout
+            android:id="@+id/result_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/score"
-            android:textAlignment="center"
-            android:textColor="#D50404"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:layout_below="@+id/viewUpper">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_screen1" />
+
+            <TextView
+                android:id="@+id/candidate_email_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/candidate_email"
+                android:textAlignment="center"
+                android:textColor="#D50404"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_screen1" />
+
+            <TextView
+                android:id="@+id/score_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/score"
+                android:textAlignment="center"
+                android:textColor="#D50404"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_screen1" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/result_heading"
+        android:layout_below="@+id/cardResult"
+        android:layout_marginHorizontal="5dp"
         android:background="@color/bg_screen1" />
 
     <ListView
         android:id="@+id/resultListViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/result_heading" />
+        android:layout_below="@+id/cardResult" />
 
     <com.victor.loading.rotate.RotateLoading
         android:id="@+id/mainLoading"

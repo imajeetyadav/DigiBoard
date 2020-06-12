@@ -26,11 +26,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 
 /*
-     #done
      List of Quiz
  */
 public class ExaminerQuizListActivity extends AppCompatActivity {
@@ -38,6 +38,7 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
     private DatabaseReference quizRef;
     private String TAG = "Quiz List Activity";
     private TextView noQuizFound;
+    private RotateLoading rotateLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
         changeSetting();
 
         noQuizFound = findViewById(R.id.no_quiz_found);
+        rotateLoading = findViewById(R.id.mainLoading);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId).child("MyQuizLists");
@@ -76,19 +78,18 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<QuizListModel>()
                         .setQuery(quizRef, QuizListModel.class)
                         .build();
-
+        rotateLoading.start();
         final FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder> adapter = new FirebaseRecyclerAdapter<QuizListModel, QuizListViewHolder>(quizDetailsModelFirebaseRecyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull final QuizListViewHolder holder, final int position, @NonNull final QuizListModel quizListModel) {
                 holder.quizName.setText(quizListModel.getQuizName());
-                holder.quizDescription.setText(quizListModel.getQuizDescription());
                 holder.createdDateTime.setText(quizListModel.getCreatedDateTime().split(" ")[0]);
 
                 if (quizListModel.getPublishInfo()) {
                     holder.publishInfo.setText(R.string.published);
-                    holder.publishInfo.setTextColor(getColor(R.color.bg_screen2));
+                    holder.publishInfo.setBackgroundColor(getColor(R.color.bg_screen2));
                 } else {
-                    holder.publishInfo.setTextColor(getColor(R.color.bg_screen1));
+                    holder.publishInfo.setBackgroundColor(getColor(R.color.bg_screen1));
                 }
 
                 final Boolean finalPublishInfo = quizListModel.getPublishInfo();
@@ -104,6 +105,13 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
                         startActivity(quizInfoIntent);
                     }
                 });
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (rotateLoading != null && rotateLoading.isStart()) {
+                    rotateLoading.stop();
+                }
             }
 
             @NonNull
@@ -125,7 +133,6 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
 
     public static class QuizListViewHolder extends RecyclerView.ViewHolder {
         TextView quizName;
-        TextView quizDescription;
         TextView publishInfo;
         TextView createdDateTime;
 
@@ -133,7 +140,6 @@ public class ExaminerQuizListActivity extends AppCompatActivity {
             super(itemView);
 
             quizName = itemView.findViewById(R.id.quizName);
-            quizDescription = itemView.findViewById(R.id.quizDescription);
             publishInfo = itemView.findViewById(R.id.publishInfo);
             createdDateTime = itemView.findViewById(R.id.createdDateTime);
         }

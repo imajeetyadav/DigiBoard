@@ -1,66 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:id="@+id/quizDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/createdDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_screen2"
+            android:text="@string/created_date"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/quizName"
-                android:layout_width="230dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/quiz_name"
                 android:textColor="@color/textCardColor"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/quizDescription"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:text="@string/quiz_description"
-                android:textAlignment="textStart"
-                android:textColor="@color/gradient_color"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/publishInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/unpublished"
                 android:textAlignment="center"
-                android:textColor="#CF133E"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/createdDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/created_date" />
+                android:textSize="20sp" />
         </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/quizDetailsLayout"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/gradient_card_color" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/publishInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unpublished"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/candidate_email_id"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/holo_red_dark"
+                android:textColor="@color/bg_screen2"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>

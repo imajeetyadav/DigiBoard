@@ -33,9 +33,9 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
     private String examinerId, quizId, duration;
     private ProSwipeButton startQuizButton;
     private List<QuestionListModel> questionList;
-    private DatabaseReference questionRef;
+    private DatabaseReference questionRef, examinerRef;
     private ActivityManager activityManager;
-    private TextView instruction4, instruction5;
+    private TextView instruction4, instruction5, name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,9 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         instruction4 = findViewById(R.id.instruction_4);
         instruction5 = findViewById(R.id.instruction_5);
+        name = findViewById(R.id.examinerName);
+        email = findViewById(R.id.examinerEmail);
+
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -62,9 +65,33 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         getQuestion();
         // get Quiz Duration
         getDuration();
+        // get Examiner Details
+        getExaminerDetails();
         startQuizButton.setOnSwipeListener(() -> {
             new Handler().postDelayed(() -> sendToQuizActivity(), 2000);
         });
+
+    }
+
+    private void getExaminerDetails() {
+        examinerRef = FirebaseDatabase.getInstance().getReference();
+
+        Query query = examinerRef.child("AdminUsers")
+                .child(examinerId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name.setText((CharSequence) dataSnapshot.child("name").getValue());
+                email.setText((CharSequence) dataSnapshot.child("email").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled : Error :" + databaseError.getMessage());
+            }
+        });
+
     }
 
     private void getDuration() {
@@ -118,7 +145,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 startQuizButton.showResultIcon(false);
-                Log.e(TAG, "onCancelled");
+                Log.e(TAG, "onCancelled : Error :" + databaseError.getMessage());
             }
         });
     }
