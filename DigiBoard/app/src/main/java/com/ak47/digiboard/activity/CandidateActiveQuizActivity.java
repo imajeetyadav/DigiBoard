@@ -247,12 +247,12 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
         float finalResult = ((float) result / (float) questionList.size()) * 100;
         new AlertDialog.Builder(this, R.style.AlertDialogStyle)
                 .setTitle("Quiz Submitted")
-                .setMessage("Your score : " + finalResult + "%")
+                .setMessage("Your score : " + String.format("%.2f", finalResult) + "%")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         (dialog, id) -> {
                             userRef.child("MyQuizLists").child(quizId).child("quizEndTime").setValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(Calendar.getInstance().getTime()));
-                            userRef.child("MyQuizLists").child(quizId).child("result").setValue(finalResult);
+                            userRef.child("MyQuizLists").child(quizId).child("result").setValue(String.format("%.2f", finalResult));
                             isSubmitted = true;
                             showNotification();
                             sendToMainActivity();
@@ -300,7 +300,7 @@ public class CandidateActiveQuizActivity extends AppCompatActivity implements Vi
         );
 
         Notification notification = new NotificationCompat.Builder(this, notificationChannelIdQuizAlert)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setContentIntent(mainActivityPendingIntent)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("Your Quiz Submitted")

@@ -74,9 +74,9 @@ public class MessagingService extends FirebaseMessagingService {
                 );
 
         //add properties to the builder
-        builder.setSmallIcon(R.drawable.ic_active_quiz)
+        builder.setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                        R.drawable.ic_active_quiz))
+                        R.mipmap.ic_launcher_foreground))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(title)
                 .setContentText(message)
