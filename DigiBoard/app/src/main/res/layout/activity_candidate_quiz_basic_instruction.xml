@@ -138,6 +138,14 @@
         </RelativeLayout>
     </ScrollView>
 
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/mainLoading"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        app:loading_color="@color/colorAccent"
+        app:loading_width="5dp" />
+
     <in.shadowfax.proswipebutton.ProSwipeButton
         android:id="@+id/startQuiz"
         android:layout_width="match_parent"
@@ -147,6 +155,7 @@
         app:arrow_color="@color/colorPrimaryDark"
         app:bg_color="@color/gradient_color"
         app:btn_text="@string/start_quiz"
+        android:visibility="invisible"
         app:text_size="20dp" />
 
 </RelativeLayout>

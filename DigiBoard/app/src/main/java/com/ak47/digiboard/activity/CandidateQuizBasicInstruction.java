@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.victor.loading.rotate.RotateLoading;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
     private DatabaseReference questionRef, examinerRef;
     private ActivityManager activityManager;
     private TextView instruction4, instruction5, name, email;
+    private RotateLoading rotateLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.instructions_title);
+        rotateLoading = findViewById(R.id.mainLoading);
         startQuizButton = findViewById(R.id.startQuiz);
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         instruction4 = findViewById(R.id.instruction_4);
@@ -54,6 +58,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         email = findViewById(R.id.examinerEmail);
 
 
+        rotateLoading.start();
         Intent intent = getIntent();
         if (intent != null) {
             examinerId = intent.getStringExtra("examinerId");
@@ -67,6 +72,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         getDuration();
         // get Examiner Details
         getExaminerDetails();
+
         startQuizButton.setOnSwipeListener(() -> {
             new Handler().postDelayed(() -> sendToQuizActivity(), 2000);
         });
@@ -79,11 +85,13 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         Query query = examinerRef.child("AdminUsers")
                 .child(examinerId);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                name.setText((CharSequence) dataSnapshot.child("name").getValue());
-                email.setText((CharSequence) dataSnapshot.child("email").getValue());
+                name.setText(String.valueOf(dataSnapshot.child("name").getValue()));
+                email.setText(String.valueOf(dataSnapshot.child("email").getValue()));
+                rotateLoading.stop();
+                startQuizButton.setVisibility(View.VISIBLE);
             }
 
             @Override

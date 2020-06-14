@@ -120,7 +120,6 @@ public class ExaminerQuestionListActivity extends AppCompatActivity implements V
     }
 
     private void sendToMainActivity() {
-
         Intent intent = new Intent(ExaminerQuestionListActivity.this, ExaminerMainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

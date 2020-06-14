@@ -125,6 +125,12 @@
     <string name="examiner_email">Examiner Email</string>
     <string name="examiner_details">Examiner Details</string>
     <string name="swipe_to_delete">Tip : Swipe to Delete</string>
-    <!--    <string name="data_type_query_message">query_message</string>-->
+    <string name="quiz_preview">Quiz Preview</string>
+    <string name="select_file">Select File</string>
+    <string name="from_file">From File</string>
+    <string name="manually">Manually</string>
+    <string name="any_txt_file">Any .txt file can be used</string>
+    <string name="quiz_file_sample_title">Sample of file given below</string>
+    <string name="quiz_sample_file">Purpose of this App?\nTime pass\nPlay Games\nConduct Quiz\nNone of these\n3\nRate this app in stars?\n2 star\n4 star\n5 star\n1 star\n3</string>
 
 </resources>

@@ -14,29 +14,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/createdDateTime"
+            android:id="@+id/quizName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_screen2"
-            android:text="@string/created_date"
+            android:text="@string/quiz_name"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/quizName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quiz_name"
-                android:textColor="@color/textCardColor"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-        </LinearLayout>
+            android:textColor="@color/textCardColor"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/publishInfo"
@@ -46,5 +30,14 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/createdDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_screen2"
+            android:text="@string/created_date"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

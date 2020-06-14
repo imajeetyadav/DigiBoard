@@ -108,6 +108,7 @@ public class QuestionListModel implements Parcelable {
                 ", optionB='" + optionB + '\'' +
                 ", optionC='" + optionC + '\'' +
                 ", optionD='" + optionD + '\'' +
+                ", answer=" + answer +
                 '}';
     }
 }

@@ -88,9 +88,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/createQuizImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_active_quiz"
@@ -138,9 +138,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/candidateListImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_history"
@@ -189,9 +189,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/quizListImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_result"
@@ -240,9 +240,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/notificationImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_notification"
@@ -290,9 +290,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/settingImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_settings"
@@ -339,9 +339,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/aboutImage"
-                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_about"

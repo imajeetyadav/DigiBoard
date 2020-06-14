@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,13 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /*
-        #Done
-    - Add Quiz Title,description
+    Add Quiz Title,description
     then send to add question activity
    */
 public class ExaminerQuizCreateActivity extends AppCompatActivity {
     private TextInputEditText quizName, quizDescription;
-    private Button nextButton;
     private String TAG = "Quiz Create Activity";
 
     @Override
@@ -38,28 +35,66 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_examiner_quiz_create);
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-
         setSupportActionBar(toolbar);
         mTitle.setText(R.string.quiz_details);
 
         quizName = findViewById(R.id.quizNameId);
         quizDescription = findViewById(R.id.quizDescriptionId);
-        nextButton = findViewById(R.id.nextButton);
+        Button manuallyEnterQuestionButton = findViewById(R.id.manually);
+        Button formFileQuestionButton = findViewById(R.id.fromFile);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        manuallyEnterQuestionButton.setOnClickListener(v -> {
 
-                String Name = quizName.getText().toString().trim();
-                String Description = quizDescription.getText().toString().trim();
+            String Name = quizName.getText().toString().trim();
+            String Description = quizDescription.getText().toString().trim();
 
-                if (validation(Name, Description)) {
-                    // send To QuestionListActivity
-                    sendToQuestionListActivity(Name, Description);
-                }
+            if (validation(Name, Description)) {
+                // send To QuestionListActivity
+                sendToQuestionListActivity(Name, Description);
             }
         });
 
+        formFileQuestionButton.setOnClickListener(v -> {
+
+            String Name = quizName.getText().toString().trim();
+            String Description = quizDescription.getText().toString().trim();
+
+            if (validation(Name, Description)) {
+                // send To sendQuestionFormFile
+                sendQuestionFormFile(Name, Description);
+            }
+        });
+    }
+
+    private void sendQuestionFormFile(final String Name, final String Description) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("AdminUsers").child(userId);
+        quizRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.hasChild("MyQuizLists") && ds.child("MyQuizLists").child("quizName").getValue().equals(Name)) {
+                        quizName.setError("Already Exist. Please try other name");
+                        break;
+                    } else {
+
+                        Intent intent = new Intent(ExaminerQuizCreateActivity.this, ExaminerNewQuestionsFromFile.class);
+                        intent.putExtra("quizName", Name);
+                        intent.putExtra("quizDescription", Description);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "checkExistence fail");
+                new AlertDialog.Builder(ExaminerQuizCreateActivity.this, R.style.AlertDialogStyle)
+                        .setMessage("Error Occur")
+                        .show();
+            }
+        });
 
     }
 
@@ -74,6 +109,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
                         quizName.setError("Already Exist. Please try other name");
                         break;
                     } else {
+
                         Intent intent = new Intent(ExaminerQuizCreateActivity.this, ExaminerQuestionListActivity.class);
                         intent.putExtra("quizName", Name);
                         intent.putExtra("quizDescription", Description);
@@ -93,6 +129,7 @@ public class ExaminerQuizCreateActivity extends AppCompatActivity {
         });
 
     }
+
 
     private boolean validation(String Name, String Description) {
         boolean check = true;

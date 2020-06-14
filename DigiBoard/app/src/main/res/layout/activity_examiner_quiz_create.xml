@@ -57,15 +57,37 @@
             android:padding="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/nextButton"
-        android:layout_width="150dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quizDescriptionIdLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:backgroundTint="@color/gradient_color"
-        android:text="@string/next"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="150dp"
+        android:orientation="horizontal">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fromFile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="@string/from_file"
+            android:textColor="@color/bg_screen1"
+            android:textSize="12sp"
+            app:elevation="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/manually"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="@string/manually"
+            android:textColor="@color/bg_screen1"
+            android:textSize="12sp"
+            app:elevation="20dp" />
+
+    </LinearLayout>
 </RelativeLayout>
