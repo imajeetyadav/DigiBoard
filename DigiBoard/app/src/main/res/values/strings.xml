@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DigiBoard</string>
-    <string name="versionCode">5</string>
-    <string name="version">v1.4</string>
+    <string name="versionCode">6</string>
+    <string name="version">v1.5</string>
     <string name="developers">Developed By \nAjeet Yadav\nBrij Pratap Singh</string>
     <string name="open_source_licenses">Click to See Open Source Licenses</string>
     <string name="active_quiz">Quiz</string>
