@@ -109,7 +109,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
                 .child(examinerId)
                 .child("MyQuizLists")
                 .child(quizId);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 instruction5.setText(MessageFormat.format("5. Quiz duration is {0} minutes.", dataSnapshot.child("duration").getValue().toString()));
