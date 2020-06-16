@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -18,10 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -79,14 +76,11 @@ public class LoginActivity extends AppCompatActivity {
         //Now we will attach a click listener to the sign_in_button
         //and inside onClick() method we are calling the signIn() method that will open
         //google sign in intent
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
+        findViewById(R.id.sign_in_button).setOnClickListener(view -> {
+            signIn();
 //                rotateLoading.setVisibility(View.VISIBLE);
-                rotateLoading.start();
+            rotateLoading.start();
 
-            }
         });
 
     }
@@ -113,70 +107,65 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         //getting the auth credential
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
         //Now using firebase we are signing in the user here
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.e(TAG, "signInWithCredential:success");
-                            final FirebaseUser user = mAuth.getCurrentUser();
-                            SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
-                            final SharedPreferences.Editor editor = sharedPreferences.edit();
-                            rootRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    assert user != null;
-                                    if (dataSnapshot.child("users").hasChild(user.getUid())) {
-                                        editor.putInt("initial_setup", 1);
-                                        editor.apply();
-                                        rotateLoading.stop();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithCredential:success");
+                        final FirebaseUser user = mAuth.getCurrentUser();
+                        SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
+                        final SharedPreferences.Editor editor = sharedPreferences.edit();
+                        rootRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                assert user != null;
+                                if (dataSnapshot.child("users").hasChild(user.getUid())) {
+                                    editor.putInt("initial_setup", 1);
+                                    editor.apply();
+                                    rotateLoading.stop();
 //                                        sendUserToStudentMainActivity();
 
-                                    } else if (dataSnapshot.child("AdminUsers").hasChild(user.getUid())) {
-                                        editor.putInt("initial_setup", 2);
-                                        editor.apply();
-                                        rotateLoading.stop();
+                                } else if (dataSnapshot.child("AdminUsers").hasChild(user.getUid())) {
+                                    editor.putInt("initial_setup", 2);
+                                    editor.apply();
+                                    rotateLoading.stop();
 //                                        sendUserToTeacherMainActivity();
 
-                                    } else {
-                                        editor.putInt("initial_setup", 0);
-                                        editor.apply();
-                                        rotateLoading.stop();
+                                } else {
+                                    editor.putInt("initial_setup", 0);
+                                    editor.apply();
+                                    rotateLoading.stop();
 //                                        sendUserToProfileSelectionActivity();
-                                    }
-                                    Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, ActivitySelection.class);
-                                    mainTeacherActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(mainTeacherActivityIntent);
-                                    finish();
-
-
-
-
                                 }
+                                Intent mainTeacherActivityIntent = new Intent(LoginActivity.this, ActivitySelection.class);
+                                mainTeacherActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(mainTeacherActivityIntent);
+                                finish();
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Log.e(TAG, "User Profile Input Error Message :-" + databaseError.getMessage());
 
-                                }
-                            });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.e(TAG, "User Profile Input Error Message :-" + databaseError.getMessage());
+
+                            }
+                        });
 
 //                            rotateLoading.setVisibility(View.GONE);
-                            Log.e(TAG, "User Signed In");
-                        } else {
-                            rotateLoading.stop();
+                        Log.e(TAG, "User Signed In");
+                    } else {
+                        rotateLoading.stop();
 //                            rotateLoading.setVisibility(View.INVISIBLE);
-                            // If sign in fails, display a message to the user.
-                            Log.e(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        // If sign in fails, display a message to the user.
+                        Log.e(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -1,6 +1,5 @@
 package com.ak47.digiboard.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -28,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,8 +51,10 @@ public class SettingsActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
     private TextView remainingCreditText;
-    private Button getSomeCreditButton, refreshCreditButton;
+    private Button getSomeCreditButton, refreshCreditButton, runAdsButton;
     private DatabaseReference rootRef;
+    private RewardedAd rewardedAd;
+    private int creditCount;
 
 
     @Override
@@ -60,6 +69,12 @@ public class SettingsActivity extends AppCompatActivity {
         remainingCreditText = findViewById(R.id.remainingCreditTextView);
         getSomeCreditButton = findViewById(R.id.getCreditButton);
         refreshCreditButton = findViewById(R.id.refreshCreditButton);
+        runAdsButton = findViewById(R.id.runAd);
+
+        // Initialize the Google Mobile Ads SDK
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+        rewardedAd = new RewardedAd(SettingsActivity.this, getString(R.string.ad_reward_id_1));
 
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
@@ -69,6 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
             getSomeCreditButton.setVisibility(View.GONE);
             remainingCreditText.setVisibility(View.GONE);
             refreshCreditButton.setVisibility(View.GONE);
+            runAdsButton.setText(R.string.workAppreciateMsg);
 
         } else if (initialSetupInt == 2) {
             setCreditInTextView();
@@ -87,79 +103,145 @@ public class SettingsActivity extends AppCompatActivity {
             signOutDialog.show();
         });
 
-        getSomeCreditButton.setOnClickListener(new View.OnClickListener() {
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
-                        .setMessage("Coming Soon..\nFor Business Mail At - codingprotocols@gmail.com  ")
-                        .show();
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                runAdsButton.setVisibility(View.VISIBLE);
+
             }
+
+            @Override
+            public void onRewardedAdFailedToLoad(int errorCode) {
+                // Ad failed to load.
+            }
+        };
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+
+
+        // Buttons
+        getSomeCreditButton.setOnClickListener(v -> new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                .setMessage("Coming Soon..\nFor Business Mail At - codingprotocols@gmail.com  ")
+                .show());
+
+        refreshCreditButton.setOnClickListener(v -> {
+            Query query = rootRef.child("AdminUsers")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange: getCreditedDate from server");
+                    String currentDateString = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                    try {
+                        Date creditedOn = sdf.parse(String.valueOf(dataSnapshot.child("creditedOn").getValue()));
+                        Date currentDate = sdf.parse(currentDateString);
+                        long diffInDay = (currentDate.getTime() - creditedOn.getTime()) / (24 * 60 * 60 * 1000);
+                        if (diffInDay > 29) {
+
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                                    .child("AppConfig");
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Log.d(TAG, " onDataChange: getCredit Value");
+                                    rootRef.child("AdminUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .child("creditedOn").setValue(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
+                                    rootRef.child("AdminUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .child("credit").setValue(String.valueOf(dataSnapshot.child("credit").getValue())).addOnCompleteListener(task -> {
+                                        setCreditInTextView();
+                                        new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                                                .setMessage("Credit Updated")
+                                                .show();
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                                            .setMessage("Sorry Error occurred\nTry Again Later ")
+                                            .show();
+                                }
+                            });
+                        } else {
+                            new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                                    .setMessage("Wait " + (30 - diffInDay) + " days to refresh credit\nIf you want credit now then\n click at get Some Credit Button")
+                                    .show();
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: Error: " + databaseError.getMessage());
+                }
+            });
+
+
         });
 
-        refreshCreditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Query query = rootRef.child("AdminUsers")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
+        runAdsButton.setOnClickListener(v -> {
+            if (rewardedAd.isLoaded()) {
+                RewardedAdCallback adCallback = new RewardedAdCallback() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "onDataChange: getCreditedDate from server");
-                        String currentDateString = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime());
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                        try {
-                            Date creditedOn = sdf.parse(String.valueOf(dataSnapshot.child("creditedOn").getValue()));
-                            Date currentDate = sdf.parse(currentDateString);
-                            long diffInDay = (currentDate.getTime() - creditedOn.getTime()) / (24 * 60 * 60 * 1000);
-                            if (diffInDay > 29) {
-
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                                        .child("AppConfig");
-                                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        Log.d(TAG, " onDataChange: getCredit Value");
-                                        rootRef.child("AdminUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .child("creditedOn").setValue(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
-                                        rootRef.child("AdminUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .child("credit").setValue(String.valueOf(dataSnapshot.child("credit").getValue())).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                setCreditInTextView();
-                                                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
-                                                        .setMessage("Credit Updated")
-                                                        .show();
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
-                                                .setMessage("Sorry Error occurred\nTry Again Later ")
-                                                .show();
-                                    }
-                                });
-                            } else {
-                                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
-                                        .setMessage("Wait " + (30 - diffInDay) + " days to refresh credit\nIf you want credit now then\n click at get Some Credit Button")
-                                        .show();
-                            }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                    public void onRewardedAdOpened() {
+                        //Ad closed
+                        if (initialSetupInt == 2) {
+                            Toast.makeText(SettingsActivity.this, "Please Wait to Earn Reward", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(SettingsActivity.this, "Appreciation is under progress", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.d(TAG, "onCancelled: Error: " + databaseError.getMessage());
+                    public void onRewardedAdClosed() {
+                        // Ad closed.
+                        runAdsButton.setVisibility(View.INVISIBLE);
                     }
-                });
 
+                    @Override
+                    public void onUserEarnedReward(@NonNull RewardItem reward) {
+                        // User earned reward.
+                        if (initialSetupInt == 2) {
+                            addEarnedReward(reward.getAmount() - 8);
+                            Toast.makeText(SettingsActivity.this, "Credit Added", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(SettingsActivity.this, "Thank you for Appreciation", Toast.LENGTH_LONG).show();
+                        }
 
+                    }
+
+                    @Override
+                    public void onRewardedAdFailedToShow(int errorCode) {
+                        // Ad failed to display.
+                    }
+                };
+                rewardedAd.show(SettingsActivity.this, adCallback);
+            } else {
+                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                        .setMessage("Failed to run. Try again Later")
+                        .show();
+                Log.d("TAG", "The rewarded ad wasn't loaded yet.");
             }
         });
+    }
+
+    private void addEarnedReward(int reward) {
+        if (creditCount >= 0) {
+            rootRef.child("AdminUsers").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("credit").setValue(creditCount + reward).addOnCompleteListener(task -> {
+                setCreditInTextView();
+                new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                        .setMessage("Credit Updated")
+                        .show();
+            });
+        } else {
+            new AlertDialog.Builder(SettingsActivity.this, R.style.AlertDialogStyle)
+                    .setMessage("Chances to get credit is 8 out of 10 \nBetter Luck next time")
+                    .show();
+        }
 
     }
 
@@ -170,9 +252,9 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: getCredit from server");
-                remainingCreditText.setText(getString(R.string.remaining_credit) + " " + dataSnapshot.child("credit").getValue().toString());
+                creditCount = Integer.parseInt(dataSnapshot.child("credit").getValue().toString());
+                remainingCreditText.setText(MessageFormat.format("{0} {1}", getString(R.string.remaining_credit), dataSnapshot.child("credit").getValue().toString()));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: Error: " + databaseError.getMessage());
@@ -186,23 +268,15 @@ public class SettingsActivity extends AppCompatActivity {
                 .setMessage("Are Really want to Sign Out")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                mGoogleSignInClient.signOut().addOnCompleteListener(SettingsActivity.this, new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        mAuth.signOut();
-                                        sendToLogInActivity();
-                                    }
-                                });
+                        (dialog, id) -> mGoogleSignInClient.signOut().addOnCompleteListener(SettingsActivity.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                mAuth.signOut();
+                                sendToLogInActivity();
                             }
-                        })
-                .setNeutralButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dismiss
-                    }
+                        }))
+                .setNeutralButton("No", (dialog, which) -> {
+                    //dismiss
                 });
         return (alertDialogBuilder.create());
     }
@@ -214,4 +288,5 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
 
     }
+
 }

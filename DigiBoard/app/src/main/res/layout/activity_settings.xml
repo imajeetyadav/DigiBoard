@@ -34,6 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/buttonLayout"
         android:layout_below="@id/remainingCreditTextView"
         android:orientation="horizontal">
 
@@ -41,7 +42,7 @@
             android:id="@+id/getCreditButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="@string/get_some_credit"
@@ -53,15 +54,28 @@
             android:id="@+id/refreshCreditButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="@string/refresh_credit"
             android:textColor="@color/bg_screen1"
             android:textSize="12sp"
             app:elevation="10dp" />
-
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/runAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/get_2_credit_instantly"
+        android:textColor="@color/bg_screen1"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:elevation="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signOut"
