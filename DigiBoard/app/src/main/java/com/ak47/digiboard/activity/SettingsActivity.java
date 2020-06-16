@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         refreshCreditButton = findViewById(R.id.refreshCreditButton);
         runAdsButton = findViewById(R.id.runAd);
 
-        rewardedAd = new RewardedAd(SettingsActivity.this, "ca-app-pub-3940256099942544/5224354917");
+        rewardedAd = new RewardedAd(SettingsActivity.this, getString(R.string.ad_reward_id_1));
 
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);
