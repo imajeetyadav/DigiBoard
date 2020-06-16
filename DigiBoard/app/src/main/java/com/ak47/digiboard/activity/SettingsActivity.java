@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ak47.digiboard.R;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
@@ -71,10 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         refreshCreditButton = findViewById(R.id.refreshCreditButton);
         runAdsButton = findViewById(R.id.runAd);
 
-        // Initialize the Google Mobile Ads SDK
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-        rewardedAd = new RewardedAd(SettingsActivity.this, getString(R.string.ad_reward_id_1));
+        rewardedAd = new RewardedAd(SettingsActivity.this, "ca-app-pub-3940256099942544/5224354917");
 
         SharedPreferences sharedPreferences = getSharedPreferences("initial_setup", MODE_PRIVATE);
         int initialSetupInt = sharedPreferences.getInt("initial_setup", 0);

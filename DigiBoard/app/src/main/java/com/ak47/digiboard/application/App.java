@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
@@ -18,6 +19,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        // Initialize the Google Mobile Ads SDK
+        MobileAds.initialize(this, initializationStatus -> {
+            Log.e(TAG, " Initialize the Google Mobile Ads SDK");
+        });
 
         Picasso.Builder builder = new Picasso.Builder(this);   // load image offline - picasso library
         builder.downloader(new OkHttp3Downloader(this, Integer.MAX_VALUE));
