@@ -449,7 +449,7 @@ public class ExaminerQuizPublishActivity extends AppCompatActivity implements Vi
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable throwable) {
                 Log.e(TAG, "onFailure: Unable to send the message." + throwable.getMessage());
-                Toast.makeText(ExaminerQuizPublishActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ExaminerQuizPublishActivity.this, "Notification Send Error :" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -98,7 +98,7 @@ public class CandidateHistoryActivity extends AppCompatActivity {
                                 noQuizFound.setText(MessageFormat.format("{0} {1}", getString(R.string.total_quiz), quizCount));
                                 holder.activeTillDataTime.setTextColor(getColor(R.color.colorPrimaryDark));
                                 holder.activeTillDataTime.setBackgroundColor(getColor(R.color.bg_screen1));
-                                holder.activeTillDataTime.setText(String.format("Quiz Date%s\nExpired", model.getQuizDate()));
+                                holder.activeTillDataTime.setText(String.format("Quiz Date %s\nExpired", model.getQuizDate()));
 
                             } else {
                                 ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();

@@ -1,6 +1,5 @@
 package com.ak47.digiboard.activity;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,6 +26,7 @@ import com.victor.loading.rotate.RotateLoading;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
@@ -36,7 +37,6 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
     private ProSwipeButton startQuizButton;
     private List<QuestionListModel> questionList;
     private DatabaseReference questionRef, examinerRef;
-    private ActivityManager activityManager;
     private TextView instruction4, instruction5, name, email;
     private RotateLoading rotateLoading;
 
@@ -51,7 +51,6 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         mTitle.setText(R.string.instructions_title);
         rotateLoading = findViewById(R.id.mainLoading);
         startQuizButton = findViewById(R.id.startQuiz);
-        activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         instruction4 = findViewById(R.id.instruction_4);
         instruction5 = findViewById(R.id.instruction_5);
         name = findViewById(R.id.examinerName);
@@ -73,9 +72,7 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         // get Examiner Details
         getExaminerDetails();
 
-        startQuizButton.setOnSwipeListener(() -> {
-            new Handler().postDelayed(() -> sendToQuizActivity(), 2000);
-        });
+        startQuizButton.setOnSwipeListener(() -> new Handler().postDelayed(this::sendToQuizActivity, 2000));
 
     }
 
@@ -93,13 +90,11 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
                 rotateLoading.stop();
                 startQuizButton.setVisibility(View.VISIBLE);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled : Error :" + databaseError.getMessage());
             }
         });
-
     }
 
     private void getDuration() {
@@ -112,13 +107,17 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                instruction5.setText(MessageFormat.format("5. Quiz duration is {0} minutes.", dataSnapshot.child("duration").getValue().toString()));
-                duration = dataSnapshot.child("duration").getValue().toString();
+                try {
+                    instruction5.setText(MessageFormat.format("5. Quiz duration is {0} minutes.", Objects.requireNonNull(dataSnapshot.child("duration").getValue()).toString()));
+                    duration = Objects.requireNonNull(dataSnapshot.child("duration").getValue()).toString();
+                } catch (NullPointerException e) {
+                    Log.e(TAG, "getDuration Error : " + e.getMessage());
+                    warningDialog();
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled() : Error :" + databaseError.getMessage());
+                Log.e(TAG, " onCancelled() : Error :" + databaseError.getMessage());
             }
         });
     }
@@ -136,17 +135,21 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
-                    questionList.add(new QuestionListModel(
-                            String.valueOf(dataSnapshot.child(String.valueOf(i)).child("question").getValue()),
-                            String.valueOf(dataSnapshot.child(String.valueOf(i)).child("optionA").getValue()),
-                            String.valueOf(dataSnapshot.child(String.valueOf(i)).child("optionB").getValue()),
-                            String.valueOf(dataSnapshot.child(String.valueOf(i)).child("optionC").getValue()),
-                            String.valueOf(dataSnapshot.child(String.valueOf(i)).child("optionD").getValue()),
-                            Integer.parseInt(dataSnapshot.child(String.valueOf(i)).child("answer").getValue().toString())
-                    ));
+                try {
+                    for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                        questionList.add(new QuestionListModel(
+                                Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("question").getValue()).toString(),
+                                Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("optionA").getValue()).toString(),
+                                Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("optionB").getValue()).toString(),
+                                Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("optionC").getValue()).toString(),
+                                Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("optionD").getValue()).toString(),
+                                Integer.parseInt(Objects.requireNonNull(dataSnapshot.child(String.valueOf(i)).child("answer").getValue()).toString())
+                        ));
+                    }
+                } catch (NullPointerException e) {
+                    Log.e(TAG, " getQuestion() Error : " + e.getMessage());
+                    warningDialog();
                 }
-
                 instruction4.setText(MessageFormat.format("4. This Quiz contains {0} questions.", questionList.size()));
             }
 
@@ -168,5 +171,12 @@ public class CandidateQuizBasicInstruction extends AppCompatActivity {
         quizIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(quizIntent);
         finish();
+    }
+
+    private void warningDialog() {
+        new AlertDialog.Builder(CandidateQuizBasicInstruction.this, R.style.AlertDialogStyle)
+                .setMessage("Unable To Connect\nTry again Later")
+                .setPositiveButton("Ok", (dialog, which) -> finish())
+                .show();
     }
 }

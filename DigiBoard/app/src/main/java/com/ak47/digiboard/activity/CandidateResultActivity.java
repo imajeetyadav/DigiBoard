@@ -82,28 +82,6 @@ public class CandidateResultActivity extends AppCompatActivity {
                     layoutParams.height = 0;
                     holder.itemView.setLayoutParams(layoutParams);
                 }
-
-                // todo: leaderboard
-//                holder.itemView.setOnClickListener(v -> {
-//                    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-//                    try {
-//                        Date dateToday = sdfDate.parse(new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(Calendar.getInstance().getTime()));
-//                        Date dateQuizLastDate = sdfDate.parse(model.getQuizDate());
-//                        if (dateToday.after(dateQuizLastDate)) {
-////                                Intent quizInstructionIntent = new Intent(CandidateResultActivity.this, QuizLeaderBoardActivity.class);
-////                                quizInstructionIntent.putExtra("examinerId", model.getExaminer());
-////                                quizInstructionIntent.putExtra("quizId", model.getQuizId());
-////                                startActivity(quizInstructionIntent);
-//                        } else {
-//                            showWarningMessage(model.getQuizDate());
-//                        }
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                });
-
             }
 
             @Override
